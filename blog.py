@@ -2,17 +2,36 @@ import sys
 from flask import Flask, render_template
 from flask_flatpages import FlatPages, pygments_style_defs
 from flask_frozen import Freezer
+from flaskext.markdown import Markdown
+
 
 DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = '.md'
 FLATPAGES_ROOT = 'content'
 POST_DIR = 'posts'
+FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite', 'extra','toc']
 
-app = Flask(__name__)
+app = Flask(__name__,  static_url_path='')
+
+
+
 flatpages = FlatPages(app)
 freezer = Freezer(app)
 app.config.from_object(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/portfolio')
+def portfolio():
+    return render_template('portfolio.html')
+
+@app.route('/hire')
+def hire():
+    return render_template('hire.html')
+
 
 @app.route("/posts/")
 def posts():
