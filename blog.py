@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import sys
 from flask import Flask, render_template
 from flask_flatpages import FlatPages, pygments_style_defs
@@ -38,6 +40,14 @@ def posts():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
     posts.sort(key=lambda item:item['date'], reverse=False)
     return render_template('posts.html', posts=posts)
+
+@app.route("/categories/<name>/")
+def categories(name):
+    # Articles are pages with a publication date
+    posts = (p for p in flatpages if name in p.meta['categories'])
+
+    return render_template('posts.html', posts=posts)
+
 
 @app.route('/posts/<name>/')
 def post(name):
