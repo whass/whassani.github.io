@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import sys
 from flask import Flask, render_template
 from flask_flatpages import FlatPages, pygments_style_defs
@@ -12,9 +10,9 @@ FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = '.md'
 FLATPAGES_ROOT = 'content'
 POST_DIR = 'posts'
-FLATPAGES_MARKDOWN_EXTENSIONS = ['extra','toc']
+FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','headerid','extra','toc']
 
-app = Flask(__name__,  static_url_path='')
+app = Flask(__name__)
 
 
 
@@ -22,13 +20,13 @@ flatpages = FlatPages(app)
 freezer = Freezer(app)
 app.config.from_object(__name__)
 
+@app.route('/pygments.css')
+def pygments_css():
+    return pygments_style_defs('default'), 200, {'Content-Type': 'text/css'}
+
 @app.route('/')
 def home():
     return render_template('index.html')
-
-@app.route('/portfolio')
-def portfolio():
-    return render_template('portfolio.html')
 
 @app.route('/hire')
 def hire():
@@ -43,9 +41,7 @@ def posts():
 
 @app.route("/categories/<name>/")
 def categories(name):
-    # Articles are pages with a publication date
     posts = (p for p in flatpages if name in p.meta['categories'])
-
     return render_template('posts.html', posts=posts)
 
 
@@ -53,6 +49,7 @@ def categories(name):
 def post(name):
     path = '{}/{}'.format(POST_DIR, name)
     post = flatpages.get_or_404(path)
+
     return render_template('post.html', post=post)
 
 if __name__ == "__main__":
