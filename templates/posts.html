@@ -8,9 +8,9 @@
 {% block header %}
       <div id="logo">
         <div id="more-nav">
+          &rarr; <a href="{{ url_for('home') }}" class="" >about</a>        
           &rarr; <a href="{{ url_for('posts') }}" class="selected" >blog</a>
-          &rarr; <a href="{{ url_for('portfolio') }}" class="" >portfolio</a>
-          &rarr; <a href="{{ url_for('hire') }}" class="" >hire</a>
+          &rarr; <a href="{{ url_for('hire') }}" class="" >hire me</a>
 
         </div>
         <a id='logo1' href="/">whassani</a>
@@ -22,8 +22,9 @@
 {% endblock %}
 
 {% block content %}
-    {% for post in posts %}
     <div id="all-posts">
+
+    {% for post in posts %}
     
       <div class="single-post clearfix">
         <div class="excerpt">
@@ -42,25 +43,7 @@
         </div>
       </div>
   
-</div>
      {% endfor %}
+</div>
 {% endblock %}
-
-
-    <script type="text/javascript">
-
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-31071519-1']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-
-    </script>
-
-  </body>
-</html>
 

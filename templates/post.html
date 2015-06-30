@@ -3,6 +3,7 @@
 {% block title %}
 	{{ post.title }}
 {% endblock %}
+
 {% block meta %}
     <meta name="description" content="{{ post.description }}">
 {% endblock %}
@@ -10,9 +11,9 @@
 {% block header %}
       <div id="logo">
         <div id="more-nav">
+          &rarr; <a href="{{ url_for('home') }}" class="" >about</a>        
           &rarr; <a href="{{ url_for('posts') }}" class="selected" >blog</a>
-          &rarr; <a href="{{ url_for('portfolio') }}" class="" >portfolio</a>
-          &rarr; <a href="{{ url_for('hire') }}" class="" >hire</a>
+          &rarr; <a href="{{ url_for('hire') }}" class="" >hire me</a>
 
         </div>
         <a id='logo1' href="/">whassani</a>
@@ -33,7 +34,7 @@
 </h1>
 
 <div class="published">
-  <span>Published the {{ post.date }} in the Categories 
+  <span>Published the {{ post.date }} in 
   {%  for category in post.categories %}
   <a href="{{ url_for('categories',name=category) }}"> {{ category }} </a> &nbsp; 
        {% endfor %}
@@ -43,9 +44,7 @@
 <div id="container">
   <div id="content">
     <div class="post">
-    <div markdown="1">
 {{post.html|safe}}
-</div>
       
 
       <div id="more">
