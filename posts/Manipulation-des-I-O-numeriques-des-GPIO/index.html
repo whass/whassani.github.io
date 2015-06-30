@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Cet article vous montre à travers un exemple pratique consistant à allumer une des LED de la carte ARM tiva-c. Quoique simple, cet exemple  regroupe tout les concepts fondamentaux pour manipuler les GPIO, ç savoir, la configuration, l&#39;accès aux registres, lecture et écriture, etc.">
+
+
+
+    <title>
+	
+	Manipulation des I/O numériques des GPIO
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Manipulation des I/O numériques des GPIO
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-01-24 in 
+  
+  <a href="../../categories/Embedded/index.html"> Embedded </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p>Dans ce qui suit, j'aborderai avec vous, à travers un exemple très simple, un concept fondamental dans les systèmes embarqués, à savoir la manipulation des GPIO !</p>
+<p>Les GPIO pour General Purpose Input Output, sont l'ensemble des entrées/sorties numériques permettants de communiquer avec le monde extérieur.</p>
+<p>Dans ce qui suit, je vous apprendrez à :</p>
+<ul>
+<li>Manipuler les registres</li>
+<li>Configurer les registres</li>
+<li>Accéder aux GPIO</li>
+<li>Lire et écrire les GPIO</li>
+<li>Identifier les pins sur une carte et leurs registres sur le micro-contrôleur.</li>
+</ul>
+<h3 id="pre-requis">Pré-requis</h3>
+<p>Dans ce qui suit, je supposerai que :</p>
+<ul>
+<li>
+<p>vous avez déjà installé et configuré</p>
+<ul>
+<li>
+<p>CCS V6 (Code Composer Studio) sur votre machine ubuntu ou windows</p>
+</li>
+<li>
+<p>TivaWare</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Possédez une carte Tiva C Séries TM4C123G LaunchPad Evaluation Kit EK-TM4C123GXL.</p>
+</li>
+<li>
+<p>Vous savez comment écrire sur un registre.</p>
+</li>
+</ul>
+<h3 id="methodologie">Méthodologie</h3>
+<p>La méthode est relativement simple, pour manipuler les GPIO il suffit de :</p>
+<ol>
+<li>
+<p>Activer le port sur le lequel le GPIO est relié  </p>
+</li>
+<li>
+<p>Configurer ce port</p>
+</li>
+<li>
+<p>écrire et lire sur ce port.</p>
+</li>
+</ol>
+<h2 id="example-pratique-faire-clignoter-une-led">Example pratique : Faire clignoter une LED</h2>
+<p>Nous souhaitons allumer et éteindre la LED rouge de notre carte.</p>
+<p>La figure ci-après illustre l'ensemble des entrées/sorties dont dispose le micro-contrôleur de notre carte de développement.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/port-cortex-m4.gif"><img alt="port-cortex-m4" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/port-cortex-m4.gif" /></a></p>
+<p>Nous devons chercher parmi toutes ces entrées/sorties, laquelle correspondant à la LED rouge. Un seul moyen de le savoir, le schéma de la carte. J'ai fait un screenshot de la partie qui nous intéresse</p>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-28-à-07.42.31.png"><img alt="Capture d’écran 2015-01-28 à 07.42.31" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-28-à-07.42.31.png" /></a></p>
+<p>L'ensemble du schéma est disponible en téléchargement libre à l'adresse suivante :</p>
+<p>http://www.ti.com/lit/ug/spmu296/spmu296.pdf</p>
+<p>Conclusion, la LED rouge est connectée à PF1, qui correspond au deuxième bit du port F.</p>
+<ol>
+<li>
+<p>Identifier le pin sur la carte : LED_R</p>
+</li>
+<li>
+<p>Identifier le port sur le lequel le pin est relié (port F), ainsi que :</p>
+</li>
+<li>
+<p>l'adresse mémoire du registre de contrôle des ports (0x400FE608).</p>
+</li>
+<li>
+<p>Activer le port (mettre le bit numéro 5 du registre de contrôle à l'état haut)</p>
+</li>
+<li>
+<p>Identifier les registres de contrôles du port</p>
+</li>
+<li>
+<p>Les adresse mémoires des registres de contrôle (0x40025400, 0x4002551C)</p>
+<ul>
+<li>
+<p>définir la direction (registre : 0x40025400, mettre le bit numéro 2 à l'état haut)</p>
+</li>
+<li>
+<p>activer la sortie numérique (registre : 0x4002551C, mettre le bit numéro 2 à l'état haut)</p>
+</li>
+<li>
+<p>D'autres registres peuvent être configuré, mais ces deux sont largement suffisant pour lire et écrire un GPIO</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Identifier le registre de données du port</p>
+</li>
+<li>
+<p>l'adresse mémoire du registre de données (0x400253FC)</p>
+</li>
+<li>
+<p>le bit du registre de données qui agit sur le pin (le deuxième bit)</p>
+</li>
+<li>
+<p>écrire sur la sortie en agissante sur le registre de donnée (mettre le bit numéro 2 à l'état haut ou bas)</p>
+</li>
+</ol>
+<h3 id="code-source">Code source</h3>
+<div class="codehilite"><pre>  <span class="err">#</span><span class="n">define</span> <span class="n">RegistreDonnees</span> <span class="p">(</span><span class="o">*</span><span class="p">((</span><span class="k">volatile</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="mh">0x400253FC</span><span class="p">))</span>
+  <span class="err">#</span><span class="n">define</span> <span class="n">RegistreDirection</span> <span class="p">(</span><span class="o">*</span><span class="p">((</span><span class="k">volatile</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="mh">0x40025400</span><span class="p">))</span>
+  <span class="err">#</span><span class="n">define</span> <span class="n">RegistreActivationSortieNumerique</span> <span class="p">(</span><span class="o">*</span><span class="p">((</span><span class="k">volatile</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="mh">0x4002551C</span><span class="p">))</span>
+  <span class="err">#</span><span class="n">define</span> <span class="n">RegistreControleGPIO</span> <span class="p">(</span><span class="o">*</span><span class="p">((</span><span class="k">volatile</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="mh">0x400FE608</span><span class="p">))</span>
+
+  <span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">RegistreControleGPIO</span> <span class="o">=</span> <span class="mh">0x00000020</span><span class="p">;</span> <span class="c1">// activer le PORT F GPIO</span>
+    <span class="n">RegistreDirection</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// mettre la sortie 2 du port F en sortie</span>
+    <span class="n">RegistreActivationSortieNumerique</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// mettre la sortie 2 du port F en numérique</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">RegistreDonnees</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// mettre la sortie 2 du port F à l&#39;état haut - allumer la LED-</span>
+      <span class="n">RegistreDonnees</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// mettre la sortie 2 du port F à l&#39;état bas - éteindre la LED </span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</pre></div>
+
+
+<p>Félicitations vous avez configurer votre premier I/O from scratch</p>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

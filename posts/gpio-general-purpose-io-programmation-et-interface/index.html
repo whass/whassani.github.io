@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="GPIO pour General Purpose Input Output désigne tout simplement les entrées-sorties d&#39;un micro-contrôleur, micro-processeur, etc. C&#39;est ce qui permet de passer du monde extérieur au monde binaire. A travers la puce ARM tiva-c de ti, je vous exposerai les élements les plus imortants des GPIO à savoir, les bus (APB (Advanced Bus périphérique) et AHB (Advanced High-Performance Bus)), l&#39;adresse, les pins, les registes (Direction et Data Registers), l&#39;horloge, pin multiplexing, etc.">
+
+
+
+    <title>
+	
+	GPIO (General Purpose I/O) Programmation et interface
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	GPIO (General Purpose I/O) Programmation et interface
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-02-17 in 
+  
+  <a href="../../categories/Embedded/index.html"> Embedded </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong> Table des matières </strong></p>
+<div class="toc">
+<ul>
+<li><a href="#apercu">Aperçu</a></li>
+<li><a href="#example-io-pins-in-ti-tiva-launchpad">Example : I/O Pins in TI Tiva LaunchPad</a></li>
+<li><a href="#les-bus-apb-et-ahb">Les bus APB et AHB</a><ul>
+<li><a href="#direction-et-data-registers-registres-de-donnees">Direction et Data Registers (registres de données)</a><ul>
+<li><a href="#data-register-gpiodata-dans-ti-arm">Data Register (GPIODATA) dans TI ARM</a></li>
+<li><a href="#bit-banding">Bit-Banding</a><ul>
+<li><a href="#bit-banding-de-cas-detude-pour-les-experts-seulement">Bit-banding de cas d'étude (Pour les experts seulement)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#direction-registrer-dans-le-ti-arm">Direction registrer dans le TI ARM</a><ul>
+<li><a href="#example-pratique">Example pratique</a></li>
+</ul>
+</li>
+<li><a href="#le-gpio-digital-enable-register">le GPIO Digital Enable Register</a></li>
+<li><a href="#le-gpio-clock-enable-for-all-the-io-ports">Le GPIO Clock enable for all the I/O ports</a><ul>
+<li><a href="#exemple">Exemple :</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="apercu">Aperçu</h2>
+<p>Comment leurs noms l'indiquent, les GPIO servent d'entrées/sortie pour les microprocesseur, il existe deux type :</p>
+<ol>
+<li>
+<p><strong>General Purpose I/O (GPIO):</strong> ils sont utiliser pour interfacer les périphériques, tels que, les LEDs, les switches, le LCD, et bien plus.</p>
+</li>
+<li>
+<p><strong>Special purpose I/O:</strong> ils sont conçus pour des fonctions spécifiques, tels que, ADC (Analog-to-Digital), Timer, UART (universal asynchronous receiver transmitter), etc,.</p>
+</li>
+</ol>
+<h2 id="example-io-pins-in-ti-tiva-launchpad">Example : I/O Pins in TI Tiva LaunchPad</h2>
+<p>La puce ARM utilisé dans TI Tiva LaunchPad est Tiva série C TM4C123GH6PM dispose des ports A, B, C, D, E et F. Les broches sont désignés comme ceci : PA0-PA7, PB0-PB7, PC0-PC7, PD0-PD7, PE0-PE5 et PF0-PF4. Voir Figure suivante :</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00006.jpeg"><img alt="00006" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00006.jpeg" /></a></p>
+<p>Remarquez que les ports PE et PF ne dispose de 8 broches et les PC0-PC3 sont utilisés pour les connexions JTAG au débogeur sur le LaunchPad.</p>
+<h2 id="les-bus-apb-et-ahb">Les bus APB et AHB</h2>
+<p>Les puces ARM ont deux bus: APB (Advanced Bus périphérique) et AHB (Advanced High-Performance Bus). Le bus AHB est beaucoup plus rapide que l'APB. Le AHB permet d'accéder d'un seul cycle d'horloge au  périphériques. L'APB est plus lent et son temps d'accès minimum est de deux cycles d'horloge.</p>
+<p>Les adresses des ports d'E/S affectés à l'AP-PF pour APB sont les suivantes:</p>
+<ul>
+<li>GPIO Port A (APB): 0x4000.4000    </li>
+<li>GPIO Port B (APB): 0x4000.5000</li>
+<li>GPIO Port C (APB): 0x4000.6000</li>
+<li>GPIO Port D (APB): 0x4000.7000</li>
+<li>GPIO Port E (APB): 0x4002.4000</li>
+<li>GPIO Port F (APB): 0x4002.5000 (ce port est connecté à la LED et SW sur TI Tiva LaunchPad)</li>
+</ul>
+<p>Les adresses des ports d'E/S affectés à l'AP-PF pour AHB sont les suivantes:</p>
+<ul>
+<li>GPIO Port A (AHB): 0x4005.8000</li>
+<li>GPIO Port B (AHB): 0x4005.9000</li>
+<li>GPIO Port C (AHB): 0x4005.A000</li>
+<li>GPIO Port D (AHB): 0x4005.B000</li>
+<li>GPIO Port E (AHB): 0x4005.C000</li>
+<li>GPIO Port F (AHB): 0x4005.D000</li>
+</ul>
+<h3 id="direction-et-data-registers-registres-de-donnees">Direction et Data Registers (registres de données)</h3>
+<p>En général, chaque microcontrôleur dispose d'au moins deux registres associés à chacun des ports d'E/S. Ils sont les registres de données et de direction.</p>
+<p>Le registre de direction est utilisé pour faire en sorte que la broche soit une entrée ou une sortie. Le registre de données permet soit de lire (lorsque la broche est configuré en entrée) ou d'écrire (lorsque la broche est configuré en entrée). Voir Figure suivante :</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00007.jpeg"><img alt="00007" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00007.jpeg" /></a></p>
+<h4 id="data-register-gpiodata-dans-ti-arm">Data Register (GPIODATA) dans TI ARM</h4>
+<p>Le registre de données GPIO (GPIODATA) est situé à l'offset 0x0000 à l'adresse de base de ce port. Ceci est illustré ci-dessous.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00008.jpeg"><img alt="00008" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00008.jpeg" /></a></p>
+<h4 id="bit-banding">Bit-Banding</h4>
+<p><em>Rappel : le bit-banding permet l'écrire sur un registre en un seul cycle d'horloge.</em></p>
+<p>Parce le registre GPIODATA supporte le bit-banding, il occupe 256 mots (offset 0x000 - 0x3FC). Pour être capable d'écrire tous les 8 bits du registre de données GPIO à la fois, il faut utiliser l'offset 0x3FC.</p>
+<h5 id="bit-banding-de-cas-detude-pour-les-experts-seulement">Bit-banding de cas d'étude (Pour les experts seulement)</h5>
+<p>Pourquoi faudrait-il  256 mots (1024 octets) pour le GPIODATA ?</p>
+<p>Comme le montre la figure ci-dessous, afin de rendre le mot adresses alignées, les bits 1 et 0 sont toujours à 0.</p>
+<p>En utilisant les bits 2-9 de l'adresse, montre les bits qui doivent être changés lors de l'écriture dans le registre de GPIODATA.</p>
+<p>Par exemple, pour écrire à l'adresse la valeur 0x34 (0000110100 en binaire) signifiant que les broches 0, 2 et 4 du port doivent être changés tandis que les autres broches restent inchangés.</p>
+<p>Pour changer toutes les broches du port, tous les masques de bits (bits 2-9) doit être réglée. Cela rend l'adresse de décalage de 0x3FC (001 111 111 100 en binaire).</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00009.jpeg"><img alt="00009" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00009.jpeg" /></a></p>
+<h3 id="direction-registrer-dans-le-ti-arm">Direction registrer dans le TI ARM</h3>
+<p>Dans le cas des puces TI ARM, chaque bit du registre de direction doit être mis à 0 pour configurer la broche en entrée et à 1 pour configurer la broche en sortie. L'adresse du registre de Direction GPIO est situé à l'adresse de décalage de 0x400 à l'adresse de base de ce port. Ceci est illustré ci-dessous.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00011.jpeg"><img alt="00011" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00011.jpeg" /></a></p>
+<h4 id="example-pratique">Example pratique</h4>
+<p>Trouver l'adresse physique de la GPIODATA et GPIODIR enregistre pour PORTF si l'adresse de base de la PORTF est 0x40025000.</p>
+<p>solution :</p>
+<p>L'emplacement de l'adresse physique de l'GPIODATA pour PORTF commence à 0x40025000 :</p>
+<p>0x40025000 + 000 = 0x40025000</p>
+<p>Pour être capable d'écrire à tous les 8 bits du registre de données à la fois, vous devez utiliser :</p>
+<p>0x40025000 + 0x3FC = 0x400253FC.</p>
+<p>L'emplacement de l'adresse physique de GPIODIR pour la PORTF est</p>
+<p>0x40025000+0x400=0x40025400</p>
+<p>Pour accéder aux I/Ode la puce ARM TM4C123GH6PM utilisés dans LaunchPad, nous devons examiner deux autres registres. Ils sont les GPIODEN et RCGCGPIO.</p>
+<h3 id="le-gpio-digital-enable-register">le GPIO Digital Enable Register</h3>
+<p>Chaque broche de la puce ARM TI peut avoir plusieurs fonctions. Nous choisissons la fonction en programmant un registre de fonction spéciale (SFR).</p>
+<p>L'utilisant d'une seule broche pour de multiples fonctions est appelé multiplexage de broches (<strong><em>pin multiplexing</em></strong>) et est largement utilisé par les microcontrôleurs.</p>
+<p>En l'absence du multiplexage de broches, un microcontrôleur aura besoin de plusieurs centaines de broches pour soutenir toutes ses fonctions. Par exemple, une broche peut être utilisé comme entrée analogique, numérique, etc. Bien sûr, pas tous en même temps.</p>
+<p>Le GPIODEN (Activer numérique) <em>special function register</em> permet d'activer la broche pour être utilisé comme I/O numérique à la place de la fonction analogique. Chaque port (de A-F) a son propre registre de GPIODEN. Ceci est illustré ci-dessous.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00012.jpeg"><img alt="00012" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00012.jpeg" /></a></p>
+<p>Comme on peut le voir l'offset de ce registre est 0x51C</p>
+<p>L'horloge</p>
+<h3 id="le-gpio-clock-enable-for-all-the-io-ports">Le GPIO Clock enable for all the I/O ports</h3>
+<p>Le RCGCGPIO est utilisé pour activer la source d'horloge pour les entrées/sorties. Si un port I/O n'est pas utilisé, la source d'horloge pour elle peut être désactivée pour <strong>économiser de l'énergie</strong>.</p>
+<p>Il ya seulement une special function register RCGCGPIO pour tous les ports et chaque bit de ce registre est utilisé pour activer la source d'horloge à l'un des ports.</p>
+<p>Dans le cas des TI TM4C123GH6PM puisque nous avons seulement ports A à F, les inférieurs 6 bits de ce registre sont utilisés. Les bits de registre sont présentés ci-dessous.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00013.jpeg"><img alt="00013" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00013.jpeg" /></a></p>
+<p>L'adresse de base du registre spécial RCGCGPIO est 0x400F.E000 et son offset est 0x608; par conséquent, l'adresse physique est 0x400FE000 + 0x608 = 0x400FE608.</p>
+<h4 id="exemple">Exemple :</h4>
+<p>Montrer comment activer l'horloge du PORTF et  activer la fonction Digital des broches des port PORTF1, PORTF2 et PORTF3.</p>
+<p>solution:</p>
+<p>a) Pour activer la source d'horloge pour PORTF nous devons fixer à 1 la bit 5 du registre RCGCGPIO (écrire la valuer 0x20).
+b) Nous devons écrire la valeur 0b00001110 = 0x0E à PORTFDEN registre situé à l'adresse 0x4002551C</p>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

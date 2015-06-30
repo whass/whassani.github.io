@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Le C est un outils primordial si vous voulez faire de l&#39;embarqué, un outils incontournable. Cet article propose un guide complet des opérateurs utilisés en C à savoir, les opérateus de calcul, d&#39;assignation, d&#39;incrémentation, de comparaison, logique, etc. Il est à utiliser comme un aide mémoire.">
+
+
+
+    <title>
+	
+	 C : Le guide complet des opérateurs
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	 C : Le guide complet des opérateurs
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2014-05-14 in 
+  
+  <a href="../../categories/Embedded/index.html"> Embedded </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong>Table des matières :</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#les-operateurs-de-calcul">Les opérateurs de calcul</a></li>
+<li><a href="#les-operateurs-dassignation">Les opérateurs d'assignation</a></li>
+<li><a href="#les-operateurs-dincrementation">Les opérateurs d'incrémentation</a></li>
+<li><a href="#les-operateurs-de-comparaison">Les opérateurs de comparaison</a></li>
+<li><a href="#les-operateurs-logiques-booleens">Les opérateurs logiques (booléens)</a></li>
+<li><a href="#les-operateurs-bit-a-bit">(Les opérateurs bit-à-bit)</a></li>
+<li><a href="#les-operateurs-de-rotation-de-bit">(Les opérateurs de rotation de bit)</a></li>
+</ul>
+</div>
+<h2 id="les-operateurs-de-calcul">Les opérateurs de calcul</h2>
+<p>Les opérateurs de calcul permettent de modifier mathématiquement la valeur d'une variable.</p>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Dénomination</th>
+<th>Effet</th>
+<th>Exemple</th>
+<th>Résultat (avec x valant 7)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>opérateur d'addition</td>
+<td>Ajoute deux valeurs</td>
+<td>x+3</td>
+<td>10</td>
+</tr>
+<tr>
+<td>-</td>
+<td>opérateur de soustraction</td>
+<td>Soustrait deux valeurs</td>
+<td>x-3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>*</td>
+<td>opérateur de multiplication</td>
+<td>Multiplie deux valeurs</td>
+<td>x*3</td>
+<td>21</td>
+</tr>
+<tr>
+<td>/</td>
+<td>opérateur de division</td>
+<td>Divise deux valeurs</td>
+<td>x/3</td>
+<td>2.3333333</td>
+</tr>
+<tr>
+<td>=</td>
+<td>opérateur d'affectation</td>
+<td>Affecte une valeur à une variable</td>
+<td>x=3</td>
+<td>Met la valeur 3 dans la variable x</td>
+</tr>
+</tbody>
+</table>
+<h2 id="les-operateurs-dassignation">Les opérateurs d'assignation</h2>
+<p>Ces opérateurs permettent de simplifier des opérations telles que <em>ajouter une valeur dans une variable et stocker le résultat dans la variable</em>. Une telle opérations s'écrirait habituellement de la façon suivante par exemple : <em>x=x+2</em> 
+Avec les opérateurs d'assignation il est possible d'écrire cette opération sous la forme suivante : <em>x+=2</em> 
+Ainsi, si la valeur de x était 7 avant opération, elle sera de 9 après...</p>
+<p>Les autres opérateurs du même type sont les suivants :</p>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>+=</strong></td>
+<td>additionne deux valeurs et stocke le résultat dans la variable (à gauche)</td>
+</tr>
+<tr>
+<td><strong>-=</strong></td>
+<td>soustrait deux valeurs et stocke le résultat dans la variable</td>
+</tr>
+<tr>
+<td><strong>*=</strong></td>
+<td>multiplie deux valeurs et stocke le résultat dans la variable</td>
+</tr>
+<tr>
+<td><strong>/=</strong></td>
+<td>divise deux valeurs et stocke le résultat dans la variable</td>
+</tr>
+</tbody>
+</table>
+<p><a name="incrémentation" class="ancre"></a></p>
+<h2 id="les-operateurs-dincrementation">Les opérateurs d'incrémentation</h2>
+<p>Ce type d'opérateur permet de facilement augmenter ou diminuer d'une unité une variable. Ces opérateurs sont très utiles pour des structures telles que des boucles, qui ont besoin d'un compteur (variable qui augmente de un en un).</p>
+<p>Un opérateur de type <em>x++</em> permet de remplacer des notations lourdes telles que <em>x=x+1</em> ou bien <em>x+=1</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Dénomination</th>
+<th>Effet</th>
+<th>Syntaxe</th>
+<th>Résultat (avec x valant 7)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>++</strong></td>
+<td>Incrémentation</td>
+<td>Augmente d'une unité la variable</td>
+<td>x++</td>
+<td>8</td>
+</tr>
+<tr>
+<td><strong>--</strong></td>
+<td>Décrémentation</td>
+<td>Diminue d'une unité la variable</td>
+<td>x--</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p><a name="comparaison" class="ancre"></a></p>
+<h2 id="les-operateurs-de-comparaison">Les opérateurs de comparaison</h2>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Dénomination</th>
+<th>Effet</th>
+<th>Exemple</th>
+<th>Résultat (avec x valant 7)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>==</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>A ne pas confondre avec le signe d'affectation (=) !</strong></td>
+<td>opérateur d'égalité</td>
+<td>Compare deux valeurs et vérifie leur égalité</td>
+<td>x==3</td>
+<td>Retourne 1 si x est égal à 3, sinon 0</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>opérateur d'infériorité stricte</td>
+<td>Vérifie qu'une variable est strictement inférieure à une valeur</td>
+<td>x&lt;3</td>
+<td>Retourne 1 si x est inférieur à 3, sinon 0</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>opérateur d'infériorité</td>
+<td>Vérifie qu'une variable est inférieure ou égale à une valeur</td>
+<td>x&lt;=3</td>
+<td>Retourne 1 si x est inférieur ou égal à 3, sinon 0</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>opérateur de supériorité stricte</td>
+<td>Vérifie qu'une variable est strictement supérieure à une valeur</td>
+<td>x&gt;3</td>
+<td>Retourne 1 si x est supérieur à 3, sinon 0</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>opérateur de supériorité</td>
+<td>Vérifie qu'une variable est supérieure ou égale à une valeur</td>
+<td>x&gt;=3</td>
+<td>Retourne 1 si x est supérieur ou égal à 3, sinon 0</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>opérateur de différence</td>
+<td>Vérifie qu'une variable est différente d'une valeur</td>
+<td>x!=3</td>
+<td>Retourne 1 si x est différent de 3, sinon 0</td>
+</tr>
+</tbody>
+</table>
+<p><a name="logiques" class="ancre"></a></p>
+<h2 id="les-operateurs-logiques-booleens">Les opérateurs logiques (booléens)</h2>
+<p>Ce type d'opérateur permet de vérifier si plusieurs conditions sont vraies :</p>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Dénomination</th>
+<th>Effet</th>
+<th>Syntaxe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**</td>
+<td></td>
+<td>**</td>
+<td>OU logique</td>
+</tr>
+<tr>
+<td><strong>&amp;&amp;</strong></td>
+<td>ET logique</td>
+<td>Vérifie que toutes les conditions sont réalisées</td>
+<td>((condition1)&amp;&amp;(condition2))</td>
+</tr>
+<tr>
+<td><strong>!</strong></td>
+<td>NON logique</td>
+<td>Inverse l'état d'une variable booléenne (retourne la valeur 1 si la variable vaut 0, 0 si elle vaut 1)</td>
+<td>(!condition)</td>
+</tr>
+</tbody>
+</table>
+<p><a name="bitabit" class="ancre"></a></p>
+<h2 id="les-operateurs-bit-a-bit">(Les opérateurs bit-à-bit)</h2>
+<p>Si vous ne comprenez pas ces opérateurs cela n'est pas important, vous n'en aurez probablement pas l'utilité. Pour ceux qui voudraient comprendre, rendez-vous aux chapitres suivants :</p>
+<ul>
+<li><a href="/contents/95-le-codage-binaire">Compréhension du binaire</a></li>
+<li><a href="/contents/100-representation-des-nombres-entiers-et-reels">Représentation des données</a></li>
+<li><a href="/contents/18-instructions-arithmetiques-et-logiques-en-assembleur">Instructions arithmétiques et logiques en assembleur</a></li>
+</ul>
+<p>Ce type d'opérateur traite ses opérandes comme des données binaires, plutôt que des données décimales, hexadécimales ou octales. Ces opérateurs traitent ces données selon leur représentation binaire mais retournent des valeurs numériques standard dans leur format d'origine.</p>
+<p>Les opérateurs suivants effectuent des opérations bit-à-bit, c'est-à-dire avec des bits de même poids.</p>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Dénomination</th>
+<th>Effet</th>
+<th>Syntaxe</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>&amp;</strong></td>
+<td>ET bit-à-bit</td>
+<td>Retourne 1 si les deux bits de même poids sont à 1</td>
+<td>9 &amp; 12 (1001 &amp; 1100)</td>
+<td>8 (1000)</td>
+</tr>
+<tr>
+<td>**</td>
+<td>**</td>
+<td>OU bit-à-bit</td>
+<td>Retourne 1 si l'un ou l'autre des deux bits de même poids est à 1 (ou les deux)</td>
+<td>9</td>
+</tr>
+<tr>
+<td><strong>^</strong></td>
+<td>OU exclusif bit-à-bit</td>
+<td>Retourne 1 si l'un des deux bits de même poids est à 1 (mais pas les deux)</td>
+<td>9 ^ 12 (1001 ^ 1100)</td>
+<td>5 (0101)</td>
+</tr>
+</tbody>
+</table>
+<p><a name="rotbit" class="ancre"></a></p>
+<h2 id="les-operateurs-de-rotation-de-bit">(Les opérateurs de rotation de bit)</h2>
+<p>Si vous ne comprenez pas ces opérateurs cela n'est pas important, vous n'en aurez probablement pas l'utilité. Pour ceux qui voudraient comprendre, rendez-vous aux chapitres suivants :</p>
+<ul>
+<li><a href="/contents/95-le-codage-binaire">Compréhension du binaire</a></li>
+<li><a href="/contents/100-representation-des-nombres-entiers-et-reels">Représentation des données</a></li>
+<li><a href="/contents/18-instructions-arithmetiques-et-logiques-en-assembleur">Instructions arithmétiques et logiques en assembleur</a></li>
+</ul>
+<p>Ce type d'opérateur traite ses opérandes comme des données binaires d'une longueur de 32 bits, plutôt que des données décimales, hexadécimales ou octales. Ces opérateurs traitent ces données selon leur représentation binaire mais retournent des valeurs numériques standard dans leur format d'origine.</p>
+<p>Les opérateurs suivants effectuent des rotations sur les bits, c'est-à-dire qu'ils décalent chacun des bits d'un nombre de bits vers la gauche ou vers la droite. La première opérande désigne la donnée sur laquelle on va faire le décalage, la seconde désigne le nombre de bits duquel elle va être décalée.</p>
+<table>
+<thead>
+<tr>
+<th>Opérateur</th>
+<th>Dénomination</th>
+<th>Effet</th>
+<th>Syntaxe</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>&lt;&lt;</strong></td>
+<td>Rotation à gauche</td>
+<td>Décale les bits vers la gauche (multiplie par 2 à chaque décalage). Les zéros qui sortent à gauche sont perdus, tandis que des zéros sont insérés à droite</td>
+<td>6 &lt;&lt; 1 (110 &lt;&lt; 1)</td>
+<td>12 (1100)</td>
+</tr>
+<tr>
+<td><strong>&gt;&gt;</strong></td>
+<td>Rotation à droite avec conservation du signe</td>
+<td>Décale les bits vers la droite (divise par 2 à chaque décalage). Les zéros qui sortent à droite sont perdus, tandis que le bit non nul de poids plus fort est recopié à gauche</td>
+<td>6 &gt;&gt; 1 (0110 &gt;&gt; 1)</td>
+<td>3 (0011)</td>
+</tr>
+<tr>
+<td><strong>&gt;&gt;&gt;</strong></td>
+<td>Rotation à droite avec remplissage de zéros</td>
+<td>Décale les bits vers la droite (divise par 2 à chaque décalage). Les zéros qui sortent à droite sont perdus, tandis que des zéros sont insérés à gauche</td>
+<td>6 &gt;&gt;&gt; 1 (0110 &gt;&gt;&gt; 1)</td>
+<td>3 (0011)</td>
+</tr>
+</tbody>
+</table>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

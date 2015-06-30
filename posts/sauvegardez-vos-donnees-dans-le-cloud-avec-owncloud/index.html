@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="OwnCloud est une application web qui vous permettra de stocker vos données dans le Cloud un peu comme DropBox, à la seule différence que vous êtes seul maître de vos données. Il ne se limite qu&#39;au stockage de données, mais aussi, comme agenda, lecteur de musique, etc.">
+
+
+
+    <title>
+	
+	Sauvegardez vos données dans le Cloud avec OwnCloud
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Sauvegardez vos données dans le Cloud avec OwnCloud
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2014-10-22 in 
+  
+  <a href="../../categories/Linux/index.html"> Linux </a> &nbsp; 
+       
+  <a href="../../categories/Web-Server/index.html"> Web-Server </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong> Table des matières </strong></p>
+<div class="toc">
+<ul>
+<li><a href="#installez-owncloud">Installez OwnCloud</a></li>
+<li><a href="#configurer-mysql">Configurer MySQL</a></li>
+<li><a href="#configuration-finale">Configuration finale</a></li>
+</ul>
+</div>
+<p>OwnCloud est une application web qui vous permettra de stocker vos données dans le Cloud un peu comme DropBox, à la seule différence que vous êtes seul maître de vos données.</p>
+<p>Il ne se limite qu'au stockage de données, mais aussi, comme agenda, lecteur de musique, etc.</p>
+<p>Dans ce guide, nous allons installer et configurer ownCloud sur une Ubuntu 14.04.</p>
+<h2 id="installez-owncloud">Installez OwnCloud</h2>
+<p>La version de ownCloud disponibles dans les dépôts officiel d'Ubuntu 14.04 par défaut est obsolète maintenant. La dernière version est compilé pour Ubuntu par l'outil fourni par par openSUSE.</p>
+<p>Pour cela, nous téléchargeons d'abord la clé de ownCloud associé à ce fichier :</p>
+<div class="codehilite"><pre><span class="n">CD</span>
+<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_14.04//Release.key</span>
+</pre></div>
+
+
+<p>Maintenant, ajoutez la clé à apt d'ubuntu afin qu'il puisse valider les fichiers:</p>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span> <span class="o">&lt;</span><span class="n">Release</span><span class="p">.</span><span class="n">key</span>
+</pre></div>
+
+
+<p>Ajoutez les dépôts Owncloud dans le Build Service openSUSE à des listes de sources d'Apt en tapant:</p>
+<div class="codehilite"><pre><span class="n">echo</span> <span class="err">&#39;</span><span class="n">deb</span> <span class="n">http</span><span class="o">:</span><span class="c1">//download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_12.04/ /&#39; | sudo tee -a /etc/apt/sources.list.d/owncloud.list</span>
+</pre></div>
+
+
+<p>Enfin, mettre à jour la base de données de package et installer ownCloud et MySQL (il es possible d'utiliser d'autres bases de données (SQLite, MariaDB), mais SQL est la plus performante parmis celles supportées par owncloud):</p>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">owncloud</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span>
+</pre></div>
+
+
+<p>Vous serez invité à définir un mot de passe root pour l'administrateur de votre base de données MySQL pendant l'installation.</p>
+<h2 id="configurer-mysql">Configurer MySQL</h2>
+<p>La base de donnée par défaut utilisé par OwnCloud est SQLite, pour des raisons de performances, nous préférerons l'usage de MySQL. Pour ce faire, nous devons configurer MySQL en premier.</p>
+<p>Tapez les commandes suivantes pour initialiser la base de données et sécuriser le système:</p>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">mysql_install_db</span>
+<span class="n">sudo</span> <span class="n">mysql_secure_installation</span>
+</pre></div>
+
+
+<p>Le mot de passe du root vous sear demandé dans un premier temps, ensuite, le système vous demandera si vous voulez le changer ou pas, à vous de voir. Pour les autres questions, appuyer sur "entree" pour sélectionner oui pour tous les réglages.</p>
+<p>Maintenant, vous connecter à MySQL en tant que l'utilisateur root en tapant:</p>
+<div class="codehilite"><pre><span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span>
+</pre></div>
+
+
+<p>Encore une fois, vous serez invité à entrer le mot de passe d'administration MySQL.</p>
+<p>Créer une base de données avec cette commande:</p>
+<div class="codehilite"><pre><span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">owncloud</span><span class="p">;</span>
+</pre></div>
+
+
+<p>Créer et attribuer des privilèges à un nouvel utilisateur de MySQL pour gérer les opérations de base de données pour ownCloud:</p>
+<div class="codehilite"><pre><span class="nx">GRANT</span> <span class="kc">ALL</span> <span class="k">ON</span> <span class="nx">owncloud.</span><span class="o">*</span> <span class="k">to</span> <span class="s1">&#39;owncloud&#39;</span><span class="p">@</span><span class="s1">&#39;localhost&#39;</span> <span class="nx">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;&lt;span class=&quot;highlight&quot;&gt;select_database_password&lt;/span&gt;&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>Quitter MySQL en tapant:</p>
+<p>exit;</p>
+<p>On a presque terminé.</p>
+<h2 id="configuration-finale">Configuration finale</h2>
+<p>Maintenant, si sur votre navigateur WEB tapez :</p>
+<p>http://votre_nom_de_domaine_ou_IP/owncloud</p>
+<p>Si tout est OK, vous verrez cela :</p>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.37.45.png"><img alt="Capture d’écran 2015-01-22 à 12.37.45" src="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.37.45.png" /></a></p>
+<p>Choisissez le nom ainsi qu'un mot de passe administrateur que vous souhaitez (j'ai choisi blender pour moi !), saisissiez-les. Avant de terminer l'installation, cliquez sur "support de stockage &amp; base de données". Vous verrez apparaître cela :</p>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.36.57.png"><img alt="Capture d’écran 2015-01-22 à 12.36.57" src="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.36.57.png" /></a></p>
+<p>Cliquez sur "MySQL/MariaDB" et saisissez  les informations relatives à cette dernière (celles vous avez configuré dans la dernière étape)</p>
+<p>Cliquez sur "Terminer l'installation", encore une fois, si tout s'est bien passé, vous accéderez à votre OwnCloud. Un message de bienvenu vous invitera à télécharger les clients webs de OwnCloud pour votre machine (PC, Mac, Smartphone, etc.) sur les système mac os, android et linux. Libre à vous de les télécharger ou pas.</p>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.48.59.png"><img alt="Capture d’écran 2015-01-22 à 12.48.59" src="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.48.59.png" /></a></p>
+<p>Bravo, votre serveur est prêt pour stocker vos données.</p>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

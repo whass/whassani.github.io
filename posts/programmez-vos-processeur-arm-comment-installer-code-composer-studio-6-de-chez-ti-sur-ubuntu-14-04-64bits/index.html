@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Le logiciel Code Composer Studio est un environnement de développement intégré qui permet de programmer les processeurs embarqués de chez Texas Instrument comme les processeurs spécialisé dans le traitement de signal (DSP) de la famille TMS320, les appareils basé sur l&#39;architecture ARM ou les microcontrôleurs de la famille MSP430.">
+
+
+
+    <title>
+	
+	Programmation des processeurs ARM avec Code Composer Studio 6 de chez TI et Ubuntu 14.04 64bits
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Programmation des processeurs ARM avec Code Composer Studio 6 de chez TI et Ubuntu 14.04 64bits
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-01-23 in 
+  
+  <a href="../../categories/Embedded/index.html"> Embedded </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong> Table des matières </strong></p>
+<div class="toc">
+<ul>
+<li><a href="#resoudre-les-dependances">Résoudre les dépendances</a></li>
+<li><a href="#telecharger-code-composer-studio">Télécharger Code Composer Studio</a></li>
+<li><a href="#installer-code-composer-studio">Installer Code Composer Studio</a></li>
+<li><a href="#installer-tivaware">Installer TivaWare</a></li>
+<li><a href="#configurez-votre-projet-pour-tivaware">Configurez votre projet pour TivaWare</a></li>
+</ul>
+</div>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png"><img alt="CCSv6-embeddedprocessor" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png" /></a></p>
+<p>Le logiciel <strong>Code Composer Studio</strong> est un environnement de développement intégré qui permet de programmer les processeurs embarqués de chez Texas Instrument comme les processeurs de signal numérique (DSP) de la famille TMS320, les appareils basé sur l'architecture ARM ou les microcontrôleurs de la famille MSP430.</p>
+<p>Cet IDE est basé sur Eclipse, un framework open source.</p>
+<p>Let's begin .....</p>
+<h2 id="resoudre-les-dependances">Résoudre les dépendances</h2>
+<p>Nous commençons par résoudre les dépendances.</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libc6</span><span class="o">:</span><span class="n">i386</span> <span class="n">libx11</span><span class="o">-</span><span class="mi">6</span><span class="o">:</span><span class="n">i386</span> <span class="n">libasound2</span><span class="o">:</span><span class="n">i386</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="mi">0</span><span class="o">:</span><span class="n">i386</span> <span class="n">libcairo2</span><span class="o">:</span><span class="n">i386</span> <span class="n">libcups2</span><span class="o">:</span><span class="n">i386</span> <span class="n">libdbus</span><span class="o">-</span><span class="n">glib</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">:</span><span class="n">i386</span> <span class="n">libgconf</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">:</span><span class="n">i386</span> <span class="n">libgdk</span><span class="o">-</span><span class="n">pixbuf2</span><span class="mf">.0</span><span class="o">-</span><span class="mi">0</span><span class="o">:</span><span class="n">i386</span> <span class="n">libgtk</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">0</span><span class="o">:</span><span class="n">i386</span> <span class="n">libice6</span><span class="o">:</span><span class="n">i386</span> <span class="n">libncurses5</span><span class="o">:</span><span class="n">i386</span> <span class="n">libsm6</span><span class="o">:</span><span class="n">i386</span> <span class="n">liborbit2</span><span class="o">:</span><span class="n">i386</span> <span class="n">libudev1</span><span class="o">:</span><span class="n">i386</span> <span class="n">libusb</span><span class="o">-</span><span class="mf">0.1</span><span class="o">-</span><span class="mi">4</span><span class="o">:</span><span class="n">i386</span> <span class="n">libstdc</span><span class="o">++</span><span class="mi">6</span><span class="o">:</span><span class="n">i386</span> <span class="n">libxt6</span><span class="o">:</span><span class="n">i386</span> <span class="n">libxtst6</span><span class="o">:</span><span class="n">i386</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="mi">0</span><span class="o">:</span><span class="n">i386</span> <span class="n">libusb</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="n">dev</span><span class="o">:</span><span class="n">i386</span> <span class="n">libcanberra</span><span class="o">-</span><span class="n">gtk</span><span class="o">-</span><span class="n">module</span><span class="o">:</span><span class="n">i386</span> <span class="n">gtk2</span><span class="o">-</span><span class="n">engines</span><span class="o">-</span><span class="n">murrine</span><span class="o">:</span><span class="n">i386</span>
+</pre></div>
+
+
+<h2 id="telecharger-code-composer-studio">Télécharger Code Composer Studio</h2>
+<p>Ensuite téléchargez gratuitement CCS, il est disponible sur le wiki de Texas Instrument suivant :</p>
+<p><a href="http://processors.wiki.ti.com/index.php/Download_CCS">http://processors.wiki.ti.com/index.php/Download_CCS</a> </p>
+<p>Choisissez linux, vous serez invité à vous identifié sur la plateforme de Texas Instrument (vous devez disposer d'un compte TI, vous pouvez en créer un).</p>
+<h2 id="installer-code-composer-studio">Installer Code Composer Studio</h2>
+<p>Après avoir téléchargé l'exécutable, tapez :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">cd</span> <span class="n">dossier</span><span class="o">-</span><span class="n">de</span><span class="o">-</span><span class="n">telechargement</span>
+
+<span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">ccs_setup_6</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">xxxxx</span><span class="p">.</span><span class="n">bin</span> <span class="p">(</span><span class="n">remplacer</span> <span class="n">le</span> <span class="n">xxxxxxx</span> <span class="n">avec</span> <span class="n">le</span> <span class="n">num</span><span class="err">é</span><span class="n">ro</span> <span class="n">de</span> <span class="n">version</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">ex</span><span class="err">é</span><span class="n">cutable</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Si vous avez un message d'erreur vous spécifiant qu'il manque libudev.so.0 dans votre système. Il suffit de lui créer un lien symbolique comme ceci :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i386</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span><span class="n">libudev</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libudev</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+</pre></div>
+
+
+<p>L'installation est relativement aisée, et se déroule comme suit :</p>
+<ol>
+<li>Accepter les termes du contrat</li>
+</ol>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png"><img alt="Capture d’écran 2015-01-23 à 02.15.15" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png" /></a></p>
+<ol>
+<li>Cocher les outils de développement nécessaire à la Tiva-C launchpad comme sur la figure suivante.</li>
+</ol>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png"><img alt="Capture d’écran 2015-01-23 à 02.24.09" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png" /></a></p>
+<ol>
+<li>Sélectctionner les émulateurs qui vous intéresse</li>
+</ol>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png"><img alt="Capture d’écran 2015-01-23 à 02.25.30" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png" /></a></p>
+<ol>
+<li>Pour l'app centre, libre à vous de les cocher ou pas.</li>
+</ol>
+<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png"><img alt="Capture d’écran 2015-01-23 à 02.25.55" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png" /></a></p>
+<p>Juste avant que l'installation se termine, l'installateur vous demande si vous souhaiter un raccourci ou pas.</p>
+<ul>
+<li>Si vous choisissez oui alors, il y'a de forte chance qui si vous cliquez sur le raccourci que ça ne marche pas. Dans ce cas, modifier le fichier du raccourci qui se trouve dans le d'installation de CCS choisi au début comme ceci :</li>
+</ul>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">cd</span><span class="err"> </span><span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span><span class="err">```</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">nano</span> <span class="n">nom</span><span class="o">-</span><span class="n">du</span><span class="o">-</span><span class="n">raccourci</span><span class="err">`</span>
+</pre></div>
+
+
+<p>Modifier la ligne qui commence par EXEC, elle devrait ressembler à ceci :</p>
+<div class="codehilite"><pre><span class="n">EXEC</span> <span class="o">:</span> <span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span><span class="n">ccsvx</span><span class="o">/</span><span class="n">eclipse</span><span class="o">/</span><span class="n">ccstudio</span>
+</pre></div>
+
+
+<p>(x la version installé, la mienne c'est 6, donc ccv6)</p>
+<ul>
+<li>Si vous n'avez pas choisi de créer le raccourci, dans ce cas, exécutez la commande suivante :</li>
+</ul>
+<div class="codehilite"><pre>  <span class="p">.</span><span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span><span class="n">ccsvx</span><span class="o">/</span><span class="n">eclipse</span><span class="o">/</span><span class="n">ccstudio</span>
+</pre></div>
+
+
+<p>(n'obliez pas le pointu début de la ligne, car c'est un script)</p>
+<p>A l'issu de cela, CCS se lance. Un fenêtre de démarrage vous demandera de choisir le répertoire de travail (comme il est basée sur Ecplise vu qu'il est construit à partir de ce dernier) comme ceci :</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-03.13.32.png"><img alt="Capture d’écran 2015-01-23 à 03.13.32" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-03.13.32.png" /></a></p>
+<p>Choisissez le dossier que vous souhaitez, il n y'a de restrictions.</p>
+<p>Cochez "Use this as ..... ask again" si vous ne voulez pas que cette boite de dialogue s'affiche à chaque démarrage de CCS.</p>
+<p>S'il vous demande de faire les mise-à-jour, en vous affichant ce message :</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-03.30.53.png"><img alt="Capture d’écran 2015-01-23 à 03.30.53" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-03.30.53.png" /></a></p>
+<p>Ces dernières concernent l'app center, comme nous l'avons coché précédemment. Je vous conseille de les faire, mais elles ne sont pas obligatoire.</p>
+<p>Maintenant CCS et prêt à être utilisé.</p>
+<p>Il reste une dernière étape elle concerne les drivers de la carte, ils s'installent facilement comme ceci :</p>
+<div class="codehilite"><pre><span class="n">cd</span><span class="err"> </span><span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span><span class="n">ccsvx</span><span class="o">/</span><span class="n">install_scripts</span>
+<span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">install_drivers</span><span class="p">.</span><span class="n">sh</span><span class="p">.</span>
+</pre></div>
+
+
+<h2 id="installer-tivaware">Installer TivaWare</h2>
+<p>A titre d'information, TivaWare, contient un ensemble de script, tels que les pilotes ... nous aurons l'occasion de revoir cela plus en détails une autre fois.</p>
+<p>Télécharger Tivaware directement (après authentification) du site de Texas Instruments via ce lien :</p>
+<p><a href="http://www.ti.com/tool/sw-tm4c">http://www.ti.com/tool/sw-tm4c</a> </p>
+<p>Une fois sur le site de TI, vous avez la possibilité de télécharger séparément les pilotes ou autre, je vous recommande de les télécharger tous en choisissant :</p>
+<div class="codehilite"><pre><span class="n">SW</span><span class="o">-</span><span class="n">TM4C</span><span class="o">:</span> <span class="n">TivaWare</span> <span class="k">for</span> <span class="n">C</span> <span class="n">Series</span> <span class="n">Software</span> <span class="p">(</span><span class="n">Complete</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Vous serait redirigé vers la page de téléchargement, choisissez la "full release" qui correspond à ce fichier :</p>
+<div class="codehilite"><pre><span class="n">SW</span><span class="o">-</span><span class="n">TM4C</span><span class="o">-</span><span class="mf">2.1.0.12573</span><span class="p">.</span><span class="n">exe</span>
+</pre></div>
+
+
+<p>(le fichier peut varier)</p>
+<p>Téléchargez ce fichier et enregistrez-le dans votre dossier d'installation de CCS</p>
+<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span>
+<span class="n">mkdir</span> <span class="n">tivaware</span>
+<span class="n">cd</span> <span class="n">tivaware</span> 
+<span class="n">unzip</span> <span class="o">~/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">SW</span><span class="o">-</span><span class="n">TM4C</span><span class="o">-</span><span class="mf">2.1.0.12573</span><span class="p">.</span><span class="n">exe</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Il y a plusieurs façons d'inclure TivawWre dans vos projets. Afin de minimiser les paramètres requis sur chaque projet, créez un fichier dans votre espace de travail qu'on appellera "vars.ini". </p>
+<p><code>cd /votre-espace-de-travail/
+nano vars.ini</code></p>
+<p>Une seule ligne est nécessaire :</p>
+<div class="codehilite"><pre><span class="n">TIVAWARE_INSTALL</span><span class="o">=/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">-</span><span class="n">tivaware</span><span class="o">/</span>
+</pre></div>
+
+
+<h2 id="configurez-votre-projet-pour-tivaware">Configurez votre projet pour TivaWare</h2>
+<p>Le fichier vars.ini crée une variable d'environnement pour votre espace de travail (où le fichier est enregistré). Pour configurer votre projet pour utiliser tivaware, faites ceci :</p>
+<ul>
+<li>Importez le fichier vars.ini comme source pour construire des variables CCS</li>
+<li>Ajouter un chemin "inclure des fichiers" pour le compilateur en utilisant la variable TIVAWARE_INSTALL</li>
+<li>Ajoutez le fichier driverlib.lib au projet.</li>
+</ul>
+<p>Allez-y et créez un nouveau projet (File =&gt; New =&gt; CCS Project). Utilisez le screenshot suivant comme guide:</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-07.23.441.png"><img alt="Capture d’écran 2015-01-24 à 07.23.44" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-07.23.441.png" /></a></p>
+<p>Une fenêtre de configuration apprêtera :</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-08.49.53.png"><img alt="Capture d’écran 2015-01-24 à 08.49.53" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-08.49.53.png" /></a></p>
+<p>Choisissez Tiva C series ainsi que le processeur correspondant à votre carte.</p>
+<p>Lorsque vous avez terminé, sélectionnez File =&gt; Import =&gt; Code Composer Studio =&gt; Build Variables :</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-08.53.36.png"><img alt="Capture d’écran 2015-01-24 à 08.53.36" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-08.53.36.png" /></a></p>
+<p>Sélectionner vars.ini qu'on crée précédemment.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-08.56.41.png"><img alt="Capture d’écran 2015-01-24 à 08.56.41" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-08.56.41.png" /></a></p>
+<p>Ensuite, un clic droit sur le nom de votre projet dans l'explorateur de projet. Sélectionnez "Properties" -&gt; ARM Compiler, include options, et ajouter le chemin tel qu'il est illustré sur le screenshot suivant :</p>
+<div class="codehilite"><pre><span class="cp">${</span><span class="n">TIVAWARE_INSTALL</span><span class="cp">}</span>
+</pre></div>
+
+
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-09.06.24.png"><img alt="Capture d’écran 2015-01-24 à 09.06.24" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-09.06.24.png" /></a></p>
+<p>Enfin, ajoutez driverlib.lib à votre projet. Un clic droit sur le nom de votre projet dans l'explorateur de projet et sélectionnez Add files :</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-09.09.161.png"><img alt="Capture d’écran 2015-01-24 à 09.09.16" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-09.09.161.png" /></a></p>
+<p>Le chemin d'accès complet driverlib.lib comme indiqué: /votre-dossier-d-installation/tivaware/driverlib/CCS/Debug.</p>
+<p>Sur la fenêtre suivante, sélectionnez lien vers le fichier ( link to file):</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-09.12.15.png"><img alt="Capture d’écran 2015-01-24 à 09.12.15" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-24-à-09.12.15.png" /></a></p>
+<p>Désormais, votre espace de travail est fin prêt.</p>
+<p>Nous en avons fini! Vous êtes prêt à devenir expert dans les systèmes embarqué !</p>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

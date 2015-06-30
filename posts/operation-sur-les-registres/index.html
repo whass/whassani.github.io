@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="L&#39;aspect fondamental de la programmation des micri-contrôleur est la confifguration des registres. Quoique vous fassiez, congigurer une entrée, une sortie, vitesse de transmission, .... vous devez passer par les registres associé. Ici je vous montre les méthodes utilisé pour cela.">
+
+
+
+    <title>
+	
+	Micro-Contrôleur : Opération sur les registres (accès, écriture et lecture)
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Micro-Contrôleur : Opération sur les registres (accès, écriture et lecture)
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-01-22 in 
+  
+  <a href="../../categories/Embedded/index.html"> Embedded </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong>Table des matière</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#acces-aux-registres">Accès aux registres</a></li>
+<li><a href="#ecrire-sur-un-registre">Ecrire sur un registre</a></li>
+<li><a href="#lire-sur-un-registre">Lire sur un registre</a></li>
+<li><a href="#manipulation-des-bits-des-registres">Manipulation des bits des registres</a><ul>
+<li><a href="#mettre-un-seul-bit-a-0">Mettre un seul bit à 0</a></li>
+<li><a href="#mettre-un-seul-bit-a-1">Mettre un seul bit à 1</a></li>
+<li><a href="#isoler-la-valeur-dun-seul-bit">Isoler la valeur d'un seul bit</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Dans l'embarqué, lorsqu'on manipule les registres, tout est une question de mise à 0 ou 1 des bits de ce dernier. On peut distinguer principalement 2 cas : (1) mettre un seul bit donné du registre à 0 ou 1, (2) mettre un ensemble de bits à 0 ou 1.</p>
+<p>Dans ce quit suit je vous montrerai comment faire.</p>
+<h2 id="acces-aux-registres">Accès aux registres</h2>
+<p>Pour accéder à un registre il faut connaitre son adresse mémoire et savoir manipuler les pointeurs.</p>
+<p>Example :</p>
+<p>Supposons que notre registre est situé à l'adresse mémoire (0x40025400), pour pouvoir y accéder, il suffit de définir une macro comme ceci :</p>
+<div class="codehilite"><pre><span class="c">#define NomDuRegistre (*((volatile unsigned long *)0x40025400))</span>
+</pre></div>
+
+
+<p>Bien évidemment ce n'est pas la seule méthode, on s'arrêtera à celle-ci.</p>
+<h2 id="ecrire-sur-un-registre">Ecrire sur un registre</h2>
+<p>Si nous reprenons l'example précédent, pour écrire une valeur sur un registre, faites comme ceci :</p>
+<div class="codehilite"><pre><span class="cp">#define NomDuRegistre (*((volatile unsigned long *)0x40025400))</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="n">NomDuRegistre</span> <span class="o">=</span> <span class="n">Valeur</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="lire-sur-un-registre">Lire sur un registre</h2>
+<p>Si nous reprenons l'example précédent, pour écrire une valeur sur un registre, faites comme ceci :</p>
+<div class="codehilite"><pre><span class="cp">#define NomDuRegistre (*((volatile unsigned long *)0x40025400))</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="n">Valeur</span> <span class="o">=</span> <span class="n">NomDuRegistre</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="manipulation-des-bits-des-registres">Manipulation des bits des registres</h2>
+<p>Dans la majorité des situations vous serez amener à ne manipuler qu'un bit sur un registre donné. Nous verrons dans ce qui suit, la manière avec laquelle il est possible de manipuler les registres directement en utilisant certaines fonctionnalités du langage C.</p>
+<h3 id="mettre-un-seul-bit-a-0">Mettre un seul bit à 0</h3>
+<p>Soit un registre REG = 0101 0111. Supposons que l'on veuille mettre le 4 ème bit de ce registre à 0.</p>
+<div class="codehilite"><pre><span class="n">REG</span> <span class="o">=</span> <span class="mo">0101</span> <span class="mo">0111</span>
+<span class="n">REG</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">4</span><span class="p">);</span> <span class="p">(</span><span class="n">variante</span> <span class="o">:</span> <span class="n">REG</span> <span class="o">&amp;=</span> <span class="mh">0xEF</span><span class="p">);)</span>
+</pre></div>
+
+
+<p>Résultat :</p>
+<div class="codehilite"><pre><span class="n">REG</span> <span class="o">=</span> <span class="mo">0100</span> <span class="mo">0111</span>
+</pre></div>
+
+
+<p>Explication :</p>
+<ol>
+<li>la valeur 1 est décalé 4 fois, on obtient 0001 0000</li>
+<li>En complémentant à 1 (0 devient 1 et 1 devient 0) la valeur obtenu, on obtient 1110 1111</li>
+<li>En utilisant un ET logique (0101 0111 &amp; 1110 1111 = 0100 0111)
+ </li>
+</ol>
+<h3 id="mettre-un-seul-bit-a-1">Mettre un seul bit à 1</h3>
+<p>Soit un registre REG = 0100 0111. Supposons que l'on veuille mettre le 4 ème bit de ce registre à 1</p>
+<div class="codehilite"><pre><span class="n">REG</span> <span class="o">=</span> <span class="mo">0100</span> <span class="mo">0111</span>
+<span class="n">REG</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">4</span><span class="p">);</span> <span class="p">(</span><span class="n">variante</span> <span class="o">:</span> <span class="n">REG</span> <span class="o">|=</span> <span class="mh">0x10</span><span class="p">;)</span>
+</pre></div>
+
+
+<p>Résultat :</p>
+<div class="codehilite"><pre><span class="n">REG</span> <span class="o">=</span> <span class="mo">0101</span> <span class="mo">0111</span>
+</pre></div>
+
+
+<p>Explication :
+1. la valeur 1 est décalé 4 fois, on obtient 0001 0000
+2. En utilisant un OU logique, on a : (0100 0111 | 0001 0000 = 0101 0111)</p>
+<h3 id="isoler-la-valeur-dun-seul-bit">Isoler la valeur d'un seul bit</h3>
+<p>Soit un registre REG = 0100 0111. Supposons que l'on veuille récupérer la valeur du 4 ème bit de ce registre</p>
+<div class="codehilite"><pre><span class="n">REG</span> <span class="o">=</span> <span class="mo">0101</span> <span class="mo">0111</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">REG</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">4</span><span class="p">);</span>
+</pre></div>
+
+
+<p>Résultat :</p>
+<div class="codehilite"><pre><span class="n">REG</span> <span class="o">=</span> <span class="mo">0001</span> <span class="mo">0000</span>
+</pre></div>
+
+
+<p>Explication :</p>
+<ol>
+<li>la valeur 1 est décalé 4 fois, on obtient 0001 0000</li>
+<li>En utilisant un ET logique, on a : (0101 0111 &amp; 0001 0000 = 0001 0000)</li>
+</ol>
+<p>Comme on peut le constater, il est très facile de travailler sur les registres.</p>
+<p><strong>NB</strong> l'article suppose que le CPU travaille dans des coditions idéales. En effet, certains problèmes peuvent survenir (Voir l'article sur "le bit danding") pour plus de détails. </p>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

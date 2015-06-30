@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Une introduction complète des fonctionnalités les plus usuelles de l&#39;incontournable Bash, à savoir, ses fonctionnalités et capacités, sa syntaxe, sa configiuration, utlisation interactive, etc.">
+
+
+
+    <title>
+	
+	Bash Shell Scripting I : Niveau débutant
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Bash Shell Scripting I : Niveau débutant
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-02-23 in 
+  
+  <a href="../../categories/Linux/index.html"> Linux </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong>Table des matières :</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#fonctionnalites-et-capacites">Fonctionnalités et capacités</a><ul>
+<li><a href="#choix-commande-shell">Choix commande Shell</a></li>
+<li><a href="#bash-scripts">bash Scripts</a></li>
+<li><a href="#utilisation-interactive-de-lutilisation-des-scripts-bash">Utilisation interactive de l'utilisation des scripts bash</a></li>
+<li><a href="#valeurs-de-retour">valeurs de retour</a></li>
+<li><a href="#analyse-des-valeurs-de-retour">Analyse des Valeurs de retour</a></li>
+</ul>
+</li>
+<li><a href="#syntaxe">Syntaxe</a><ul>
+<li><a href="#syntaxe-de-base-et-des-caracteres-speciaux">Syntaxe de base et des caractères spéciaux</a></li>
+<li><a href="#commandes-longues-fractionnement-sur-des-lignes-multiples">Commandes longues fractionnement sur des lignes multiples</a></li>
+<li><a href="#mettre-plusieurs-commandes-sur-une-seule-ligne">Mettre plusieurs commandes sur une seule ligne</a></li>
+<li><a href="#fonctions">fonctions</a></li>
+<li><a href="#built-in-commandes-shell">Built-in Commandes Shell</a></li>
+<li><a href="#substitution-de-commandes-built-in">Substitution de commandes Built-in</a></li>
+<li><a href="#variables-denvironnement">Variables d'environnement</a></li>
+<li><a href="#exporter-les-variables">Exporter les variables</a></li>
+<li><a href="#parametres-des-scripts">Paramètres des scripts</a></li>
+<li><a href="#utilisation-des-parametres-de-script">Utilisation des paramètres de script</a></li>
+<li><a href="#redirection-de-sortie">Redirection de sortie</a></li>
+<li><a href="#redirection-dentree">Redirection d'entrée</a></li>
+</ul>
+</li>
+<li><a href="#constructions">Constructions</a><ul>
+<li><a href="#linstruction-if">L'instruction if</a></li>
+<li><a href="#utilisation-de-linstruction-if">Utilisation de l'instruction if</a></li>
+<li><a href="#tests-pour-les-fichiers">Tests pour les fichiers</a></li>
+<li><a href="#comparaison-de-string">Comparaison de string</a></li>
+<li><a href="#tests-numeriques">Tests numériques</a></li>
+<li><a href="#expressions-arithmetiques">expressions arithmétiques</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="fonctionnalites-et-capacites">Fonctionnalités et capacités</h3>
+<p>Supposons que vous souhaitez rechercher un nom de fichier, vérifiez si le fichier associé existe, puis réagir en conséquence, l'affichage d'un message de confirmation ou non de l'existence du fichier. Si vous avez seulement besoin de le faire une fois, vous pouvez simplement taper une séquence de commandes sur un terminal. Toutefois, si vous devez le faire plusieurs fois, l'automatisation est la voie à suivre. Afin d'automatiser cela, vous aurez besoin d'apprendre comment écrire des scripts shell, le plus commun est bash.</p>
+<p>Par exemple saisissant:</p>
+<div class="codehilite"><pre><span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;*.c&quot;</span> <span class="o">-</span><span class="n">ls</span>
+</pre></div>
+
+
+<p>Cette ligne de commande permet d'accomplir la même chose que l'exécution d'un fichier de script contenant les lignes:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+find . -name <span class="s2">&quot;* .c&quot;</span> -ls
+</pre></div>
+</td></tr></table>
+
+<p>La première ligne du script, qui commence par #!, contient le chemin complet de l'interpréteur de commande (dans ce cas /bin/bash) qui doit être utilisé par le fichier.</p>
+<h4 id="choix-commande-shell">Choix commande Shell</h4>
+<p>L'interpréteur de commandes est chargé de l'exécution des instructions de script. Les interpréteurs couramment utilisés sont :</p>
+<ul>
+<li>/usr/bin/perl,</li>
+<li>/bin/bash,</li>
+<li>/bin/csh,</li>
+<li>/usr/bin/python et</li>
+<li>/bin/sh.</li>
+</ul>
+<p>En déployant des scripts shell, en utilisant la ligne de commande devient un moyen efficace et rapide pour lancer des séquences complexes. Le fait que des scripts shell sont enregistrés dans un fichier facilite également la création de nouvelles variations du script avec plusieurs utilisateurs.</p>
+<p>Linux offre un large choix; ce qui est disponible sur le système est listé dans /etc/shells. Les choix typiques sont:</p>
+<ul>
+<li>/bin/sh</li>
+<li>/bin/bash</li>
+<li>/bin/tcsh</li>
+<li>/bin/csh</li>
+<li>/bin/ksh</li>
+</ul>
+<p>La plupart des utilisateurs de Linux utilisent le shell bash par défaut.</p>
+<h4 id="bash-scripts"><strong>bash Scripts</strong></h4>
+<p>Écrivons un script bash simple qui affiche un message de deux lignes sur l'écran.</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">cat</span> <span class="o">&gt;</span> <span class="n">exscript</span><span class="p">.</span><span class="n">sh</span>
+<span class="err">  </span> <span class="err">#</span><span class="o">!</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="err">  </span> <span class="n">echo</span> <span class="s">&quot;BONJOUR&quot;</span>
+<span class="err">  </span> <span class="n">echo</span> <span class="s">&quot;MONDE&quot;</span>
+</pre></div>
+
+
+<p>et appuyez sur ENTER et CTRL-D pour enregistrer le fichier, ou tout simplement créer exscript.sh dans votre éditeur de texte favori.</p>
+<p>Ensuite, tapez</p>
+<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">exscript</span><span class="p">.</span><span class="n">sh</span>
+</pre></div>
+
+
+<p>pour rendre le fichier exécutable. (La commande chmod + x rend le fichier exécutable pour tous les utilisateurs.) Vous pourrez ensuite lancer en tapant simplement</p>
+<div class="codehilite"><pre><span class="p">.</span><span class="o">/</span><span class="n">exscript</span><span class="p">.</span><span class="n">sh</span>
+</pre></div>
+
+
+<p>ou en faisant:</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">bash</span> <span class="n">exscript</span><span class="p">.</span><span class="n">sh</span>
+<span class="err">  </span> <span class="n">BONJOUR</span>
+<span class="err">  </span> <span class="n">MONDE</span>
+</pre></div>
+
+
+<p>Notez que si vous utilisez la seconde forme, vous ne avez pas à rendre le fichier exécutable.</p>
+<h4 id="utilisation-interactive-de-lutilisation-des-scripts-bash">Utilisation interactive de l'utilisation des scripts bash</h4>
+<p>Maintenant, nous allons voir comment créer un exemple plus interactif en utilisant un script bash. L'utilisateur sera invité à entrer une valeur, qui est ensuite affichée sur l'écran. La valeur est mémorisée dans une variable temporaire, sname.</p>
+<p>Nous pouvons référencer la valeur d'une variable de shell en utilisant un $ devant le nom de la variable, comme $ sname. Pour créer ce script, vous devez créer un fichier nommé ioscript.sh dans votre éditeur de texte favori avec le contenu suivant:</p>
+<div class="codehilite"><pre><span class="err">   #</span><span class="o">!</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="err">   #</span> <span class="n">Lecture</span> <span class="n">interactive</span> <span class="n">des</span> <span class="n">variables</span>
+<span class="err">   </span><span class="n">echo</span> <span class="s">&quot;ENTRER VOTRE NOM&quot;</span>
+<span class="err">   </span><span class="n">read</span> <span class="n">sname</span>
+<span class="err">   #</span> <span class="n">Affichage</span> <span class="n">des</span> <span class="n">valeurs</span> <span class="n">variables</span>
+<span class="err">   </span><span class="n">echo</span> <span class="err">$</span><span class="n">sname</span>
+</pre></div>
+
+
+<p>Une fois encore, le rendre exécutable en faisant chmod + x ioscript.sh.</p>
+<p>Dans l'exemple ci-dessus, lorsque le ./ioscript.sh est exécuté, il demandera à l'utilisateur de saisir votre nom. L'utilisateur doit alors entrer une valeur et appuyez sur la touche Entrée. La valeur sera alors affichée.</p>
+<p>Note complémentaire: Le hash-tag/dièse/nombre-signe (#) est utilisé pour démarrer commentaires dans le script et peut être placé n'importe où dans la ligne (le reste de la ligne est considéré comme un commentaire).</p>
+<h4 id="valeurs-de-retour">valeurs de retour</h4>
+<p>Tous les scripts shell génèrent une valeur de retour lors de la fin de l'exécution (la valeur peut être définie). Les valeurs de retour permettent de savoir si le script a été correctement exécuté ou pas. En outre, cela aide à déterminer comment ce processus se est arrêté et prendre les mesures appropriées à prendre, dans le succès ou l'échec.</p>
+<h4 id="analyse-des-valeurs-de-retour">Analyse des Valeurs de retour</h4>
+<p>Lorsqu'un script s'exécute, on peut vérifier s'il a échoué ou pas.</p>
+<p>Par convention,</p>
+<ul>
+<li>succès : 0,</li>
+<li>échec : valuer non nulle.</li>
+</ul>
+<p>Pour récupérer la variable de retour, il faut utiliser $? comme ceci :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">ls</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>    
+<span class="err">$</span> <span class="n">echo</span> <span class="err">$</span><span class="o">?</span>
+<span class="mi">0</span>
+</pre></div>
+
+
+<p>Dans cet exemple, le système est capable de localiser le fichier /etc/passwd et renvoie une valeur de 0 pour indiquer le succès de l'opération;</p>
+<ul>
+<li>la valeur de retour est toujours stockée dans la variable d'environnement $?.</li>
+</ul>
+<h3 id="syntaxe">Syntaxe</h3>
+<h4 id="syntaxe-de-base-et-des-caracteres-speciaux">Syntaxe de base et des caractères spéciaux</h4>
+<p>Scripts vous obliger à suivre une syntaxe de langage standard. Règles définissent comment définir des variables, construire, format, etc.</p>
+<p>Ci-après certains usages de caractères spéciaux dans les scripts bash :</p>
+<ul>
+<li>
+<p><code>#</code>  Utilisé pour ajouter un commentaire, sauf lorsqu'il est utilisé comme <code>\#</code>, ou <code>#!</code> lors du démarrage d'un script</p>
+</li>
+<li>
+<p><code>\</code>  Utilisés à la fin d'une ligne pour indiquer que la commande se poursuit à la ligne suivante</p>
+</li>
+<li>
+<p>;  Utilisé pour interpréter que ce qui suit comme une nouvelle commande</p>
+</li>
+<li>
+<p>$ : Indique que ce qui suit est une variable</p>
+</li>
+</ul>
+<p>Notez que lorsque # est inséré au début d'une ligne de commentaire, toute la ligne est ignoré.</p>
+<h4 id="commandes-longues-fractionnement-sur-des-lignes-multiples">Commandes longues fractionnement sur des lignes multiples</h4>
+<p>Les utilisateurs ont parfois besoin de combiner plusieurs commandes et instructions et exécuter même les  exécuter conditionnellement. Cette méthode est appelée chaînage de commandes.</p>
+<p>L'opérateur de concaténation () est utilisé pour concaténer des commandes sur plusieurs lignes.</p>
+<p>Par exemple, vous souhaitez copier le fichier /var/ftp/pub/userdata/custdata/read server1.linux.com dans le répertoire /opt/oradba/master/abc sur server3.linux.co.in.</p>
+<p>Pour effectuer cette action, vous pouvez écrire la commande en utilisant l'opérateur \ :</p>
+<div class="codehilite"><pre><span class="n">scp</span> <span class="n">abc</span><span class="err">@</span><span class="n">server1</span><span class="p">.</span><span class="n">linux</span><span class="p">.</span><span class="n">com</span><span class="o">:</span> \
+ <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">userdata</span><span class="o">/</span><span class="n">custdata</span><span class="o">/</span><span class="n">read</span> \
+ <span class="n">abc</span><span class="err">@</span><span class="n">server3</span><span class="p">.</span><span class="n">linux</span><span class="p">.</span><span class="n">co</span><span class="p">.</span><span class="n">in</span><span class="o">:</span> \
+ <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">oradba</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">abc</span><span class="o">/</span>
+</pre></div>
+
+
+<p>La commande est divisé en plusieurs lignes pour qu'elle soit lisible et plus facile à comprendre.</p>
+<h4 id="mettre-plusieurs-commandes-sur-une-seule-ligne">Mettre plusieurs commandes sur une seule ligne</h4>
+<p>Parfois, vous pouvez regrouper plusieurs commandes sur une seule ligne. le ; (point-virgule) est utilisé pour séparer ces commandes et de les exécuter séquentiellement comme se ils avaient été tapé sur des lignes séparées.</p>
+<p>Les trois commandes dans l'exemple suivant seront tous exécuter, même si ceux qui les précédentes échouent:</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">make</span><span class="p">;</span> <span class="n">make</span> <span class="n">install</span><span class="p">;</span> <span class="n">make</span> <span class="n">clean</span>
+</pre></div>
+
+
+<p>Cependant, vous pouvez vouloir annuler les commandes suivantes si l'on échoue. Vous pouvez le faire en utilisant l'opérateur &amp;&amp; (et) comme dans:</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">Make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">clean</span>
+</pre></div>
+
+
+<p>Si la première commande échoue la seconde ne sera jamais exécutée.</p>
+<p>Un raffinement final est d'utiliser l'opérateur || (ou) comme dans:</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">fichier1</span> <span class="o">||</span> <span class="n">cat</span> <span class="n">fichier2</span> <span class="err"> </span><span class="o">||</span> <span class="n">cat</span> <span class="n">fichier3</span>
+</pre></div>
+
+
+<p>Dans ce cas, vous continuez jusqu'à ce que quelque chose arrive et puis vous arrêtez l'exécution.</p>
+<h4 id="fonctions">fonctions</h4>
+<p>Une fonction est un bloc de code qui implémente une série d'opérations. Les fonctions sont utiles pour exécuter des procédures plusieurs fois et peut-être avec des variables d'entrée variables.  L'utilisation des fonctions se fait  en deux étapes:</p>
+<ul>
+<li>Déclarer une fonction</li>
+<li>Appel d'une fonction</li>
+</ul>
+<p>La déclaration de la fonction nécessite un nom pour l'invoquer. La syntaxe correcte est:</p>
+<div class="codehilite"><pre><span class="err">    </span> <span class="n">nom_fonction</span> <span class="p">()</span> <span class="p">{</span>
+<span class="err">       </span> <span class="n">commande</span> <span class="p">...</span>
+<span class="err">    </span> <span class="p">}</span>
+</pre></div>
+
+
+<p>Par exemple, la fonction suivante est nommé affichage:</p>
+<div class="codehilite"><pre><span class="err">    </span> <span class="n">affichage</span> <span class="p">()</span> <span class="p">{</span>
+<span class="err">       </span> <span class="n">echo</span> <span class="s">&quot;Ceci est un exemple de fonction&quot;</span>
+<span class="err">    </span> <span class="p">}</span>
+</pre></div>
+
+
+<p>On peut ajouter des arguments comme ceci :</p>
+<div class="codehilite"><pre><span class="err">    </span> <span class="n">affichage</span> <span class="p">()</span> <span class="p">{</span>
+<span class="err">       </span> <span class="n">echo</span> <span class="s">&quot;Ceci est un exemple de paramètre&quot;</span> <span class="err">$</span><span class="mi">1</span>
+<span class="err">    </span> <span class="p">}</span>
+</pre></div>
+
+
+<p>example :</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash </span>
+<span class="c"># Lecture interactive des variables </span>
+<span class="nb">echo</span> <span class="s2">&quot;ENTRER VOTRE NOM&quot;</span> 
+<span class="nb">read </span>sname 
+<span class="c"># Affichage des valeurs variables </span>
+<span class="nb">echo</span> <span class="nv">$sname</span> 
+affichage<span class="o">(){</span> 
+     <span class="nb">echo</span> <span class="s2">&quot;Ceci est le nom&quot;</span> <span class="nv">$1</span> 
+<span class="o">}</span> 
+affichage <span class="nv">$sname</span>
+</pre></div>
+</td></tr></table>
+
+<h4 id="built-in-commandes-shell">Built-in Commandes Shell</h4>
+<p>Les scripts shell sont utilisés pour exécuter des séquences de commandes et d'autres types de déclarations. Les commandes peuvent être répartis dans les catégories suivantes :</p>
+<ul>
+<li>applications compilées</li>
+<li>Built-in commandes bash</li>
+<li>autres scripts</li>
+</ul>
+<p>Applications compilées sont des fichiers exécutables binaires que vous pouvez trouver sur le système de fichiers. </p>
+<p>Le script shell a toujours accès à des applications compilées tels que rm, ls, df, vi, et gzip. bash a beaucoup de Built-in commands qui peuvent être utilisés pour afficher la sortie d'un script shell ou de terminal. </p>
+<p>Parfois, ces commandes ont le même nom que des programmes exécutables sur le système, tels que echo qui peut conduire à des problèmes. les commandes Built-in comprennent cd, pwd, echo, read, logout, printf, let, et ulimit. Une liste complète des commandes de bash intégrés peut être trouvée dans bash man, ou en tapant simplement help.  </p>
+<h4 id="substitution-de-commandes-built-in">Substitution de commandes Built-in</h4>
+<p>À certains moments, vous devrez peut-être remplacer le résultat d'une commande comme une partie d'une autre commande. Il peut être fait de deux façons:</p>
+<ul>
+<li>En enfermant la commande intérieure avec backticks (`)</li>
+<li>En enfermant la commande intérieure en $()</li>
+</ul>
+<p>Peu importe la méthode, la commande la plus interne sera exécuté dans un environnement shell en premier lieu. </p>
+<p>Pratiquement n'importe quelle commande peut être exécutée de cette façon. Ces deux méthodes permettent la substitution de commande. Par exemple:</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="err">$</span><span class="p">(</span><span class="n">uname</span> <span class="o">-</span><span class="n">r</span><span class="p">)</span><span class="o">/</span>
+</pre></div>
+
+
+<p>Dans l'exemple ci-dessus, la sortie de la commande "uname -r" devient l'argument de la commande cd.</p>
+<h4 id="variables-denvironnement">Variables d'environnement</h4>
+<p>Presque tous les scripts utilisent des variables contenant une valeur, qui peut être utilisé n'importe où dans le script. Ces variables peuvent être soit de l'utilisateur ou du système.</p>
+<p>Quelques exemples de variables d'environnement standard sont HOME, PATH, et HOST. Pour appeler une variables d'environnement elle doivent être précédés du symbole $ ($ HOME par exemple). Vous pouvez afficher et définir la valeur de variables d'environnement.</p>
+<p>Par exemple, la commande suivante affiche la valeur stockée dans la variable PATH:</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span>
+</pre></div>
+
+
+<p>Cependant, aucun préfixe n'est nécessaire lors de l'établissement ou la modification de la valeur de la variable. Par exemple, la commande suivante définit la valeur de la variable de MyColor au bleu:</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">MyColor</span> <span class="o">=</span> <span class="n">bleu</span>
+</pre></div>
+
+
+<p>Vous pouvez obtenir une liste des variables d'environnement avec les commande env, set ou printenv.</p>
+<h4 id="exporter-les-variables">Exporter les variables</h4>
+<p>Par défaut, les variables créées dans un script ne sont valide que dans ce dernier. Pour les rendre disponibles, ils doivent être promus à des variables d'environnement en utilisant la déclaration d'exportation comme dans:</p>
+<div class="codehilite"><pre><span class="n">export</span> <span class="n">VAR</span> <span class="o">=</span> <span class="n">valeur</span>
+</pre></div>
+
+
+<p>ou</p>
+<div class="codehilite"><pre><span class="n">VAR</span> <span class="o">=</span> <span class="n">valeur</span><span class="p">;</span> <span class="n">export</span><span class="err"> </span><span class="n">VAR</span>
+</pre></div>
+
+
+<p>les variables exportées ne sont pas partagés, mais seulement copiés, i.e, si vous faites un changement dans un autre script, il n'aura aucun effet dans le script initial.</p>
+<h4 id="parametres-des-scripts">Paramètres des scripts</h4>
+<p>Les utilisateurs ont souvent besoin de passer des valeurs de paramètres à un script, comme un nom de fichier, date, etc. Scripts auront des chemins différents où arriver à des valeurs différentes selon les paramètres (arguments de commande) passées. Ces valeurs peuvent être du texte ou des chiffres, comme dans :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">script</span><span class="p">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">tmp</span>
+<span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">script</span><span class="p">.</span><span class="n">sh</span><span class="err"> </span><span class="mi">100</span> <span class="mi">200</span>
+</pre></div>
+
+
+<p>Dans un script, le paramètre ou un argument est représenté avec un $ et un numéro. Le tableau répertorie certains de ces paramètres.</p>
+<p>Signification paramètre</p>
+<ul>
+<li>$0 Nom du script</li>
+<li>$1 Le premier paramètre</li>
+<li>$2, $3, etc. Deuxièmement, troisième paramètre, etc.</li>
+<li>$* Tous les paramètres</li>
+<li>$# Nombre d'arguments</li>
+</ul>
+<h4 id="utilisation-des-parametres-de-script">Utilisation des paramètres de script</h4>
+<p>example :</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Le nom du fichier est &quot;</span> <span class="nv">$0</span>
+<span class="nb">echo</span> <span class="s2">&quot;Le 1er paramètre est &quot;</span> <span class="nv">$1</span> 
+<span class="nb">echo</span> <span class="s2">&quot;Le 2ème paramètre est &quot;</span> <span class="nv">$2</span> 
+<span class="nb">echo</span> <span class="s2">&quot;Le 3ème paramètre est &quot;</span> <span class="nv">$3</span> 
+<span class="nb">echo</span> <span class="s2">&quot;La liste de tout les paramètres&quot;</span> <span class="nv">$*</span>
+</pre></div>
+</td></tr></table>
+
+<p>Enregister le dans le fichier script-param.sh</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">script</span><span class="o">-</span><span class="n">param</span><span class="p">.</span><span class="n">sh</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="p">.</span><span class="o">/</span><span class="n">script</span><span class="o">-</span><span class="n">param</span><span class="p">.</span><span class="n">sh</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+</pre></div>
+
+
+<h4 id="redirection-de-sortie">Redirection de sortie</h4>
+<p>La plupart des systèmes d'exploitation acceptent l'entrée à partir du clavier et d'afficher la sortie sur le terminal. Cependant, dans les scripts shell, vous pouvez envoyer la sortie vers un fichier. Le processus de détourner la sortie vers un fichier est appelé redirection de sortie.</p>
+<p>Le caractère &gt; est utilisé pour écrire la sortie dans un fichier. Par exemple, la commande suivante envoie la sortie de libre pour le fichier /tmp/free.out :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">free</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">free</span><span class="p">.</span><span class="n">out</span>
+</pre></div>
+
+
+<p>Pour vérifier le contenu du fichier <em>/tmp/free.out</em>, à l'invite de commande tapez <em>cat /tmp/free.out</em></p>
+<p>Deux caractères (&gt;&gt;) seront ajoutés la sortie à un fichier s'il existe, et d'agir comme &gt; si le fichier n'existe pas déjà.</p>
+<h4 id="redirection-dentree">Redirection d'entrée</h4>
+<p>De même que la sortie, l'entrée peut être lue depuis un fichier. Le processus de lecture en entrée d'un fichier est appelé redirection d'entrée et utilise le caractère &lt;. Si vous créez un fichier appelé script8.sh avec le contenu suivant:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#! /bin/bash</span>
+<span class="nb">echo</span> <span class="s2">&quot;Nombre de traits&quot;</span>
+wc -l &lt;/temp/free.out
+</pre></div>
+</td></tr></table>
+
+<p>puis exécuter avec chmod + x script8.sh; ./script8.sh, il comptera le nombre de lignes du fichier de /temp/free.out et affichera le résultat.</p>
+<h3 id="constructions">Constructions</h3>
+<h4 id="linstruction-if">L'instruction if</h4>
+<p>La prise de décision conditionnelle en utilisant une instruction if, est un concept de base que toute la programmation utile ou langage de script doivent avoir.</p>
+<p>Lorsque une instruction if est utilisé, les actions qui en découlent dépendent de l'évaluation des conditions spécifiques telles que:</p>
+<ul>
+<li>Comparaisons numériques ou chaîne</li>
+<li>Valeur de retour d'une commande (0 pour le succès)</li>
+<li>L'existence de fichiers ou autorisations</li>
+</ul>
+<p>Sous forme compacte, la syntaxe d'une instruction if est:</p>
+<div class="codehilite"><pre><span class="k">if</span><span class="err"> </span><span class="n">test</span><span class="o">-</span><span class="n">COMMANDES</span><span class="p">;</span> <span class="n">then</span> <span class="n">consequence</span> <span class="n">COMMANDES</span><span class="p">;</span> <span class="n">fi</span>
+</pre></div>
+
+
+<p>Une définition plus générale est:</p>
+<div class="codehilite"><pre><span class="k">if</span> <span class="n">condition</span>
+<span class="n">then</span>
+<span class="err">       </span> <span class="n">declarations</span>
+<span class="k">else</span>
+<span class="err">       </span> <span class="n">d</span><span class="err">é</span><span class="n">clarations</span>
+<span class="n">fi</span>
+</pre></div>
+
+
+<h4 id="utilisation-de-linstruction-if">Utilisation de l'instruction if</h4>
+<p>Ce qui suit if vérifie le fichier /etc/passwd, et si le fichier est trouvé, il affiche le message
+/etc/passwd existe.:</p>
+<div class="codehilite"><pre><span class="k">if</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span><span class="p">]</span>
+<span class="n">then</span>
+<span class="err">    </span> <span class="n">echo</span> <span class="s">&quot;/etc/passwd existe.&quot;</span>
+<span class="n">fi</span>
+</pre></div>
+
+
+<p>Notez l'utilisation des crochets ([]) pour délimiter la condition de test. Il existe de nombreux autres types de tests que vous pouvez effectuer, comme vérifier si deux nombres sont égaux, supérieur ou inférieur à l'autre et prendre une décision en conséquence; nous allons discuter de ces autres tests.</p>
+<p>Dans les scripts modernes vous pouvez trouver dans les supports doublé comme dans [[-f /etc/passwd]]. Ce ne est pas une erreur. Il ne est jamais mauvais de le faire et il évite certains problèmes subtils comme faisant référence à une variable d'environnement vide sans l'entourer de guillemets; nous ne allons pas en parler ici.</p>
+<h4 id="tests-pour-les-fichiers">Tests pour les fichiers</h4>
+<p>Vous pouvez utiliser l'instruction if pour tester attributs de fichier tels que :</p>
+<ul>
+<li>l'existence d'un fichier ou d'un répertoire</li>
+<li>Permission de lecture ou d'écrire</li>
+<li>Permission d'exécution</li>
+</ul>
+<p>Par exemple, dans l'exemple suivant:</p>
+<div class="codehilite"><pre><span class="k">if</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span><span class="p">];</span> <span class="n">then</span>
+<span class="err">    </span><span class="n">ACTION</span>
+<span class="n">fi</span>
+</pre></div>
+
+
+<p>l'instruction if vérifie si le fichier /etc/passwd est un fichier régulier.
+Notez la pratique très courante de mettre ; then sur la même ligne que l'instruction if.</p>
+<p>bash fournit un ensemble de conditionnels de fichiers, qui peut être utilisé avec l'instruction if, y compris:</p>
+<ul>
+<li><strong>-e</strong> si le fichier existe.</li>
+<li><strong>-d</strong> si le fichier est un répertoire.</li>
+<li><strong>-f</strong> si le fichier est un fichier régulier (c'est à dire, pas un lien symbolique, noeud de périphérique, répertoire, etc.)</li>
+<li><strong>-s</strong> si le fichier est de taille non nulle.</li>
+<li><strong>-g</strong> si le fichier a un ensemble <em>Sgid</em> .</li>
+<li><strong>-u</strong> si le fichier a un ensemble <em>suid</em>.</li>
+<li><strong>-r</strong> si le fichier est lisible.</li>
+<li><strong>-w</strong> si le fichier est accessible en écriture.</li>
+<li><strong>-x</strong> si le fichier est exécutable.</li>
+</ul>
+<p>Vous pouvez consulter la liste complète des conditions de fichiers en utilisant <strong>man 1 test</strong>.</p>
+<h4 id="comparaison-de-string">Comparaison de string</h4>
+<p>Vous pouvez utiliser l'instruction if pour comparer des chaînes à l'aide de l'opérateur == (deux signes égal). La syntaxe est la suivante:</p>
+<div class="codehilite"><pre><span class="k">if</span> <span class="p">[</span><span class="n">string1</span> <span class="o">==</span> <span class="n">string2</span><span class="p">];</span> <span class="n">then</span>
+<span class="err">   </span> <span class="n">ACTION</span>
+<span class="n">fi</span>
+</pre></div>
+
+
+<h4 id="tests-numeriques">Tests numériques</h4>
+<p>Vous pouvez utiliser des opérateurs spécialement définies avec l'instruction if pour comparer des chiffres. Les différents opérateurs qui sont disponibles sont listés ci-dessous :</p>
+<ul>
+<li><strong>-eq</strong> égal à</li>
+<li><strong>-ne</strong> n'est pas égal à</li>
+<li><strong>-gt</strong> Supérieur à</li>
+<li><strong>-lt</strong> Inférieur à</li>
+<li><strong>-ge</strong> Supérieur ou égal à</li>
+<li><strong>-le</strong> Inférieur ou égal à</li>
+</ul>
+<p>La syntaxe de numéros de comparaison est la suivante:</p>
+<div class="codehilite"><pre><span class="n">exp1</span> <span class="o">-</span><span class="n">op</span> <span class="n">exp2</span>
+</pre></div>
+
+
+<h4 id="expressions-arithmetiques">expressions arithmétiques</h4>
+<p>Les expressions arithmétiques peuvent être évalués selon les trois modes suivants (espaces sont importants!):</p>
+<ul>
+<li>Utilisation de l'utilitaire de expr: expr est un programme standard, mais quelque peu obsolète. La syntaxe est la suivante:</li>
+</ul>
+<p><code>exp1 -op exp2</code>
+<code>expr 8 + 8</code>
+<code>echo $ (expr 8 + 8)</code></p>
+<ul>
+<li>Utilisation de $ ((...)): C'est le format de l'enveloppe intégré. La syntaxe est la suivante:</li>
+</ul>
+<p><code>echo $((x + 1))</code></p>
+<ul>
+<li>Utilisation de la commande shell let. La syntaxe est la suivante:</li>
+</ul>
+<p><code>let x = (1 + 2); echo $x</code></p>
+<p>Dans les scripts Shell modernes l'utilisation de expr est remplacé par</p>
+<p><code>var = $ ((...))</code></p>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

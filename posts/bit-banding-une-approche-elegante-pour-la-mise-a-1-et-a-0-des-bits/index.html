@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Typiquement un noyau CPU ne peut pas écrire des bits d&#39;un registre individuellement. En effet, il doit écrire des octets ou mots entiers à la fois selon la flow (Read-Modify-Write). Mais que ce passera-t-il si durant (Read-Modify-Write) une intéreeution prioritaire survient ? Pour en savoir plus, lisez la la suite.">
+
+
+
+    <title>
+	
+	Bit-banding - une approche élégante pour la mise à 1 ou à 0 des Bits de vos registres
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Bit-banding - une approche élégante pour la mise à 1 ou à 0 des Bits de vos registres
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-02-14 in 
+  
+  <a href="../../categories/Embedded/index.html"> Embedded </a> &nbsp; 
+       
+  <a href="../../categories/Linux/index.html"> Linux </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong> Table des matières </strong></p>
+<div class="toc">
+<ul>
+<li><a href="#le-probleme-de-lecture-modification-ecriture">Le problème de lecture-modification-écriture</a></li>
+<li><a href="#mode-operatoire-du-bit-banding">Mode opératoire du bit-banding</a></li>
+</ul>
+</div>
+<h3 id="le-probleme-de-lecture-modification-ecriture">Le problème de lecture-modification-écriture</h3>
+<p>Avant d'expliquer ce qu'est le Bit-bading, laissez-moi vous expliquer un peu le contexte : </p>
+<p>Typiquement un noyau CPU ne peut pas écrire des bits d'un registre individuellement. En effet, il doit écrire des octets ou mots entiers à la fois. Si un CPU a besoin de changer la valeur d'un bit mais ne peut pas écrire un octet à la fois, il doit d'abord lire la valeur actuelle dans un registre temporaire, modifier cette valeur avec une opération logique, puis écrire le résultat final. Ce processus en trois étapes est appelée<strong> lecture-modification-écriture</strong> (Read-Modify-Write).</p>
+<p>L'usage de "lecture-modification-écriture" ne posent aucun problème lorsque le CPU fait une chose à la fois (ex. exécution séquentielle d'un programme), mais des problèmes peuvent survenir lorsqu'une application fait plusieurs choses en même temps. Par exemple, ce qui se passe si une interruption se produit entre les opérations "lire et modifier" lorsqu'on souhaite modifier la valeur d'un registre?. Comme l'opération écriture ne s'est pas faite, alors cette nouvelle sera valeur écrasée. </p>
+<ul>
+<li>Ce qui conduit à un <strong>race-condition</strong> comportement indésirable.</li>
+</ul>
+<h3 id="mode-operatoire-du-bit-banding">Mode opératoire du bit-banding</h3>
+<p>Le bit-banding est un terme que ARM utilise pour décrire une caractéristique disponible sur les cœurs des processeurs Cortex M3 et M4. </p>
+<p>Fondamentalement, le dispositif prend :
+<em> une zone (ou bande) mémoire (la région Bit-band) 
+</em> et fait correspondre à chaque bit dans cette région à un mot entier dans une deuxième zone de mémoire (la Bit-band Alias Region).</p>
+<p>L'avantage de Bit-banding est qu'une écriture d'un mot dans la région d'alias effectue une écriture d'un bit correspondant dans la région bit-band. Par conséquent, la lecture d'un mot dans la région d'alias retournera la valeur du bit correspondant dans la région de bit-band. </p>
+<p>Ces opérations se font en une seule instruction machine évitant ainsi le <strong><em>race-condition</em></strong>. </p>
+<p>Ceci est particulièrement utile pour interagir avec des registres périphériques où il est souvent nécessaire d'agir sur un seul bit. </p>
+<p>L'image ci-dessous montre le principe du bit-banding, à des fins de démonstration, j'ai choisis d'utiliser des mots de 8 bits. Sur le Cortex M3 et M4 de la région d'alias contient des mots de 32 bits.</p>
+<p><img alt="bit-banding" src="http://d1u2s20mo6at4b.cloudfront.net/wp-content/uploads/Screen-Shot-2013-01-30-at-7.39.59-AM.png" /></p>
+<p>Pour utiliser cette caractéristique, vous devez avoir l'adresse du mot dans la région Alias (Alias Region) qui correspond au bit que vous voulez manipuler (lecture/écrire). Ceci est fait en C avec une macro.</p>
+<p>To use this feature, you must first get the address of the word in the alias region that corresponds to the bit you wish to read/write. This is done in C with a simple pre-processor macro.</p>
+<div class="codehilite"><pre><span class="cp">#define BITBAND_SRAM_REF 0x20000000</span>
+<span class="cp">#define BITBAND_SRAM_BASE 0x22000000</span>
+<span class="cp">#define BITBAND_SRAM(a,b) ((BITBAND_SRAM_BASE + (a-BITBAND_SRAM_REF)*32 + (b*4))) </span><span class="c1">// Convert SRAM address</span>
+<span class="cp">#define BITBAND_PERI_REF 0x40000000</span>
+<span class="cp">#define BITBAND_PERI_BASE 0x42000000</span>
+<span class="cp">#define BITBAND_PERI(a,b) ((BITBAND_PERI_BASE + (a-BITBAND_PERI_REF)*32 + (b*4))) </span><span class="c1">// Convert PERI address</span>
+<span class="cp">#define MAILBOX 0x20004000</span>
+<span class="cp">#define TIMER 0x40004000</span><span class="c1">// Mailbox bit 0</span>
+<span class="cp">#define MBX_B0 *((volatile unsigned int *)(BITBAND_SRAM(MAILBOX,0)))</span><span class="c1">// Mailbox bit 7</span>
+<span class="cp">#define MBX_B7 *((volatile unsigned int *)(BITBAND_SRAM(MAILBOX,7)))</span><span class="c1">// Timer bit 0</span>
+<span class="cp">#define TIMER_B0 *((volatile unsigned char *)(BITBAND_PERI(TIMER,0)))</span><span class="c1">// Timer bit 7</span>
+<span class="cp">#define TIMER_B7 *((volatile unsigned char *)(BITBAND_PERI(TIMER,7)))</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">MBX_B0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Word write    </span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">MBX_B7</span><span class="p">;</span> <span class="c1">// Word read    </span>
+     <span class="n">TIMER_B0</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span> <span class="c1">// Byte write    </span>
+     <span class="k">return</span> <span class="n">TIMER_B7</span><span class="p">;</span> <span class="c1">// Byte read</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Pour plus de détails veuillez vous référer a cette adresse <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0179b/CHDJHIDF.html">the ARM InfoCenter page on bit-banding</a>.</p>
+<p>Ce n'est pas la seule solution existante. Pour toute les architectures connues, ils existent des mécanismes pour agir sur un bit individuellement. L"approche qu'utilise ARM est élégante et n'utilise que le ANSI C  là où les autres utilisent des extensions spéciales ou le langages assembleur.</p>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

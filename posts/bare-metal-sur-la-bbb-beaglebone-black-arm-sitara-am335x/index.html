@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Mise en place d&#39;applications embarqués sans os sur la BeagleBone Black équipé d&#39;un processeur ARM-A7. Utilisation de StarterWare de TI et de la chaine de compilation croisée pour ARM (linaro-gcc)">
+
+
+
+    <title>
+	
+	Applications en Bare Metal (sans OS) sur la Beagle Bone Board
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Applications en Bare Metal (sans OS) sur la Beagle Bone Board
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-02-22 in 
+  
+  <a href="../../categories/Linux/index.html"> Linux </a> &nbsp; 
+       
+  <a href="../../categories/Embedded/index.html"> Embedded </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong> Table des matières </strong></p>
+<div class="toc">
+<ul>
+<li><a href="#installer-starterware">Installer StarterWare</a></li>
+<li><a href="#installer-la-chaine-de-compilation-croisee-pour-arm">Installer la chaîne de compilation croisée pour ARM</a></li>
+<li><a href="#configuration-de-starterware-pour-linaro-gcc">Configuration de StarterWare pour Linaro-gcc</a></li>
+<li><a href="#compilez-les-applications-exemple-de-luart">Compilez les applications (exemple de l'UART)</a></li>
+<li><a href="#charger-les-applications-via-u-boot">Charger les applications via U-Boot</a></li>
+</ul>
+</div>
+<p>Dans ce qui suit, je vais vous montrer comment mettre en place des applications en Metal Bar (i.e., sans OS) sur la BeagleBone Black équipé d'un processeur ARM-A7.</p>
+<h2 id="installer-starterware">Installer StarterWare</h2>
+<p>Téléchargez StarterWare du site de Texas Instrument directement via le lien ci-après :</p>
+<p><a href="http://software-dl-1.ti.com/dsps/forms/self_cert_export.html?prod_no=AM335X_StarterWare_02_00_01_01_Setup.bin&amp;ref_url=http://software-dl.ti.com/dsps/dsps_public_sw/am_bu/starterware/latest/">http://software-dl-1.ti.com/dsps/forms/self_cert_export.html?prod_no=AM335X_StarterWare_02_00_01_01_Setup.bin&amp;ref_url=http://software-dl.ti.com/dsps/dsps_public_sw/am_bu/starterware/latest/</a> </p>
+<p>Rendez le binaire téléchargé exécutable comme ceci :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">AM335X_StarterWare_02_00_01_01_Setup</span><span class="p">.</span><span class="n">bin</span>
+</pre></div>
+
+
+<p>Exécutez-le, ensuite il vous sera demandé de choisir l'emplacement de l'installation. Choisissons <em>ti-env</em>, ainsi StarterWare sera dans cet emplacement :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="o">~/</span><span class="n">ti</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">AM335X_StarterWare_02_00_01_01</span><span class="o">/</span>
+</pre></div>
+
+
+<p>Télécharger le Patch pour la BeagleBone Black via le même lien que celui de StarterWare via le lien ci-après :</p>
+<p><a href="href=&quot;http://software-dl.ti.com/dsps/dsps_public_sw/am_bu/starterware/latest/exports/StarterWare_BBB_support.tar.gz&quot;&gt;http://software-dl.ti.com/dsps/dsps_public_sw/am_bu/starterware/latest/exports/StarterWare_BBB_support.tar.gz">href="http://software-dl.ti.com/dsps/dsps_public_sw/am_bu/starterware/latest/exports/StarterWare_BBB_support.tar.gz"&gt;http://software-dl.ti.com/dsps/dsps_public_sw/am_bu/starterware/latest/exports/StarterWare_BBB_support.tar.gz</a> </p>
+<p>Pour le patcher, rien de plus simple :</p>
+<ul>
+<li>
+<p>1-Décompressez l'archive</p>
+<p>StarterWare_BBB_support.tar.gz</p>
+</li>
+</ul>
+<p>2- Et copiez le contenu dans le dossier</p>
+<div class="codehilite"><pre><span class="o">~/</span><span class="n">ti</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">AM335X_StarterWare_02_00_01_01</span>
+</pre></div>
+
+
+<p>3- Cliquez sur merge pour ne remplacer que les fichiers du patch BBB dans StarterWare</p>
+<h2 id="installer-la-chaine-de-compilation-croisee-pour-arm">Installer la chaîne de compilation croisée pour ARM</h2>
+<p>Télécharger l'archive de linaro-gcc pour linux via :</p>
+<p><a href="https://launchpad.net/gcc-arm-embedded/4.7/4.7-2012-q4-major">https://launchpad.net/gcc-arm-embedded/4.7/4.7-2012-q4-major</a></p>
+<p>Créez un dossier dans lequel l'archive sera enregistrée</p>
+<p>$ mkdir ~/ti-env/linaro-gcc</p>
+<p>Décompressez l'archive et sauvegardez-là dans le dossier linaro-gcc (libre de vous de choisir un autre).</p>
+<p>Créez un variable d'environnement dans laquelle vous sauvegarderez le chemin vers le compilateur linaro-gcc comme ceci :</p>
+<div class="codehilite"><pre>$ export LIB_PATH=<span class="cp">${</span><span class="n">HOME</span><span class="cp">}</span>/ti-env/linaro-gcc/gcc-arm-none-eabi-4_7-2012q4
+</pre></div>
+
+
+<h2 id="configuration-de-starterware-pour-linaro-gcc">Configuration de StarterWare pour Linaro-gcc</h2>
+<p>Pour cela, vous devez d'abord indiquer l'emplacement du compilateur pour ARM à StarterWare, pour cela éditez le fichier <em>makedefs</em> comme ceci :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">nano</span> <span class="o">~/</span><span class="n">ti</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">AM335X_StarterWare_02_00_01_01</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">armv7a</span><span class="o">/</span><span class="n">gcc</span><span class="o">/</span><span class="n">makedefs</span>
+</pre></div>
+
+
+<p>Modifier :</p>
+<div class="codehilite"><pre><span class="n">ifndef</span> <span class="n">PREFIX</span>
+   <span class="n">PREFIX</span><span class="o">=</span><span class="n">arm</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="n">eabi</span><span class="o">-</span>
+<span class="n">endif</span>
+</pre></div>
+
+
+<p>Par :</p>
+<div class="codehilite"><pre>ifndef PREFIX
+   PREFIX=<span class="cp">${</span><span class="n">LIB_PATH</span><span class="cp">}</span>/bin/arm-none-eabi-
+endif
+</pre></div>
+
+
+<h2 id="compilez-les-applications-exemple-de-luart">Compilez les applications (exemple de l'UART)</h2>
+<p>Mettez-vous sur le dossier de BeagleBone Black comme ceci :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">ti</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">AM335X_StarterWare_02_00_01_01</span><span class="o">/</span><span class="n">armv7a</span><span class="o">/</span><span class="n">gcc</span><span class="o">/</span><span class="n">am335x</span><span class="o">/</span><span class="n">beaglebone</span>
+</pre></div>
+
+
+<p>ensuite compilez les projets déjà existants dans StarterWare (gpio, uart, ....) comme ceci :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">make</span>
+</pre></div>
+
+
+<p>Vérifiez que la compilation s'est bien passée dans le dossier suivant :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">ti</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">AM335X_StarterWare_02_00_01_01</span><span class="o">/</span><span class="n">binary</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;/</span><span class="n">armv7a</span><span class="o">/</span><span class="n">gcc</span><span class="o">/</span><span class="n">am335x</span><span class="o">/</span><span class="n">beaglebone</span>
+</pre></div>
+
+
+<p>Les dossiers que vous devrez voir dans le cas de l'UART sont :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">cd</span> <span class="n">uart</span><span class="o">/</span><span class="n">Release</span>
+<span class="err">$</span> <span class="n">ls</span> <span class="o">-</span><span class="n">Al</span>
+ <span class="n">total</span> <span class="mi">100</span>
+<span class="o">-</span><span class="n">rwxrwxr</span><span class="o">-</span><span class="n">x</span> <span class="mi">1</span> <span class="n">parallels</span> <span class="n">parallels</span> <span class="mi">8488</span> <span class="n">f</span><span class="err">é</span><span class="n">vr</span><span class="p">.</span> <span class="mi">24</span> <span class="mi">20</span><span class="o">:</span><span class="mi">54</span> <span class="n">uartEcho</span><span class="p">.</span><span class="n">bin</span>
+<span class="o">-</span><span class="n">rwxrwxr</span><span class="o">-</span><span class="n">x</span> <span class="mi">1</span> <span class="n">parallels</span> <span class="n">parallels</span> <span class="mi">105879</span> <span class="n">f</span><span class="err">é</span><span class="n">vr</span><span class="p">.</span> <span class="mi">24</span> <span class="mi">20</span><span class="o">:</span><span class="mi">54</span> <span class="n">uartEcho</span><span class="p">.</span><span class="n">out</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">parallels</span> <span class="n">parallels</span> <span class="mi">8496</span> <span class="n">f</span><span class="err">é</span><span class="n">vr</span><span class="p">.</span> <span class="mi">24</span> <span class="mi">20</span><span class="o">:</span><span class="mi">54</span> <span class="n">uartEcho_ti</span><span class="p">.</span><span class="n">bin</span>
+</pre></div>
+
+
+<p>Précautions : </p>
+<p>1- Vérifier que la variable d'environnement existe et qu'elle correspond bien à l'emplacement du compilateur</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">printenv</span> <span class="n">LIB_PATH</span>
+</pre></div>
+
+
+<p>Dans notre cas on devra avoir le dossier :</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="o">~/</span><span class="n">tiv</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">ti</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">linaro</span><span class="o">-</span><span class="n">gcc</span><span class="o">/</span><span class="n">gcc</span><span class="o">-</span><span class="n">arm</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="n">eabi</span><span class="o">-</span><span class="mi">4</span><span class="n">_7</span><span class="o">-</span><span class="mi">2012</span><span class="n">q4</span>
+</pre></div>
+
+
+<p>2- Que vous avez bien modifier le fichier makedefs comme illustré dans (Configuration de StarterWare pour Linaro-gcc)</p>
+<h2 id="charger-les-applications-via-u-boot">Charger les applications via U-Boot</h2>
+<p>Dans cette partie, nous verrons configurer U-Boot pour charger soit, votre noyau Linux avec son système de fichiers, ou le chargement d'une application en metal bar via TFTP.</p>
+      
+
+      <div id="more">
+        <div id="more-articles">
+          
+            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
+            <ul>
+       	    
+            </ul>
+          
+        </div>
+        <a href="https://twitter.com/xxx" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @xxx</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="marcgg" data-size="large">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      </div>
+
+      <style id="disqus_hide">
+        #disqus_thread{
+          display: none;
+        }
+      </style>
+      <p>
+        <a href="#" id="show-disqus">Show Comments</a>
+      </p>
+
+      <div id="disqus_thread"></div>
+      <script>
+        document.getElementById('show-disqus').onclick=function(e){
+          e.preventDefault();
+          document.getElementById("disqus_hide").innerHTML = "";
+          document.getElementById("show-disqus").innerHTML = "";
+        }
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.com">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31071519-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+
