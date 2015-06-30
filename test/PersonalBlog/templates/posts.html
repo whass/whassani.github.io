@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+      Walid Hassani - Blog
+{% endblock %}
+
+{% block header %}
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="{{ url_for('home') }}" class="" >about</a>        
+          &rarr; <a href="{{ url_for('posts') }}" class="selected" >blog</a>
+          &rarr; <a href="{{ url_for('hire') }}" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="{{ url_for('posts') }}">
+          blog
+        </a>
+      </div>
+{% endblock %}
+
+{% block content %}
+    <div id="all-posts">
+
+    {% for post in posts %}
+    
+      <div class="single-post clearfix">
+        <div class="excerpt">
+          <div class="title">
+                <a href="{{ url_for('post', name=post.path.replace('posts/', '')) }}">{{ post.title }}</a>
+          </div>
+
+          <p class="description">
+            {{ post.description }}
+          </p>
+          <div class="date">{{ post.date }} in 
+              {%  for category in post.categories %}
+                  <a class="date" href="{{ url_for('categories',name=category) }}">{{ category }}</a> &nbsp; 
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+  
+     {% endfor %}
+</div>
+{% endblock %}
+
