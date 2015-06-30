@@ -11,8 +11,8 @@ FLATPAGES_EXTENSION = '.md'
 FLATPAGES_ROOT = 'content'
 POST_DIR = 'posts'
 FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','headerid','extra','toc']
-
-app = Flask(__name__)
+FREEZER_RELATIVE_URLS=True
+app = Flask(__name__,  static_url_path='')
 
 
 
