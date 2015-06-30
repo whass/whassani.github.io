@@ -12,6 +12,7 @@ FLATPAGES_ROOT = 'content'
 POST_DIR = 'posts'
 FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','headerid','extra','toc']
 FREEZER_RELATIVE_URLS=True
+FREEZER_DESTINATION="../blog-stat"
 app = Flask(__name__,  static_url_path='')
 
 
