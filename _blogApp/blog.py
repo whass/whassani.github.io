@@ -8,7 +8,7 @@ from flaskext.markdown import Markdown
 DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = '.md'
-FLATPAGES_ROOT = 'content'
+FLATPAGES_ROOT = '../_blogContent'
 POST_DIR = 'posts'
 FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','headerid','extra','toc']
 FREEZER_RELATIVE_URLS=True
