@@ -139,6 +139,10 @@ h1{
   line-height : 1.5em;
 }
 
+h1 span {
+    max-width: 760px !important;
+
+}
 h1 em{
   color: #888;
   font-weight: normal;
@@ -615,9 +619,11 @@ td {
  border-style:solid; 
  }
 
- .codehilite {
-
-  font-size: 0.5em;
- }
+pre {
+     width: 95%;
+     overflow: auto;   /* ajoute des barres de défilement si nécessaire */
+     word-wrap: break-word;
+     white-space: pre-wrap;
+}
 
 
