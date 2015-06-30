@@ -12,7 +12,7 @@ FLATPAGES_ROOT = 'content'
 POST_DIR = 'posts'
 FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','headerid','extra','toc']
 FREEZER_RELATIVE_URLS=True
-FREEZER_DESTINATION="../blog-stat"
+FREEZER_DESTINATION="."
 app = Flask(__name__,  static_url_path='')
 
 
@@ -21,7 +21,7 @@ flatpages = FlatPages(app)
 freezer = Freezer(app)
 app.config.from_object(__name__)
 
-@app.route('/pygments.css')
+@app.route('/css/pygments.css')
 def pygments_css():
     return pygments_style_defs('default'), 200, {'Content-Type': 'text/css'}
 
