@@ -12,7 +12,8 @@ FLATPAGES_ROOT = '../_blogContent'
 POST_DIR = 'posts'
 FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','headerid','extra','toc']
 FREEZER_RELATIVE_URLS=True
-FREEZER_DESTINATION="."
+FREEZER_DESTINATION="../"
+
 app = Flask(__name__,  static_url_path='')
 
 
@@ -20,6 +21,7 @@ app = Flask(__name__,  static_url_path='')
 flatpages = FlatPages(app)
 freezer = Freezer(app)
 app.config.from_object(__name__)
+app.config['FREEZER_DESTINATION_IGNORE'] = ['.git*', 'CNAME', '.gitignore', 'readme.md','_blogContent','_blogApp']
 
 @app.route('/css/pygments.css')
 def pygments_css():
