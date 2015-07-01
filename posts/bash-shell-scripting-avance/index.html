@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="author" content="Walid Hassani">
 	
-    <meta name="description" content="Cet article est la suite du Bash Shell Scripting I pour ceux qui souhaitent aller plus loin. Il es déidié à la création de script bash pour la manipulation de chaînes, la logique booléenne, les boucle, débogage, etc.">
+    <meta name="description" content="Cet article est la suite du Bash Shell Scripting I destiné à ceux ceux qui souhaitent aller plus loin. Il est déidié à la création de script bash pour la manipulation de chaînes, la logique booléenne, les boucle, débogage, etc.">
 
 
 
@@ -92,12 +92,12 @@
 <p>Les opérateurs de chaînes comprennent ceux qui font la comparaison, le tri, et de trouver la longueur. l'utilisation de certains opérateurs de base sont illustrés ci-après :</p>
 <ul>
 <li>[String1 &gt; string2] Compare l'ordre de tri des string1 et string2.</li>
-<li>[String1 = string2] Compare les caractères dans chaîne1 avec les caractères dans string2.</li>
+<li>[String1 = string2] Compare les caractères dans chaîne1 avec les caractères string2.</li>
 <li>myLen1 = $ {#string1} Enregistre la longueur de string1 dans la variable myLen1.</li>
 </ul>
 <p><strong>1 : Partie de la chaîne</strong></p>
 <p>Pour extraire le premier caractère d'une chaîne, nous pouvons préciser:</p>
-<p>$ {chaine:0: 1} Ici 0 est le décalage dans la chaîne où l'extraction doit commencer et 1 est le nombre de caractères à extraire.</p>
+<p>$ {chaine:0: 1} Ici 0 est le décalage dans la chaîne, où, l'extraction doit commencer et 1 est le nombre de caractères à extraire.</p>
 <p>(.) Pour extraire tous les caractères d'une chaîne après un point, utiliser l'expression suivante:</p>
 <div class="codehilite"><pre><span class="cp">${</span><span class="n">string</span><span class="c">#*.</span><span class="cp">}</span>
 </pre></div>
@@ -113,7 +113,7 @@
 <p><strong>N.B</strong> :   </p>
 <ul>
 <li>
-<p>si vous avez plusieurs conditions qui s'enchaînent avec l'opérateur &amp;&amp;,   le traitement s'arrête dès que la condition est évaluée à false. Par exemple, si vous avez un &amp;&amp; B &amp;&amp; C et A est vrai, mais B est faux, C ne sera jamais exécutée.</p>
+<p>si vous avez plusieurs conditions qui s'enchaînent avec l'opérateur &amp;&amp;,   le traitement s'arrête dès que la condition est évaluée à False. Par exemple, si vous avez un &amp;&amp; B &amp;&amp; C et A est vrai, mais B est faux, C ne sera jamais exécutée.</p>
 </li>
 <li>
 <p>De même, si vous utilisez l'opérateur ||, le traitement s'arrête dès que quelque chose est vrai. Par exemple, si vous avez A || B || C et A est faux et B est vrai, C ne sera jamais exécutée.</p>
@@ -143,11 +143,11 @@
 <h4 id="structure-de-la-declaration-de-cas-case">Structure de la déclaration de cas (case)</h4>
 <p>Voici la structure de base de la déclaration de cas:</p>
 <div class="codehilite"><pre><span class="k">case</span> <span class="n">expression</span><span class="err"> </span><span class="n">in</span>
-<span class="err">   </span> <span class="n">pattern1</span><span class="p">)</span> <span class="n">ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span><span class="p">;;</span>
-<span class="err">   </span> <span class="n">pattern2</span><span class="p">)</span> <span class="n">ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span><span class="p">;;</span>
-<span class="err">   </span> <span class="n">pattern3</span><span class="p">)</span> <span class="n">ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span><span class="p">;;</span>
-<span class="err">   </span> <span class="n">pattern4</span><span class="p">)</span> <span class="n">ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span><span class="p">;;</span>
-<span class="err">   </span> <span class="o">*</span><span class="p">)</span> <span class="n">Ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span> <span class="n">par</span> <span class="n">d</span><span class="err">é</span><span class="n">faut</span> <span class="n">ou</span> <span class="n">rien</span><span class="p">;;</span>
+    <span class="n">pattern1</span><span class="p">)</span> <span class="n">ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span><span class="p">;;</span>
+    <span class="n">pattern2</span><span class="p">)</span> <span class="n">ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span><span class="p">;;</span>
+    <span class="n">pattern3</span><span class="p">)</span> <span class="n">ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span><span class="p">;;</span>
+    <span class="n">pattern4</span><span class="p">)</span> <span class="n">ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span><span class="p">;;</span>
+    <span class="o">*</span><span class="p">)</span> <span class="n">Ex</span><span class="err">é</span><span class="n">cuter</span> <span class="n">des</span> <span class="n">commandes</span> <span class="n">par</span> <span class="n">d</span><span class="err">é</span><span class="n">faut</span> <span class="n">ou</span> <span class="n">rien</span><span class="p">;;</span>
 <span class="n">esac</span>
 </pre></div>
 
@@ -161,12 +161,10 @@
 <li>until</li>
 </ul>
 <h4 id="la-boucle-for">La boucle "for"</h4>
-<p>La boucle <strong>for</strong> opère sur chaque élément d'une liste d'éléments. La syntaxe de la boucle est:</p>
-<div class="codehilite"><pre><span class="nb">for</span><span class="err"> </span><span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;</span><span class="kd">variable</span><span class="o">&lt;/</span><span class="nx">em</span><span class="o">&gt;</span><span class="err"> </span><span class="k">in</span> <span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;</span><span class="nb">list</span><span class="o">&lt;/</span><span class="nx">em</span><span class="o">&gt;</span>
-<span class="k">do</span>
-<span class="err">    </span> <span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;</span><span class="nx">ex</span><span class="err">é</span><span class="nx">cuter</span> <span class="nx">une</span> <span class="nx">it</span><span class="err">é</span><span class="nx">ration</span> <span class="nx">pour</span> <span class="nx">chaque</span> <span class="err">é</span><span class="nx">l</span><span class="err">é</span><span class="nx">ment</span> <span class="nx">dans</span> <span class="nx">la</span><span class="o">&lt;/</span><span class="nx">em</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;</span><span class="err">            </span> <span class="nx">liste</span> <span class="nx">jusqu</span><span class="s1">&#39;à ce que la liste est terminée&lt;/em&gt;</span>
-<span class="s1">done</span>
+<p>La boucle <strong>for</strong> opère sur chaque élément d'une liste d'éléments. La syntaxe de la boucle est:</p>
+<div class="codehilite"><pre><span class="k">for</span> <span class="n">variable</span> <span class="n">in</span> <span class="n">list</span>
+    <span class="k">do</span> <span class="s">&quot;exécuter une itération pour chaque élément dans la liste jusqu&#39;à ce que la liste est terminée&quot;</span>
+<span class="n">done</span>
 </pre></div>
 
 
@@ -179,7 +177,7 @@
 6</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash </span>
 <span class="nv">sum</span><span class="o">=</span>0
 <span class="k">for </span>i in 1 2 3 4
-    <span class="nv">sum</span> <span class="o">=</span> <span class="k">$((</span><span class="nv">$sum</span><span class="o">+</span><span class="nv">$i</span><span class="k">))</span>
+   <span class="nv">sum</span> <span class="o">=</span> <span class="k">$((</span><span class="nv">$sum</span><span class="o">+</span><span class="nv">$i</span><span class="k">))</span>
 <span class="k">done</span>
 <span class="nb">echo</span> <span class="s2">&quot;la somme des $i est $sum&quot;</span>
 </pre></div>
@@ -187,11 +185,10 @@
 
 <h4 id="la-boucle-while">La boucle while</h4>
 <p>La boucle while répète un ensemble de déclarations tant que la commande de contrôle renvoie true. La syntaxe est:</p>
-<div class="codehilite"><pre><span class="k">while</span><span class="err"> </span><span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;</span><span class="nx">condition</span> <span class="nx">est</span> <span class="nx">vraie</span><span class="o">&lt;/</span><span class="nx">em</span><span class="o">&gt;</span>
-<span class="k">do</span>
-<span class="err">    </span> <span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;</span><span class="nx">Commandes</span> <span class="nb">d</span><span class="s1">&#39;exécution&lt;/em&gt;</span>
-<span class="s1">&lt;em&gt;     ----&lt;/em&gt;</span>
-<span class="s1">done</span>
+<div class="codehilite"><pre><span class="k">while</span><span class="err"> </span><span class="s">&quot;condition est vraie&quot;</span>
+    <span class="k">do</span> <span class="s">&quot;commandes à executer&quot;</span>
+    <span class="o">----</span>
+<span class="n">done</span>
 </pre></div>
 
 
@@ -222,9 +219,9 @@
 
 <h4 id="la-boucle-until">La boucle until</h4>
 <p>La boucle <strong>until</strong> répète un ensemble de déclarations tant que la commande de contrôle est fausse. Ainsi, il est essentiellement à l'opposé de la boucle while. La syntaxe est:</p>
-<div class="codehilite"><pre><span class="n">until</span><span class="err"> </span><span class="n">la</span> <span class="n">condition</span> <span class="n">est</span> <span class="n">fausse</span>
+<div class="codehilite"><pre><span class="n">until</span><span class="err"> </span><span class="s">&quot;la condition est fausse&quot;</span>
 <span class="k">do</span>
-<span class="err">    </span> <span class="n">Commandes</span> <span class="n">d</span><span class="err">&#39;</span><span class="n">ex</span><span class="err">é</span><span class="n">cution</span>
+<span class="err">    </span> <span class="s">&quot;Commandes d&#39;exécution&quot;</span>
 <span class="err">    </span> <span class="o">----</span>
 <span class="n">done</span>
 </pre></div>

@@ -1,6 +1,6 @@
 title: "Bash Shell Scripting II - Niveau avancé"
 date: 2015-02-23
-description: Cet article est la suite du Bash Shell Scripting I pour ceux qui souhaitent aller plus loin. Il es déidié à la création de script bash pour la manipulation de chaînes, la logique booléenne, les boucle, débogage, etc.
+description: Cet article est la suite du Bash Shell Scripting I destiné à ceux ceux qui souhaitent aller plus loin. Il est déidié à la création de script bash pour la manipulation de chaînes, la logique booléenne, les boucle, débogage, etc.
 categories: 
 - Linux
 
@@ -14,7 +14,7 @@ Une variable de type chaîne contient une séquence de caractères de texte. Ell
 Les opérateurs de chaînes comprennent ceux qui font la comparaison, le tri, et de trouver la longueur. l'utilisation de certains opérateurs de base sont illustrés ci-après :
 	
 * [String1 > string2] Compare l'ordre de tri des string1 et string2.
-* [String1 = string2] Compare les caractères dans chaîne1 avec les caractères dans string2.
+* [String1 = string2] Compare les caractères dans chaîne1 avec les caractères string2.
 * myLen1 = $ {#string1} Enregistre la longueur de string1 dans la variable myLen1.
 
 
@@ -22,12 +22,12 @@ Les opérateurs de chaînes comprennent ceux qui font la comparaison, le tri, et
 
 Pour extraire le premier caractère d'une chaîne, nous pouvons préciser:
 
-$ {chaine:0: 1} Ici 0 est le décalage dans la chaîne où l'extraction doit commencer et 1 est le nombre de caractères à extraire.
+$ {chaine:0: 1} Ici 0 est le décalage dans la chaîne, où, l'extraction doit commencer et 1 est le nombre de caractères à extraire.
 
 (.) Pour extraire tous les caractères d'une chaîne après un point, utiliser l'expression suivante:
 
     
-    ${string#*.}
+	${string#*.}
 
 
 ### expressions booléennes
@@ -41,7 +41,7 @@ Les expressions booléennes ont pour résultat  TRUE ou FALSE, et les résulta
 
 **N.B** :	
 
-* si vous avez plusieurs conditions qui s'enchaînent avec l'opérateur &&,   le traitement s'arrête dès que la condition est évaluée à false. Par exemple, si vous avez un && B && C et A est vrai, mais B est faux, C ne sera jamais exécutée.
+* si vous avez plusieurs conditions qui s'enchaînent avec l'opérateur &&,   le traitement s'arrête dès que la condition est évaluée à False. Par exemple, si vous avez un && B && C et A est vrai, mais B est faux, C ne sera jamais exécutée.
 
 * De même, si vous utilisez l'opérateur ||, le traitement s'arrête dès que quelque chose est vrai. Par exemple, si vous avez A || B || C et A est faux et B est vrai, C ne sera jamais exécutée.
 
@@ -53,14 +53,14 @@ Les expressions booléennes ont pour résultat  TRUE ou FALSE, et les résulta
 
 Nous pouvons utiliser ces expressions lorsque vous travaillez avec plusieurs types de données y compris les chaînes ou des nombres ainsi que les fichiers. Par exemple, pour vérifier si un fichier existe, utiliser le test conditionnelle suivante:
 
-    
-    [-e <Nom du fichier>]
+
+	[-e <Nom du fichier>]
 
 
 De même, pour vérifier si la valeur de nombre1 est supérieur à la valeur de nombre2, utiliser le test conditionnelle suivante:
 
     
-    [$nombre1 -gt $nombre2]
+	[$nombre1 -gt $nombre2]
 
 
 l'opérateur -gt retourne TRUE si nombre1 est supérieur à nombre2.
@@ -87,13 +87,13 @@ Voici quelques-uns des avantages de l'utilisation de la déclaration de cas:
 Voici la structure de base de la déclaration de cas:
 
     
-    case expression in
-        pattern1) exécuter des commandes;;
-        pattern2) exécuter des commandes;;
-        pattern3) exécuter des commandes;;
-        pattern4) exécuter des commandes;;
-        *) Exécuter des commandes par défaut ou rien;;
-    esac
+	case expression in
+	    pattern1) exécuter des commandes;;
+	    pattern2) exécuter des commandes;;
+	    pattern3) exécuter des commandes;;
+	    pattern4) exécuter des commandes;;
+	    *) Exécuter des commandes par défaut ou rien;;
+	esac
 
 
 
@@ -112,53 +112,50 @@ Trois types de boucles sont souvent utilisés dans la plupart des langages de pr
 #### La boucle "for"
 
 
-La boucle **for** opère sur chaque élément d'une liste d'éléments. La syntaxe de la boucle est:
+La boucle **for** opère sur chaque élément d'une liste d'éléments. La syntaxe de la boucle est:
 
     
-    for <em>variable</em> in <em>list</em>
-    do
-         <em>exécuter une itération pour chaque élément dans la</em>
-    <em>             liste jusqu'à ce que la liste est terminée</em>
-    done
-
+	for variable in list
+		do "exécuter une itération pour chaque élément dans la liste jusqu'à ce que la liste est terminée"
+	done
+	
 
 exemple :
     
-    #!/bin/bash 
-    sum=0
-    for i in 1 2 3 4
-        sum = $(($sum+$i))
-    done
-    echo "la somme des $i est $sum"
-
+	#!/bin/bash 
+	sum=0
+	for i in 1 2 3 4
+	   sum = $(($sum+$i))
+	done
+	echo "la somme des $i est $sum"
+	
 
 
 #### La boucle while
 
 La boucle while répète un ensemble de déclarations tant que la commande de contrôle renvoie true. La syntaxe est:
     
-    while <em>condition est vraie</em>
-    do
-         <em>Commandes d'exécution</em>
-    <em>     ----</em>
-    done
+	while "condition est vraie"
+		do "commandes à executer"
+		----
+	done
 
 
 exemple :
 
     
-    #!/bin/bash 
-    echo "entrer un nombre"
-    read nm
-    fact=1
-    i=0
-    while [$i -le $nm]
-    do
-        fact = $(($fact*$i))
-        i = $(($i+1))
-    done
-    echo "le factoriel de $nm est $fact"
-
+	#!/bin/bash 
+	echo "entrer un nombre"
+	read nm
+	fact=1
+	i=0
+	while [$i -le $nm]
+	do
+	    fact = $(($fact*$i))
+	    i = $(($i+1))
+	done
+	echo "le factoriel de $nm est $fact"
+	
 
 
 
@@ -168,9 +165,9 @@ exemple :
 La boucle **until** répète un ensemble de déclarations tant que la commande de contrôle est fausse. Ainsi, il est essentiellement à l'opposé de la boucle while. La syntaxe est:
 
     
-    until la condition est fausse
+    until "la condition est fausse"
     do
-         Commandes d'exécution
+         "Commandes d'exécution"
          ----
     done
 
@@ -219,7 +216,8 @@ Le mode de débogage permet d'identifier l'erreur parce que:
 exemple :
 
 * Sans débogage
-```    
+
+```
     #!/bin/bash `
     echo "entrer votre nom avec votre titre"`
     read nom`
