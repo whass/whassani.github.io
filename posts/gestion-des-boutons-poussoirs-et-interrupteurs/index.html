@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="author" content="Walid Hassani">
 	
-    <meta name="description" content="Les bouttons poussoirs et les interrupteurs sont des éléments avec lesquels vous travaillerai en permancen si vous travaillez dans l&#39;embarqué. Dans cet article, à travers la ARM tiva-c de TI, je vous expose la procédure complète pour travailler avec ces éléments. La procédure reste valable pour la majorité des micro-contrôleurs.">
+    <meta name="description" content="Les boutons poussoirs et les interrupteurs sont des éléments avec lesquels vous travaillerai en permanence si vous travaillez dans l&#39;embarqué. Dans cet article, à travers la ARM tiva-c de TI, je vous expose la procédure complète pour travailler avec ces éléments. La procédure reste valable pour la majorité des micro-contrôleurs.">
 
 
 
@@ -76,12 +76,12 @@
 </li>
 </ol>
 <p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00015.jpeg"><img alt="00015" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00015.jpeg" /></a></p>
-<p>Indication de la schématique, il n'y a pas de résistance de résistance de rappel <a href="http://www.embarquez-vous.fr/?p=511">(Pull-Up)</a> à SW1 ou SW2. Les broches PF0 PF4 et sont reliés à bouton-poussoir SW1 et SW2 directement (En fait, ils sont reliés par des résistances de zéro ohm de sorte qu'ils peuvent être enlevés si d'autres fonctions de ces deux broches sont souhaitées).</p>
+<p>Indication de la schématique, il n'y a pas de résistance de résistance de rappel <a href="http://www.embarquez-vous.fr/?p=511">(Pull-Up)</a> à SW1 ou SW2. Les broches PF0 PF4 et sont reliés à bouton-poussoir SW1 et SW2 directement (En fait, ils sont reliés par des résistances de zéro ohm de sorte qu'ils peuvent être enlevés si d'autres fonctions de ces deux broches sont souhaitées).</p>
 <p>Pour utiliser le SW1 et SW2 nous devons permettre à la résistance de pull-up interne à PF0 et PF4 d'être utilisée.</p>
 <p>Le tableau suivant montre le registre pour la PUR (Pull-Up Resistor).</p>
 <p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00016.jpeg"><img alt="00016" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00016.jpeg" /></a></p>
 <p>L'offset du registre GPIOPUR est l'adresse 0x510, ainsi sont adresse physique par rapport au port F est :</p>
-<div class="codehilite"><pre><span class="mh">0x40025000</span><span class="o">+</span><span class="mh">0x510</span><span class="o">=</span><span class="mh">0x40025510</span>
+<div class="codehilite"><pre><span class="mh">0x40025000</span> <span class="o">+</span> <span class="mh">0x510</span> <span class="o">=</span> <span class="mh">0x40025510</span>
 </pre></div>
 
 
@@ -113,34 +113,31 @@
 <p>répéter les opérations 5 à 7</p>
 </li>
 </ol>
-<div class="codehilite"><pre><span class="cm">/*  p2_7.c: Read a switch and write it to the LED */</span>
+<div class="codehilite"><pre><span class="cp">#include &quot;TM4C123GH6PM.h&quot;</span>
 
-<span class="cm">/*  This program reads SW1 of Tiva LaunchPad and writes the inverse of the value to the green LED. SW1 is low when pressed (Normally High). LED is on when high. */</span>
-
-<span class="p">#</span><span class="k">include</span> <span class="s">&quot;TM4C123GH6PM.h&quot;</span>
-
-<span class="k">int</span> <span class="n">main</span><span class="p">(</span><span class="k">void</span><span class="p">)</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="k">unsigned</span> <span class="k">int</span> <span class="n">value</span><span class="p">;</span>
-    <span class="no">SYSCTL</span><span class="o">-&gt;</span><span class="no">RCGCGPIO</span> <span class="o">|=</span> <span class="mh">0</span><span class="n">x20</span><span class="p">;</span>   <span class="cm">/* activer l&#39;horloge GPIOF */</span>
-    <span class="no">GPIOF</span><span class="o">-&gt;</span><span class="no">DIR</span> <span class="o">=</span> <span class="mh">0</span><span class="n">x08</span><span class="p">;</span>          <span class="cm">/* mettre PORTF3 pin comme sortie (LED) pin */</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">SYSCTL</span><span class="o">-&gt;</span><span class="n">RCGCGPIO</span> <span class="o">|=</span> <span class="mh">0x20</span><span class="p">;</span>   <span class="cm">/* activer l&#39;horloge GPIOF */</span>
+    <span class="n">GPIOF</span><span class="o">-&gt;</span><span class="kt">DIR</span> <span class="o">=</span> <span class="mh">0x08</span><span class="p">;</span>          <span class="cm">/* mettre PORTF3 pin comme sortie (LED) pin */</span>
                                 <span class="cm">/* et PORTF4 comme entrée, SW1 sur le PORTF4 */</span>
-    <span class="no">GPIOF</span><span class="o">-&gt;</span><span class="no">DEN</span> <span class="o">=</span> <span class="mh">0</span><span class="n">x18</span><span class="p">;</span>          <span class="cm">/* mettre PORTF pins 4-3 comme des pin numériques */</span>
-    <span class="no">GPIOF</span><span class="o">-&gt;</span><span class="no">PUR</span> <span class="o">=</span> <span class="mh">0</span><span class="n">x10</span><span class="p">;</span>          <span class="cm">/* activer la résistance Pull-Up pour le pin 4 */</span>
-    <span class="k">while</span><span class="p">(</span><span class="mh">1</span><span class="p">)</span>
+    <span class="n">GPIOF</span><span class="o">-&gt;</span><span class="n">DEN</span> <span class="o">=</span> <span class="mh">0x18</span><span class="p">;</span>          <span class="cm">/* mettre PORTF pins 4-3 comme des pin numériques */</span>
+    <span class="n">GPIOF</span><span class="o">-&gt;</span><span class="n">PUR</span> <span class="o">=</span> <span class="mh">0x10</span><span class="p">;</span>          <span class="cm">/* activer la résistance Pull-Up pour le pin 4 */</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="no">GPIOF</span><span class="o">-&gt;</span><span class="no">DATA</span><span class="p">;</span>    <span class="cm">/* lire les données du PORTF */</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="o">~</span><span class="n">value</span><span class="p">;</span>         <span class="cm">/* switch is low active; LED is high active */</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">&gt;&gt;</span> <span class="mh">1</span><span class="p">;</span>     <span class="cm">/* shift it right to display on green LED */</span>
-        <span class="no">GPIOF</span><span class="o">-&gt;</span><span class="no">DATA</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>     <span class="cm">/* put it on the green LED */</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">GPIOF</span><span class="o">-&gt;</span><span class="n">DATA</span><span class="p">;</span>    <span class="cm">/* lire les données du PORTF */</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="o">~</span><span class="n">value</span><span class="p">;</span>         <span class="cm">/* switch état bas; LED état bas */</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>     <span class="cm">/* décalage à droite pour allumer la LED verte */</span>
+        <span class="n">GPIOF</span><span class="o">-&gt;</span><span class="n">DATA</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>     <span class="cm">/* écrire le registre */</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="cm">/* This function is called by the startup assembly code to perform system specific initialization tasks. */</span>
-<span class="k">void</span> <span class="n">SystemInit</span><span class="p">(</span><span class="k">void</span><span class="p">)</span>
+<span class="cm">/* Cette fonction est appelée par le code assembleur de démarrage pour effectuer des tâches spécifiques d&#39;initialisation du système. */</span>
+
+<span class="kt">void</span> <span class="nf">SystemInit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="cm">/* Grant coprocessor access */</span>
-    <span class="cm">/* This is required since TM4C123G has a floating point coprocessor */</span>
-    <span class="no">SCB</span><span class="o">-&gt;</span><span class="no">CPACR</span> <span class="o">|=</span> <span class="mh">0</span><span class="n">x00F00000</span><span class="p">;</span>
+     <span class="cm">/* Accès au coprocesseur */</span>
+     <span class="cm">/* Ceci est nécessaire parce que la TM4C123G a un coprocesseur à virgule flottante */</span>
+    <span class="n">SCB</span><span class="o">-&gt;</span><span class="n">CPACR</span> <span class="o">|=</span> <span class="mh">0x00F00000</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 

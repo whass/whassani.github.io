@@ -59,11 +59,7 @@ def post(name):
 
     return render_template('post.html', post=post)
 
-@app.route('/images/<name>')
-def image(name):
-    path = '{}/{}'.format(IMG_DIR, name)
-    post = flatpages.get_or_404(path)
-    return send_from_directory(post)
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "build":

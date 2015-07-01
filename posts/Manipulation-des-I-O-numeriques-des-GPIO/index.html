@@ -63,7 +63,7 @@
   <div id="content">
     <div class="post">
 <p>Dans ce qui suit, j'aborderai avec vous, à travers un exemple très simple, un concept fondamental dans les systèmes embarqués, à savoir la manipulation des GPIO !</p>
-<p>Les GPIO pour General Purpose Input Output, sont l'ensemble des entrées/sorties numériques permettants de communiquer avec le monde extérieur.</p>
+<p>Les GPIO pour General Purpose Input Output, sont l'ensemble des entrées/sorties numériques permettant de communiquer avec le monde extérieur.</p>
 <p>Dans ce qui suit, je vous apprendrez à :</p>
 <ul>
 <li>Manipuler les registres</li>
@@ -79,7 +79,7 @@
 <p>vous avez déjà installé et configuré</p>
 <ul>
 <li>
-<p>CCS V6 (Code Composer Studio) sur votre machine ubuntu ou windows</p>
+<p>CCS V6 (Code Composer Studio) sur votre machine Ubuntu ou Windows</p>
 </li>
 <li>
 <p>TivaWare</p>
@@ -90,7 +90,7 @@
 <p>Possédez une carte Tiva C Séries TM4C123G LaunchPad Evaluation Kit EK-TM4C123GXL.</p>
 </li>
 <li>
-<p>Vous savez comment écrire sur un registre.</p>
+<p>Vous savez comment écrire sur un registre.</p>
 </li>
 </ul>
 <h3 id="methodologie">Méthodologie</h3>
@@ -129,16 +129,16 @@
 <p>Activer le port (mettre le bit numéro 5 du registre de contrôle à l'état haut)</p>
 </li>
 <li>
-<p>Identifier les registres de contrôles du port</p>
+<p>Identifier les registres de contrôles du port</p>
 </li>
 <li>
 <p>Les adresse mémoires des registres de contrôle (0x40025400, 0x4002551C)</p>
 <ul>
 <li>
-<p>définir la direction (registre : 0x40025400, mettre le bit numéro 2 à l'état haut)</p>
+<p>définir la direction (registre : 0x40025400, mettre le bit numéro 2 à l'état haut)</p>
 </li>
 <li>
-<p>activer la sortie numérique (registre : 0x4002551C, mettre le bit numéro 2 à l'état haut)</p>
+<p>activer la sortie numérique (registre : 0x4002551C, mettre le bit numéro 2 à l'état haut)</p>
 </li>
 <li>
 <p>D'autres registres peuvent être configuré, mais ces deux sont largement suffisant pour lire et écrire un GPIO</p>
@@ -155,7 +155,7 @@
 <p>le bit du registre de données qui agit sur le pin (le deuxième bit)</p>
 </li>
 <li>
-<p>écrire sur la sortie en agissante sur le registre de donnée (mettre le bit numéro 2 à l'état haut ou bas)</p>
+<p>écrire sur la sortie en agissante sur le registre de donnée (mettre le bit numéro 2 à l'état haut ou bas)</p>
 </li>
 </ol>
 <h3 id="code-source">Code source</h3>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="author" content="Walid Hassani">
 	
-    <meta name="description" content="Typiquement un noyau CPU ne peut pas écrire des bits d&#39;un registre individuellement. En effet, il doit écrire des octets ou mots entiers à la fois selon la flow (Read-Modify-Write). Mais que ce passera-t-il si durant (Read-Modify-Write) une intéreeution prioritaire survient ? Pour en savoir plus, lisez la la suite.">
+    <meta name="description" content="Typiquement un noyau CPU ne peut pas écrire des bits d&#39;un registre individuellement. En effet, il doit écrire des octets ou mots entiers à la fois selon la flow (Read-Modify-Write). Mais que ce passera-t-il si durant (Read-Modify-Write) une interruption prioritaire survient ? Pour en savoir plus, lisez la la suite.">
 
 
 
@@ -89,7 +89,6 @@
 <p>L'image ci-dessous montre le principe du bit-banding, à des fins de démonstration, j'ai choisis d'utiliser des mots de 8 bits. Sur le Cortex M3 et M4 de la région d'alias contient des mots de 32 bits.</p>
 <p><img alt="bit-banding" src="http://d1u2s20mo6at4b.cloudfront.net/wp-content/uploads/Screen-Shot-2013-01-30-at-7.39.59-AM.png" /></p>
 <p>Pour utiliser cette caractéristique, vous devez avoir l'adresse du mot dans la région Alias (Alias Region) qui correspond au bit que vous voulez manipuler (lecture/écrire). Ceci est fait en C avec une macro.</p>
-<p>To use this feature, you must first get the address of the word in the alias region that corresponds to the bit you wish to read/write. This is done in C with a simple pre-processor macro.</p>
 <div class="codehilite"><pre><span class="cp">#define BITBAND_SRAM_REF 0x20000000</span>
 <span class="cp">#define BITBAND_SRAM_BASE 0x22000000</span>
 <span class="cp">#define BITBAND_SRAM(a,b) ((BITBAND_SRAM_BASE + (a-BITBAND_SRAM_REF)*32 + (b*4))) </span><span class="c1">// Convert SRAM address</span>
@@ -112,7 +111,7 @@
 
 
 <p>Pour plus de détails veuillez vous référer a cette adresse <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0179b/CHDJHIDF.html">the ARM InfoCenter page on bit-banding</a>.</p>
-<p>Ce n'est pas la seule solution existante. Pour toute les architectures connues, ils existent des mécanismes pour agir sur un bit individuellement. L"approche qu'utilise ARM est élégante et n'utilise que le ANSI C  là où les autres utilisent des extensions spéciales ou le langages assembleur.</p>
+<p>Ce n'est pas la seule solution existante. Pour toute les architectures connues, ils existent des mécanismes pour agir sur un bit individuellement. L'"'approche qu'utilise ARM est élégante et n'utilise que le ANSI C là où les autres utilisent des extensions spéciales ou le langages assembleur.</p>
 
       <br> <br>
 

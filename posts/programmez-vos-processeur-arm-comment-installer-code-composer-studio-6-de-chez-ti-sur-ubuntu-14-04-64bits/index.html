@@ -72,9 +72,9 @@
 <li><a href="#configurez-votre-projet-pour-tivaware">Configurez votre projet pour TivaWare</a></li>
 </ul>
 </div>
-<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png"><img alt="CCSv6-embeddedprocessor" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png" /></a></p>
-<p>Le logiciel <strong>Code Composer Studio</strong> est un environnement de développement intégré qui permet de programmer les processeurs embarqués de chez Texas Instrument comme les processeurs de signal numérique (DSP) de la famille TMS320, les appareils basé sur l'architecture ARM ou les microcontrôleurs de la famille MSP430.</p>
-<p>Cet IDE est basé sur Eclipse, un framework open source.</p>
+<p><a href="embarquez-vous.fr/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png"><img alt="CCSv6-embeddedprocessor" src="http://embarquez-vous.fr/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png" /></a></p>
+<p>Le logiciel <strong>Code Composer Studio</strong> est un environnement de développement intégré qui permet de programmer les processeurs embarqués de chez Texas Instrument comme les processeurs de signal numérique (DSP) de la famille TMS320, les appareils basé sur l'architecture ARM ou les microcontrôleurs de la famille MSP430.</p>
+<p>Cet IDE est basé sur Eclipse, un Framework open source.</p>
 <p>Let's begin .....</p>
 <h2 id="resoudre-les-dependances">Résoudre les dépendances</h2>
 <p>Nous commençons par résoudre les dépendances.</p>
@@ -105,25 +105,25 @@
 <ol>
 <li>Accepter les termes du contrat</li>
 </ol>
-<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png"><img alt="Capture d’écran 2015-01-23 à 02.15.15" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png" /></a></p>
+<p><a href="http://embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png"><img alt="Capture d’écran 2015-01-23 à 02.15.15" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png" /></a></p>
 <ol>
 <li>Cocher les outils de développement nécessaire à la Tiva-C launchpad comme sur la figure suivante.</li>
 </ol>
-<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png"><img alt="Capture d’écran 2015-01-23 à 02.24.09" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png" /></a></p>
+<p><a href="http://embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png"><img alt="Capture d’écran 2015-01-23 à 02.24.09" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png" /></a></p>
 <ol>
-<li>Sélectctionner les émulateurs qui vous intéresse</li>
+<li>Sélectionner les émulateurs qui vous intéresse</li>
 </ol>
-<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png"><img alt="Capture d’écran 2015-01-23 à 02.25.30" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png" /></a></p>
+<p><a href="http://embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png"><img alt="Capture d’écran 2015-01-23 à 02.25.30" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png" /></a></p>
 <ol>
 <li>Pour l'app centre, libre à vous de les cocher ou pas.</li>
 </ol>
-<p><a href="http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png"><img alt="Capture d’écran 2015-01-23 à 02.25.55" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png" /></a></p>
+<p><a href="http://embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png"><img alt="Capture d’écran 2015-01-23 à 02.25.55" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png" /></a></p>
 <p>Juste avant que l'installation se termine, l'installateur vous demande si vous souhaiter un raccourci ou pas.</p>
 <ul>
 <li>Si vous choisissez oui alors, il y'a de forte chance qui si vous cliquez sur le raccourci que ça ne marche pas. Dans ce cas, modifier le fichier du raccourci qui se trouve dans le d'installation de CCS choisi au début comme ceci :</li>
 </ul>
-<div class="codehilite"><pre><span class="err">$</span> <span class="n">cd</span><span class="err"> </span><span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span><span class="err">```</span>
-<span class="err">$</span> <span class="n">sudo</span> <span class="n">nano</span> <span class="n">nom</span><span class="o">-</span><span class="n">du</span><span class="o">-</span><span class="n">raccourci</span><span class="err">`</span>
+<div class="codehilite"><pre>    <span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span>
+    <span class="err">$</span> <span class="n">sudo</span> <span class="n">nano</span> <span class="n">nom</span><span class="o">-</span><span class="n">du</span><span class="o">-</span><span class="n">raccourci</span>
 </pre></div>
 
 
@@ -150,8 +150,8 @@
 <p>Ces dernières concernent l'app center, comme nous l'avons coché précédemment. Je vous conseille de les faire, mais elles ne sont pas obligatoire.</p>
 <p>Maintenant CCS et prêt à être utilisé.</p>
 <p>Il reste une dernière étape elle concerne les drivers de la carte, ils s'installent facilement comme ceci :</p>
-<div class="codehilite"><pre><span class="n">cd</span><span class="err"> </span><span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span><span class="n">ccsvx</span><span class="o">/</span><span class="n">install_scripts</span>
-<span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">install_drivers</span><span class="p">.</span><span class="n">sh</span><span class="p">.</span>
+<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span><span class="n">ccsvx</span><span class="o">/</span><span class="n">install_scripts</span>
+<span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">install_drivers</span><span class="p">.</span><span class="n">sh</span>
 </pre></div>
 
 
@@ -174,11 +174,11 @@
 <div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">votre</span><span class="o">-</span><span class="n">dossier</span><span class="o">-</span><span class="n">d</span><span class="o">-</span><span class="n">installation</span><span class="o">/</span>
 <span class="n">mkdir</span> <span class="n">tivaware</span>
 <span class="n">cd</span> <span class="n">tivaware</span> 
-<span class="n">unzip</span> <span class="o">~/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">SW</span><span class="o">-</span><span class="n">TM4C</span><span class="o">-</span><span class="mf">2.1.0.12573</span><span class="p">.</span><span class="n">exe</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span>
+<span class="n">unzip</span> <span class="o">~/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">SW</span><span class="o">-</span><span class="n">TM4C</span><span class="o">-</span><span class="mf">2.1.0.12573</span><span class="p">.</span><span class="n">exe</span>
 </pre></div>
 
 
-<p>Il y a plusieurs façons d'inclure TivawWre dans vos projets. Afin de minimiser les paramètres requis sur chaque projet, créez un fichier dans votre espace de travail qu'on appellera "vars.ini". </p>
+<p>Il y a plusieurs façons d'inclure TivawWre dans vos projets. Afin de minimiser les paramètres requis sur chaque projet, créez un fichier dans votre espace de travail qu'on appellera "vars.ini".</p>
 <p><code>cd /votre-espace-de-travail/
 nano vars.ini</code></p>
 <p>Une seule ligne est nécessaire :</p>
