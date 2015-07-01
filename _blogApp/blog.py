@@ -25,7 +25,7 @@ app.config['FREEZER_DESTINATION_IGNORE'] = ['.git*', 'CNAME', '.gitignore', 'rea
 
 @app.route('/css/pygments.css')
 def pygments_css():
-    return pygments_style_defs('default'), 200, {'Content-Type': 'text/css'}
+    return pygments_style_defs('friendly'), 200, {'Content-Type': 'text/css'}
 
 @app.route('/')
 def home():
