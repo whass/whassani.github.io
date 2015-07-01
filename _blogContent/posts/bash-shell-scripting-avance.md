@@ -161,10 +161,10 @@ exemple :
 La boucle **until** répète un ensemble de déclarations tant que la commande de contrôle est fausse. Ainsi, il est essentiellement à l'opposé de la boucle while. La syntaxe est:
 
     
-    until "la condition est fausse"
+    until "la condition est fausse"
     do
-         "Commandes d'exécution"
-         ----
+        "Commandes d'exécution"
+         ----
     done
 
 
