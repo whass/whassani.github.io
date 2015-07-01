@@ -183,10 +183,10 @@ exemple :
 
 
 
-## Introduction au débogage de script
+## Introduction au débogage de script
 
 
-Tout en travaillant avec des scripts et des commandes, vous pouvez rencontrer des erreurs. Ceux-ci peuvent être due à une erreur dans le script, comme une syntaxe incorrecte, ou d'autres sources comme un fichier manquant ou la permission insuffisante pour effectuer une opération. Ces erreurs peuvent être signalées avec un code d'erreur spécifique. 
+Tout en travaillant avec des scripts et des commandes, vous pouvez rencontrer des erreurs. Ceux-ci peuvent être due à une erreur dans le script, comme une syntaxe incorrecte, ou d'autres sources comme un fichier manquant ou la permission insuffisante pour effectuer une opération. Ces erreurs peuvent être signalées avec un code d'erreur spécifique. 
 
 Alors, comment allez-vous identifier et fixer une erreur?
 
@@ -194,7 +194,7 @@ Débogage vous aide à détecter et de résoudre de telles erreurs, et est l'une
 
 
 ### En savoir plus sur le débogage de script
-Avant de corriger une erreur (ou bug), il est essentiel de connaître sa source.
+Avant de corriger une erreur (ou bug), il est essentiel de connaître sa source.
 En bash shell script, vous pouvez exécuter un script en mode débogage en faisant
     
     bash -x ./script_file.sh
@@ -213,11 +213,11 @@ exemple :
 
 * Sans débogage
 
-	#! /bin/bash
-	echo "entrer votre nom avec votre titre"
-	read nom
-	echo "votre titre est ${nom:0:3}"
-	echo "votre nom est ${nom#*.}"
+    #! /bin/bash
+    echo "entrer votre nom avec votre titre"
+    read nom
+    echo "votre titre est ${nom:0:3}"
+    echo "votre nom est ${nom#*.}"
 	
 	
 sortie :
@@ -229,7 +229,7 @@ sortie :
 
 
 * Avec débogage
-```
+
     #!/bin/bash 
     echo "entrer votre nom avec votre titre"
     set -x
@@ -237,7 +237,6 @@ sortie :
     echo "votre titre est ${nom:0:3}"
     echo "votre nom est ${nom#*.}"
     set +x
-```
 
 sortie :
     
@@ -253,24 +252,24 @@ sortie :
 
 
 
-### Redirection erreurs vers un fichier ou un écran
+### Redirection erreurs vers un fichier ou un écran
 
 Dans UNIX / Linux, tous les programmes qui s'exécutent donnent lieu à trois flux de fichiers qui sont:
 	
-  1. **stdin** (0) entrée standard, par défaut le clavier / terminal pour exécuter des programmes depuis la ligne de commande.
+  1. **stdin** (0) entrée standard, par défaut le clavier / terminal pour exécuter des programmes depuis la ligne de commande.
 
 	
-  2. **stdout** (1) sortie standard , par défaut, l'écran pour les programmes exécuté depuis la ligne de commande
+  2. **stdout** (1) sortie standard , par défaut, l'écran pour les programmes exécuté depuis la ligne de commande
 
 	
-  3. **stderr** (2) Erreur standard, où les messages d'erreur de sortie sont affichés ou sauvegardés
+  3. **stderr** (2) Erreur standard, où les messages d'erreur de sortie sont affichés ou sauvegardés
 
 
 Utilisation de la redirection nous permet de sauvegarder les flux de sortie stdout et stderr dans un fichier ou deux fichiers séparés pour une analyse ultérieure après l'exécution d'un programme ou une commande.
 
 exemple :
 
-Enregistrer le script ci-après dans un fichier nom `ioscript.sh`
+Enregistrer le script ci-après dans un fichier nom "ioscript.sh"
 
     
     #!/bin/bash 

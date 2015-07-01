@@ -77,12 +77,13 @@
 <li><a href="#la-boucle-until">La boucle until</a></li>
 </ul>
 </li>
-<li><a href="#introduction-au-debogage-de-script">Introduction au débogage de script</a><ul>
+<li><a href="#introduction-au-debogage-de-script">Introduction au débogage de script</a><ul>
 <li><a href="#en-savoir-plus-sur-le-debogage-de-script">En savoir plus sur le débogage de script</a></li>
-<li><a href="#redirection-erreurs-vers-un-fichier-ou-un-ecran">Redirection erreurs vers un fichier ou un écran</a></li>
+<li><a href="#redirection-erreurs-vers-un-fichier-ou-un-ecran">Redirection erreurs vers un fichier ou un écran</a></li>
 </ul>
 </li>
 <li><a href="#binbash">! /bin/bash</a></li>
+<li><a href="#binbash_1">!/bin/bash</a></li>
 </ul>
 </div>
 <h2 id="manipulation-de-chaines">manipulation de chaînes</h2>
@@ -243,12 +244,12 @@
 </pre></div>
 </td></tr></table>
 
-<h2 id="introduction-au-debogage-de-script">Introduction au débogage de script</h2>
-<p>Tout en travaillant avec des scripts et des commandes, vous pouvez rencontrer des erreurs. Ceux-ci peuvent être due à une erreur dans le script, comme une syntaxe incorrecte, ou d'autres sources comme un fichier manquant ou la permission insuffisante pour effectuer une opération. Ces erreurs peuvent être signalées avec un code d'erreur spécifique. </p>
+<h2 id="introduction-au-debogage-de-script">Introduction au débogage de script</h2>
+<p>Tout en travaillant avec des scripts et des commandes, vous pouvez rencontrer des erreurs. Ceux-ci peuvent être due à une erreur dans le script, comme une syntaxe incorrecte, ou d'autres sources comme un fichier manquant ou la permission insuffisante pour effectuer une opération. Ces erreurs peuvent être signalées avec un code d'erreur spécifique. </p>
 <p>Alors, comment allez-vous identifier et fixer une erreur?</p>
 <p>Débogage vous aide à détecter et de résoudre de telles erreurs, et est l'une des tâches les plus importantes d'un administrateur système.</p>
 <h3 id="en-savoir-plus-sur-le-debogage-de-script">En savoir plus sur le débogage de script</h3>
-<p>Avant de corriger une erreur (ou bug), il est essentiel de connaître sa source.
+<p>Avant de corriger une erreur (ou bug), il est essentiel de connaître sa source.
 En bash shell script, vous pouvez exécuter un script en mode débogage en faisant</p>
 <div class="codehilite"><pre><span class="n">bash</span> <span class="o">-</span><span class="n">x</span> <span class="p">.</span><span class="o">/</span><span class="n">script_file</span><span class="p">.</span><span class="n">sh</span>
 </pre></div>
@@ -283,18 +284,17 @@ echo "votre nom est ${nom#*.}"</p>
 
 
 <ul>
-<li>Avec débogage</li>
+<li>
+<p>Avec débogage</p>
+<h1 id="binbash_1">!/bin/bash</h1>
+<p>echo "entrer votre nom avec votre titre"
+set -x
+read nom
+echo "votre titre est ${nom:0:3}"
+echo "votre nom est ${nom#*.}"
+set +x</p>
+</li>
 </ul>
-<div class="codehilite"><pre>    #!/bin/bash 
-    echo &quot;entrer votre nom avec votre titre&quot;
-    set -x
-    read nom
-    echo &quot;votre titre est <span class="cp">${</span><span class="n">nom</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="cp">}</span>&quot;
-    echo &quot;votre nom est <span class="cp">${</span><span class="n">nom</span><span class="c">#*.</span><span class="cp">}</span>&quot;
-    set +x
-</pre></div>
-
-
 <p>sortie :</p>
 <div class="codehilite"><pre><span class="n">entrer</span> <span class="n">votre</span> <span class="n">nom</span> <span class="n">avec</span> <span class="n">votre</span> <span class="n">titre</span> 
 <span class="o">+</span> <span class="n">read</span> <span class="n">nom</span> 
@@ -307,22 +307,22 @@ echo "votre nom est ${nom#*.}"</p>
 </pre></div>
 
 
-<h3 id="redirection-erreurs-vers-un-fichier-ou-un-ecran">Redirection erreurs vers un fichier ou un écran</h3>
+<h3 id="redirection-erreurs-vers-un-fichier-ou-un-ecran">Redirection erreurs vers un fichier ou un écran</h3>
 <p>Dans UNIX / Linux, tous les programmes qui s'exécutent donnent lieu à trois flux de fichiers qui sont:</p>
 <ol>
 <li>
-<p><strong>stdin</strong> (0) entrée standard, par défaut le clavier / terminal pour exécuter des programmes depuis la ligne de commande.</p>
+<p><strong>stdin</strong> (0) entrée standard, par défaut le clavier / terminal pour exécuter des programmes depuis la ligne de commande.</p>
 </li>
 <li>
-<p><strong>stdout</strong> (1) sortie standard , par défaut, l'écran pour les programmes exécuté depuis la ligne de commande</p>
+<p><strong>stdout</strong> (1) sortie standard , par défaut, l'écran pour les programmes exécuté depuis la ligne de commande</p>
 </li>
 <li>
-<p><strong>stderr</strong> (2) Erreur standard, où les messages d'erreur de sortie sont affichés ou sauvegardés</p>
+<p><strong>stderr</strong> (2) Erreur standard, où les messages d'erreur de sortie sont affichés ou sauvegardés</p>
 </li>
 </ol>
 <p>Utilisation de la redirection nous permet de sauvegarder les flux de sortie stdout et stderr dans un fichier ou deux fichiers séparés pour une analyse ultérieure après l'exécution d'un programme ou une commande.</p>
 <p>exemple :</p>
-<p>Enregistrer le script ci-après dans un fichier nom <code>ioscript.sh</code></p>
+<p>Enregistrer le script ci-après dans un fichier nom "ioscript.sh"</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
