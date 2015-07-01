@@ -31,7 +31,7 @@ def pygments_css():
 def home():
     return render_template('index.html')
 
-@app.route('/hire')
+@app.route('/hire.html')
 def hire():
     return render_template('hire.html')
 
