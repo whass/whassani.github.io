@@ -88,11 +88,11 @@ Voici la structure de base de la déclaration de cas:
 
     
 	case expression in
-	    pattern1) exécuter des commandes;;
-	    pattern2) exécuter des commandes;;
-	    pattern3) exécuter des commandes;;
-	    pattern4) exécuter des commandes;;
-	    *) Exécuter des commandes par défaut ou rien;;
+	    pattern1) "exécuter des commandes";;
+	    pattern2) "exécuter des commandes";;
+	    pattern3) "exécuter des commandes";;
+	    pattern4) "exécuter des commandes";;
+	    *) "Exécuter des commandes par défaut ou rien";;
 	esac
 
 
