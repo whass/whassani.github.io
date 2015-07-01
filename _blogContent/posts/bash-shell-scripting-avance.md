@@ -211,7 +211,7 @@ Le mode de débogage permet d'identifier l'erreur parce que:
 
 exemple :
 
-* Sans débogage
+*Sans débogage
 
     #! /bin/bash
     echo "entrer votre nom avec votre titre"
@@ -220,6 +220,7 @@ exemple :
     echo "votre nom est ${nom#*.}"
 	
 	
+
 sortie :
     
     entrer votre nom avec votre titre 
@@ -228,7 +229,7 @@ sortie :
     votre nom est Mr Blender
 
 
-* Avec débogage
+*Avec débogage
 
     #!/bin/bash 
     echo "entrer votre nom avec votre titre"
