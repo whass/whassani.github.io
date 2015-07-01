@@ -49,15 +49,17 @@
       <div class="single-post clearfix">
         <div class="excerpt">
           <div class="title">
-                <a href="../../posts/C-le-guide-complet-des-operateurs/index.html"> C : Le guide complet des opérateurs</a>
+                <a href="../../posts/bit-banding-une-approche-elegante-pour-la-mise-a-1-et-a-0-des-bits/index.html">Bit-banding - une approche élégante pour la mise à 1 ou à 0 des Bits de vos registres</a>
           </div>
 
           <p class="description">
-            Le C est un outils primordial si vous voulez faire de l&#39;embarqué, un outils incontournable. Cet article propose un guide complet des opérateurs utilisés en C à savoir, les opérateus de calcul, d&#39;assignation, d&#39;incrémentation, de comparaison, logique, etc. Il est à utiliser comme un aide mémoire.
+            Typiquement un noyau CPU ne peut pas écrire des bits d&#39;un registre individuellement. En effet, il doit écrire des octets ou mots entiers à la fois selon la flow (Read-Modify-Write). Mais que ce passera-t-il si durant (Read-Modify-Write) une interruption prioritaire survient ? Pour en savoir plus, lisez la la suite.
           </p>
-          <div class="date">2014-05-14 in 
+          <div class="date">2015-02-14 in 
               
                   <a class="date" href="index.html">Embedded</a> &nbsp; 
+              
+                  <a class="date" href="../Linux/index.html">Linux</a> &nbsp; 
               
           </div>
         </div>
@@ -87,36 +89,17 @@
       <div class="single-post clearfix">
         <div class="excerpt">
           <div class="title">
-                <a href="../../posts/resistance-de-rappel-pull-up/index.html">Résistance de rappel (Pull-Up)</a>
+                <a href="../../posts/linux-embarque-pour-tous-la-beaglebone-black/index.html">Linux Embarqué pour tous : la BeagleBone Black !</a>
           </div>
 
           <p class="description">
-            Admettons que vous ayez une des broches de votre processeur est configurée comme entrée. Supposons que cette dernière est en l&#39;air (rien n&#39;est relié à la broche) et que votre programme lit l&#39;état de la broche, quelle est la valeur qui sera lue ?. 0 me diriez-vous, y a rien, détrompez vous ce n&#39;est pas forcémment le cas. Petite indice (tension flottante).
+            Vous cherchez une petite carte pour créer une mini-machine de test ou valider une idée sous Linux ou Android ? La BeagleBone Black ne coûte que 45 euros et se trouve être un instrument idéal pour créer des prototypes. Si vous êtes familier des solutions de type Raspberry Pi ou que le monde Arduino ne vous évoque pas uniquement un alcool exotique, cette minicarte est faite pour vous.
           </p>
-          <div class="date">2015-02-19 in 
-              
-                  <a class="date" href="index.html">Embedded</a> &nbsp; 
-              
-          </div>
-        </div>
-      </div>
-  
-     
-    
-      <div class="single-post clearfix">
-        <div class="excerpt">
-          <div class="title">
-                <a href="../../posts/bit-banding-une-approche-elegante-pour-la-mise-a-1-et-a-0-des-bits/index.html">Bit-banding - une approche élégante pour la mise à 1 ou à 0 des Bits de vos registres</a>
-          </div>
-
-          <p class="description">
-            Typiquement un noyau CPU ne peut pas écrire des bits d&#39;un registre individuellement. En effet, il doit écrire des octets ou mots entiers à la fois selon la flow (Read-Modify-Write). Mais que ce passera-t-il si durant (Read-Modify-Write) une interruption prioritaire survient ? Pour en savoir plus, lisez la la suite.
-          </p>
-          <div class="date">2015-02-14 in 
-              
-                  <a class="date" href="index.html">Embedded</a> &nbsp; 
+          <div class="date">2015-01-21 in 
               
                   <a class="date" href="../Linux/index.html">Linux</a> &nbsp; 
+              
+                  <a class="date" href="index.html">Embedded</a> &nbsp; 
               
           </div>
         </div>
@@ -134,6 +117,105 @@
             Cet article vous montre à travers un exemple pratique consistant à allumer une des LED de la carte ARM tiva-c. Quoique simple, cet exemple  regroupe tout les concepts fondamentaux pour manipuler les GPIO, ç savoir, la configuration, l&#39;accès aux registres, lecture et écriture, etc.
           </p>
           <div class="date">2015-01-24 in 
+              
+                  <a class="date" href="index.html">Embedded</a> &nbsp; 
+              
+                  <a class="date" href="../C-C++/index.html">C-C++</a> &nbsp; 
+              
+          </div>
+        </div>
+      </div>
+  
+     
+    
+      <div class="single-post clearfix">
+        <div class="excerpt">
+          <div class="title">
+                <a href="../../posts/gpio-general-purpose-io-programmation-et-interface/index.html">GPIO (General Purpose I/O) Programmation et interface</a>
+          </div>
+
+          <p class="description">
+            GPIO pour General Purpose Input Output désigne tout simplement les entrées-sorties d&#39;un micro-contrôleur, micro-processeur, etc. C&#39;est ce qui permet de passer du monde extérieur au monde binaire. A travers la puce ARM tiva-c de ti, je vous exposerai les éléments les plus importants des GPIO à savoir, les bus (APB (Advanced Bus périphérique) et AHB (Advanced High-Performance Bus)), l&#39;adresse, les pins, les registres (Direction et Data Registers), l&#39;horloge, pin-multiplexing, etc.
+          </p>
+          <div class="date">2015-02-17 in 
+              
+                  <a class="date" href="index.html">Embedded</a> &nbsp; 
+              
+          </div>
+        </div>
+      </div>
+  
+     
+    
+      <div class="single-post clearfix">
+        <div class="excerpt">
+          <div class="title">
+                <a href="../../posts/programmation-des-ports-series-uart-tiva-c/index.html">Programmation bas-niveau des ports séries UART</a>
+          </div>
+
+          <p class="description">
+            Le port le plus utilisé dans les systèmes embarqués est sans doute le port série (UART). A l&#39;issue de cet article, l&#39;UART n&#39;aura plus aucuns secret pour vous. A travers un exemple pratique, nous allons voir pas à pas les éléments qui constituent l&#39;UART, ainsi que les registres et la manière d&#39;établir une connexion série, le tout from scratch !.
+          </p>
+          <div class="date">2015-02-19 in 
+              
+                  <a class="date" href="index.html">Embedded</a> &nbsp; 
+              
+          </div>
+        </div>
+      </div>
+  
+     
+    
+      <div class="single-post clearfix">
+        <div class="excerpt">
+          <div class="title">
+                <a href="../../posts/special-function-register/index.html">L&#39;incontournable Special Function Register</a>
+          </div>
+
+          <p class="description">
+            Un incontournable de l&#39;embarqué,  a Special Function Register (ou Special Purpose Register, ou simplement registre spécial) est un registre dans un microprocesseur, qui contrôle ou surveille les différents aspects des fonctions du microprocesseur.
+          </p>
+          <div class="date">2015-02-17 in 
+              
+                  <a class="date" href="index.html">Embedded</a> &nbsp; 
+              
+          </div>
+        </div>
+      </div>
+  
+     
+    
+      <div class="single-post clearfix">
+        <div class="excerpt">
+          <div class="title">
+                <a href="../../posts/operation-sur-les-registres/index.html">Micro-Contrôleur : Opération sur les registres (accès, écriture et lecture)</a>
+          </div>
+
+          <p class="description">
+            L&#39;aspect fondamental de la programmation des micro-contrôleur est la configuration des registres. Quoique vous fassiez, configurer une entrée, une sortie, vitesse de transmission, .... vous devez passer par les registres associé. Ici je vous montre les méthodes utilisé pour cela.
+          </p>
+          <div class="date">2015-01-22 in 
+              
+                  <a class="date" href="index.html">Embedded</a> &nbsp; 
+              
+                  <a class="date" href="../C-C++/index.html">C-C++</a> &nbsp; 
+              
+          </div>
+        </div>
+      </div>
+  
+     
+    
+      <div class="single-post clearfix">
+        <div class="excerpt">
+          <div class="title">
+                <a href="../../posts/resistance-de-rappel-pull-up/index.html">Résistance de rappel (Pull-Up)</a>
+          </div>
+
+          <p class="description">
+            Admettons que vous ayez une des broches de votre processeur est configurée comme entrée. Supposons que cette dernière est en l&#39;air (rien n&#39;est relié à la broche) et que votre programme lit l&#39;état de la broche, quelle est la valeur qui sera lue ?. 0 me diriez-vous, y a rien, détrompez vous ce n&#39;est pas forcémment le cas. Petite indice (tension flottante).
+          </p>
+          <div class="date">2015-02-19 in 
               
                   <a class="date" href="index.html">Embedded</a> &nbsp; 
               
@@ -174,44 +256,6 @@
             Le logiciel Code Composer Studio est un environnement de développement intégré qui permet de programmer les processeurs embarqués de chez Texas Instrument comme les processeurs spécialisé dans le traitement de signal (DSP) de la famille TMS320, les appareils basé sur l&#39;architecture ARM ou les microcontrôleurs de la famille MSP430.
           </p>
           <div class="date">2015-01-23 in 
-              
-                  <a class="date" href="index.html">Embedded</a> &nbsp; 
-              
-          </div>
-        </div>
-      </div>
-  
-     
-    
-      <div class="single-post clearfix">
-        <div class="excerpt">
-          <div class="title">
-                <a href="../../posts/gpio-general-purpose-io-programmation-et-interface/index.html">GPIO (General Purpose I/O) Programmation et interface</a>
-          </div>
-
-          <p class="description">
-            GPIO pour General Purpose Input Output désigne tout simplement les entrées-sorties d&#39;un micro-contrôleur, micro-processeur, etc. C&#39;est ce qui permet de passer du monde extérieur au monde binaire. A travers la puce ARM tiva-c de ti, je vous exposerai les éléments les plus importants des GPIO à savoir, les bus (APB (Advanced Bus périphérique) et AHB (Advanced High-Performance Bus)), l&#39;adresse, les pins, les registres (Direction et Data Registers), l&#39;horloge, pin-multiplexing, etc.
-          </p>
-          <div class="date">2015-02-17 in 
-              
-                  <a class="date" href="index.html">Embedded</a> &nbsp; 
-              
-          </div>
-        </div>
-      </div>
-  
-     
-    
-      <div class="single-post clearfix">
-        <div class="excerpt">
-          <div class="title">
-                <a href="../../posts/operation-sur-les-registres/index.html">Micro-Contrôleur : Opération sur les registres (accès, écriture et lecture)</a>
-          </div>
-
-          <p class="description">
-            L&#39;aspect fondamental de la programmation des micro-contrôleur est la configuration des registres. Quoique vous fassiez, configurer une entrée, une sortie, vitesse de transmission, .... vous devez passer par les registres associé. Ici je vous montre les méthodes utilisé pour cela.
-          </p>
-          <div class="date">2015-01-22 in 
               
                   <a class="date" href="index.html">Embedded</a> &nbsp; 
               

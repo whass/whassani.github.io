@@ -3,7 +3,8 @@ date: 2014-05-14
 lang: fr
 description: Le C est un outils primordial si vous voulez faire de l'embarqué, un outils incontournable. Cet article propose un guide complet des opérateurs utilisés en C à savoir, les opérateus de calcul, d'assignation, d'incrémentation, de comparaison, logique, etc. Il est à utiliser comme un aide mémoire.
 categories: 
-- Embedded
+- C-C++
+
 
 
 **Table des matières :**

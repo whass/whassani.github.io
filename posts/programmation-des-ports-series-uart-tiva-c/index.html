@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Le port le plus utilisé dans les systèmes embarqués est sans doute le port série (UART). A l&#39;issue de cet article, l&#39;UART n&#39;aura plus aucuns secret pour vous. A travers un exemple pratique, nous allons voir pas à pas les éléments qui constituent l&#39;UART, ainsi que les registres et la manière d&#39;établir une connexion série, le tout from scratch !.">
+
+
+
+    <title>
+	
+	Programmation bas-niveau des ports séries UART
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire.html" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Programmation bas-niveau des ports séries UART
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-02-19 in 
+  
+  <a href="../../categories/Embedded/index.html"> Embedded </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong>Table des matières :</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#baud-rate-generator">Baud-Rate Generator</a></li>
+<li><a href="#exemple">Exemple :</a></li>
+<li><a href="#uart-control-uartctl-register">UART Control (UARTCTL) register</a><ul>
+<li><a href="#uarten-d0-uart-enable">UARTEN (D0) UART enable</a></li>
+<li><a href="#hse-d5-high-speed-enable">HSE (D5) High Speed enable</a></li>
+<li><a href="#rxe-d8-receive-enable">RXE (D8) Receive enable</a></li>
+<li><a href="#txe-d9-transmit-enable">TXE (D9) Transmit Enable</a></li>
+</ul>
+</li>
+<li><a href="#uart-line-control-register">UART Line Control register</a><ul>
+<li><a href="#stp2-d3-stop-bit2">STP2 (D3) stop bit2.</a></li>
+<li><a href="#fen-d4-fifo-enable">FEN (D4) FIFO enable.</a></li>
+<li><a href="#wlen-d6-d5-word-lenght">WLEN (D6-D5) Word Lenght</a></li>
+</ul>
+</li>
+<li><a href="#uart-data-register">UART Data Register</a></li>
+<li><a href="#uart-flag-register-status">UART Flag Register (Status)</a><ul>
+<li><a href="#txfe-transmit-fifo-empty-d7">TXFE (Transmit FIFO empty D7):</a></li>
+<li><a href="#rxff-receive-fifo-full-d6">RXFF (Receive FIFO full D6):</a></li>
+<li><a href="#txff-transmit-fifo-full-d5">TXFF (Transmit FIFO full D5):</a></li>
+<li><a href="#rxfe-receive-fifo-empty-d4">RXFE (Receive FIFO empty D4):</a></li>
+</ul>
+</li>
+<li><a href="#enabling-clock-to-uart">Enabling clock to UART</a></li>
+<li><a href="#les-broches-gpio-utilisees-pour-uart-txd-et-rxd">Les broches GPIO utilisées pour UART TxD et RxD</a></li>
+<li><a href="#etape-pour-transmettre-les-donnees">étape pour transmettre les données</a></li>
+</ul>
+</div>
+<p>Dans ce qui suit, nous examinons les registres UART du port série de TI ARM Tiva TM4C123GH6PM et montrons comment les programmer pour transmettre et recevoir des données en série. Beaucoup de puces TI ARM disposent jusqu'à huit ports UART. Ils sont désignés par UART0-UART7. Dans le LaunchPad TI, le port de la UART0 TM4C123GH6PM est reliée au ICDI (In-Circuit d'interface de débogage), qui est relié à un connecteur USB. Le ICDI USB se trouve sur la droite du commutateur et est étiqueté comme Debug. Voir Figure la figure ci-après.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00040.jpeg"><img alt="00040" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00040.jpeg" /></a></p>
+<p>Cette connexion ICDI USB contient trois fonctions distinctes :</p>
+<ol>
+<li>
+<p>la programmation (téléchargement) en utilisant le logiciel de programmation LM Flash</p>
+</li>
+<li>
+<p>le débogage en utilisant JTAG, et</p>
+</li>
+<li>
+<p>l'utilisation en tant que port de communication virtuel.</p>
+</li>
+</ol>
+<p>Lorsque l'on connecte le Tiva LaunchPad à une machine, le pilote du périphérique de l'ordinateur hôte établit une connexion virtuelle entre le PC et l'UART0 de la carte. Sur le LaunchPad, la connexion apparaît comme UART0. Sur le PC hôte, il apparaît comme un port COM. Ce est ce qu'on appelle une connexion virtuelle.</p>
+<p>Sur le datasheet du TM4C123GH6PM, nous voyons que le UART0 utilise les broches PA0 et PA1 comme TX0 et RX0 (transmetteur et récepteurs respectivement).</p>
+<p>[ICDI USB Port]<a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00041.jpeg"><img alt="00041" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00041.jpeg" /></a> </p>
+<p>Notez qu'il y a un second connecteur USB sur la TI ARM LaunchPad juste en dessous du commutateur. Il est étiqueté comme périphériques. Ce connecteur de périphérique USB est dédié à la fonctionnalité USB et utilise PD4 et pD5 broches pour les fils de D- et D+ de l'USB, respectivement.</p>
+<p>Comme nous l'avons mentionné plus tôt, la TI TM4C123GH6PM peut avoir jusqu'à huit ports UART. Ils sont désignés comme UART0 à UART7. Le tableau suivant montre leurs adresses de base dans la mémoire:</p>
+<ul>
+<li>
+<p>UART0 base: 0x4000.C000</p>
+</li>
+<li>
+<p>UART1 base: 0x4000.D000</p>
+</li>
+<li>
+<p>UART2 base: 0x4000.E000</p>
+</li>
+<li>
+<p>UART3 base: 0x4000.F000</p>
+</li>
+<li>
+<p>UART4 base: 0x4001.0000</p>
+</li>
+<li>
+<p>UART5 base: 0x4001.1000</p>
+</li>
+<li>
+<p>UART6 base: 0x4001.2000</p>
+</li>
+<li>
+<p>UART7 base: 0x4001.3000</p>
+</li>
+</ul>
+<p>La figure ci-après représente le schéma synoptique simplifié de l'unité UART.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00042.jpeg"><img alt="00042" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00042.jpeg" /></a></p>
+<h4 id="baud-rate-generator">Baud-Rate Generator</h4>
+<p>Deux registres sont utilisés pour définir la vitesse de transmission: Ils sont UART Inger Baud-Rate Divisor (UARTIBRD) et UART fractionnal Baud-Rate Divisor (UARTFBRD). Leurs adresses de décalage sont présentés ci-dessous:</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00044.jpeg"><img alt="00044" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00044.jpeg" /></a></p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00043.jpeg"><img alt="00043" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00043.jpeg" /></a></p>
+<p>Pour la UART0 utilisé dans TI Tiva LaunchPad, leurs adresses physiques sont situés à 0x4000: C000 + 0x024 et 0x4000: C000 + 0x028, respectivement.</p>
+<p>Sur les 32 bits du regsitre UARTIBRD, seulement les 16 bits inférieurs sont utilisés et des 32 bits de la UARTFBRD, seuls les 6 bits inférieurs sont utilisés. Cela nous donne totale de 22 bits (16 bits entiers + 6 bits de fraction).</p>
+<p>Pour réduire le taux d'erreur et utiliser les vitesses de transmission standardisées, nous devrions utiliser à la fois les deux registres. Certains des taux de transmission standards sont 4800, 9600, 57600, et  115200. Ils peuvent être calculés selon la formule suivante:</p>
+<p>Désiré Baud Rate = SYSCLK / (16 × ClkDiv)</p>
+<p>où le SYSCLK est <a href="http://www.embarquez-vous.fr/?p=507">l'horloge système</a>  et ClkDiv est les valeurs que nous chargeons dans les deux registres. Pour TI Tiva LaunchPad, l'horloge du système par défaut est 16 MHz. Donc, nous pouvons réorganiser la formule ci-dessus:</p>
+<p>Désiré Baud Rate = 16MHz / (16 × ClkDiv) = 1MHz / ClkDiv</p>
+<p>La valeur ClkDiv nous donne l'entier et les valeurs fractionnaires nécessaires pour les registres UARTIBRD et UARTFBRD. Alors que la partie entière du diviseur est facile à calculer, le calcul de la partie de fraction nécessite une manipulation mathématique. Un moyen serait, de multiplier la fraction par 64 et arrondir en ajoutant 0,5.</p>
+<h4 id="exemple">Exemple :</h4>
+<p>Supposons SYSCLK = 16MHz. Trouver les valeurs des registres UARTIBRD et UARTFBRD pour les vitesses de transmission standard suivantes:
+(a) 4800 (b) 9600 (c) 57 600 (d) 115 200</p>
+<p>Par défaut, 16 MHz horloge système est divisé par 16 avant qu'il ne soit introduit dans le UART. Par conséquent, nous avons :</p>
+<p>16MHz / 16 = 1MHz et <strong>ClkDiv = 1MHz / vitesse de transmission.</strong></p>
+<ul>
+<li>
+<p>(a) 1 MHz / 4800 = 208,3333,</p>
+</li>
+<li>
+<p>UARTIBRD = 208 et</p>
+</li>
+<li>
+<p>UARTFBRD = (0,3333 x 64) + 0,5 = 21,8312 = 21</p>
+</li>
+<li>
+<p>(b) 1 MHz / 9600 = 104,166666,</p>
+</li>
+<li>
+<p>UARTIBRD = 104 et</p>
+</li>
+<li>
+<p>UARTFBRD = (0,16666 × 64) + 0,5 = 11</p>
+</li>
+<li>
+<p>(c) 1MHz / 57600 = 17,361,</p>
+</li>
+<li>
+<p>UARTIBRD = 17 et</p>
+</li>
+<li>
+<p>UARTFBRD = (0,361 × 64) + 0,5 = 23</p>
+</li>
+<li>
+<p>(d) 1 MHz / 115 200 = 8,680,</p>
+</li>
+<li>
+<p>UARTIBRD = 8 et</p>
+</li>
+<li>
+<p>UARTFBRD = (0,680 × 64) + 0,5 = 44</p>
+</li>
+</ul>
+<h3 id="uart-control-uartctl-register">UART Control (UARTCTL) register</h3>
+<p>La prochaine registre important dans UART est le registre de contrôle. Ce est un des registres 32 bits et un grand nombre de bits ne sont pas utilisés. Pour nous, les bits les plus importants sont RXE, TXE, HSE et UARTEN.</p>
+<h4 id="_1"><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00045.jpeg"><img alt="00045" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00045.jpeg" /></a></h4>
+<h4 id="uarten-d0-uart-enable">UARTEN (D0) UART enable</h4>
+<p>Cela permet d'activer ou désactiver l'UART. Lors de l'initialisation nous devons désactiver tout en modifiant certains des registres UART,. Également au cours de l'exécution de certaines tâches critiques, vous pouvez désactiver l'UART pour l'empêcher d'interrompre les tâches.</p>
+<h4 id="hse-d5-high-speed-enable"><strong>HSE (D5) High Speed enable</strong></h4>
+<p>Il permet de diviser par 8 la vitesse d'horloge et non 16 pour des vitesse de transmission avec une faible fréquence d'horloge.</p>
+<h4 id="rxe-d8-receive-enable"><strong>RXE (D8) Receive enable</strong></h4>
+<p>Nous devons le mettre à 1 pour recevoir des données.</p>
+<h4 id="txe-d9-transmit-enable"><strong>TXE (D9) Transmit Enable</strong></h4>
+<p>Nous devons le mettre à 1 pour transmettre des données.</p>
+<h3 id="uart-line-control-register">UART Line Control register</h3>
+<p>Ce est le registre définit le nombre de bits par caractère (de longueur de données) et le nombre de bits d'arrêt.</p>
+<p>[UART Line Control (UARTLCRH)]<a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00046.jpeg"><img alt="00046" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00046.jpeg" /></a> </p>
+<h4 id="stp2-d3-stop-bit2">STP2 (D3) stop bit2.</h4>
+<p>Il peut y avoir 1 ou 2 bits d'arrêt. La valeur par défaut est 1 bit d'arrêt mis à la fin de chaque trame. Si le dispositif de réception est lent, on peut utiliser deux bits d'arrêt en faisant l'STP2 = 1.</p>
+<h4 id="fen-d4-fifo-enable">FEN (D4) FIFO enable.</h4>
+<p>La pile sert principalement à ne pas bloquer le CPU. Par conséquent, la TI Tiva UART a une pile interne de 16-octet FIFO (First In First Out) pour stocker des données pour la transmission. Il y a aussi un autre tampon FIFO de 16 octets pour enregistrer tous les octets reçus. En permettant FEN, nous pouvons écrire jusqu'à 16 octets de bloc de données la pile de transmission et transférer un octet à la fois. Vous pouvez aussi créer un seuil pour l'UART et de notifier au CPU lorsque le seuil de la FIFO est franchit. Même chose pour la réception.</p>
+<h4 id="wlen-d6-d5-word-lenght">WLEN (D6-D5) Word Lenght</h4>
+<p>La longueur d'un mot transmis peut être 5, 6, 7 ou 8. En général, nous utilisons 8 bits pour chaque trame de données. Notez que la valeur de 5 est celle prise par défaut, il est nécessaire de changer pour 8 bits, comme indiqué ci-dessous:</p>
+<table >
+<tbody >
+<tr >
+
+<td width="98" >**D6**
+</td>
+
+<td width="98" >**D5**
+</td>
+
+<td width="98" >** **
+</td>
+</tr>
+<tr >
+
+<td width="98" >0
+</td>
+
+<td width="98" >0
+</td>
+
+<td width="98" >**5 bits**
+</td>
+</tr>
+<tr >
+
+<td width="98" >0
+</td>
+
+<td width="98" >1
+</td>
+
+<td width="98" >**6 bits**
+</td>
+</tr>
+<tr >
+
+<td width="98" >1
+</td>
+
+<td width="98" >0
+</td>
+
+<td width="98" >**7 bits**
+</td>
+</tr>
+<tr >
+
+<td width="98" >1
+</td>
+
+<td width="98" >1
+</td>
+
+<td width="98" >**8 bits**
+</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="uart-data-register">UART Data Register</h3>
+<p>Pour transmettre un octet de données, nous devons le placer dans le registre UART Data Register. Même s' il contient 32 bits, seuls les 8 bits inférieurs (D7-D0) sont utilisés. </p>
+<p><strong>N.B</strong> :</p>
+<ul>
+<li>
+<p>Il doit être noté que «Une écriture sur ce registre lance une transmission de l'UART."</p>
+</li>
+<li>
+<p>De la même manière, l'octet reçu est placé dans ce registre et doit être lu avant qu'il ne soit perdue.</p>
+</li>
+</ul>
+<p>Pour l'émission, seuls les 8 bits inférieurs sont utilisés. Pour le réception, les 8 bits inférieurs contiennent l'octet reçu et 4 bits supplémentaires de D11-D8 sont utilisés pour la détection d'erreur telle que, le framing erreur, erreur de parité, et ainsi de suite.</p>
+<p>Il y a un autre registre appelé UARTRSR / UARTRCR (UART Receive Status Error/Error Clear) qui peuvent être utilisés pour vérifier la source de l'erreur.</p>
+<p>[UART Data Register]<a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00047.jpeg"><img alt="00047" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00047.jpeg" /></a></p>
+<h3 id="uart-flag-register-status">UART Flag Register (Status)</h3>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00048.jpeg"><img alt="00048" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00048.jpeg" /></a></p>
+<h4 id="txfe-transmit-fifo-empty-d7">TXFE (Transmit FIFO empty D7):</h4>
+<h4 id="rxff-receive-fifo-full-d6">RXFF (Receive FIFO full D6):</h4>
+<h4 id="txff-transmit-fifo-full-d5">TXFF (Transmit FIFO full D5):</h4>
+<h4 id="rxfe-receive-fifo-empty-d4">RXFE (Receive FIFO empty D4):</h4>
+<p><strong>Busy(UART occupé D3</strong>)</p>
+<h3 id="enabling-clock-to-uart">Enabling clock to UART</h3>
+<p>Le registre de RCGCUART est utilisé pour activer l'horloge de l'UART. Dans ce registre, il existe un bit pour chacun des modules de UART0 UART7. Si un UART donnée ne est pas utilisé, il faut désactiver l'horloge pour économiser la batterie. Pour utiliser UART0, nous avons mis à la haute D0 de ce registre.</p>
+<p><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00049.jpeg"><img alt="00049" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00049.jpeg" /></a></p>
+<h3 id="les-broches-gpio-utilisees-pour-uart-txd-et-rxd">Les broches GPIO utilisées pour UART TxD et RxD</h3>
+<p>En plus de la configuration des registres UART, nous devons aussi configurer les broches d'E/S utilisés par l'UART pour les signaux TxD et RxD. Dans ce <a href="http://www.embarquez-vous.fr/?p=450">post</a>, nous avons montré la configuration minimale pour chaque port. Lorsque les broches GPIO sont utilisés pour des fonctions périphériques alternatives, tels que, UART, Timer, et ADC, nous devons configurer cinq autres registres. Ils sont ORTx Run Mode Clock Gating Control, PORTx Digital Enable, PORTx ADC Mode Selection, PORTx Alternate Selection and PORTx Port Control registers. Les deux premiers registres sont abordés <a href="http://www.embarquez-vous.fr/?p=450">ici</a>. Nous examinons les trois autres registres ici.</p>
+<p>[GPIOAMSEL (GPIO Analog Mode Select)]<a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00050.jpeg"><img alt="00050" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00050.jpeg" /></a></p>
+<p>La TI ARM vient avec un ADC sur puce (convertisseur analogique-numérique). Supposons qu'une broches donnée peut être utilisée à la fois pour l'ADC et l'UART et nous voulons l'utiliser pour UART. Dans ce cas, nous devons isoler la fonction ADC car elle n'est pas utilisée.</p>
+<p>Cela se fait avec GPIOAMSEL (GPIO Analog Mode Selection). Bien que chaque port a son propre registre de PORTxAMSEL, toutes les broches de chaque port a une capacité de ADC.</p>
+<p>Après la réinitialisation, les broches GPIO sont configurés comme simple E/S. Pour les utiliser pour d'autres fins, telle que, l'UART.</p>
+<p>Les fonctions alternatives sont sélectionner via le Port Control Register, ce registre contient 32bits. 4 bits sont utilisés pour sélectionner la fonction de chaque broche.Pour la majorité des broches, le numéro de sélection est 1 exceptions faites pour PC4 et PC5. PC4 et PC4 peuvent être utilisés et pour UART4 et UART1.</p>
+<p>[GPIOPCTL Register]<a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00052.jpeg"><img alt="00052" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00052.jpeg" /></a></p>
+<p>[UART Pins and GPIOPCTL]<a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00053.jpeg"><img alt="00053" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00053.jpeg" /></a></p>
+<h3 id="etape-pour-transmettre-les-donnees">étape pour transmettre les données</h3>
+<p>Voici les étapes pour configurer le UART0 et transmettre un octet de données pour TI Tiva TM4C123GH6PM sur le LaunchPad:</p>
+<ol>
+<li>
+<p>activer l'horloge pour UART0 en écrivant 1 au registre RCGCUART.</p>
+</li>
+<li>
+<p>activer l'horloge pour PORTA en écrivant 1 au registre RCGCGPIO.</p>
+</li>
+<li>
+<p>Désactivez l'UART0 en écrivant 0 au registre UARTCTL de UART0.</p>
+</li>
+<li>
+<p>Trouver les bonnes valeurs pour configurer la vitesse de transmission et les écrire sur les registres UARTIBRD et UARTFBRD de UART0.</p>
+</li>
+<li>
+<p>Sélectionnez l'horloge système comme source d'horloge pour l'UART en écrivant un 0 au registre  UARTCC de UART0.</p>
+</li>
+<li>
+<p>Configurer la paramètres de transmission : 1 bit d'arrêt, pas de FIFO, sans interruption, pas de bit parité, et la taille de données de 8 bits. Cela nous donne 0x60 pour le registre de UARTLCRH de UART0.</p>
+</li>
+<li>
+<p>Mettre TxE et RXE de UARTCTL à 1 pour permettre à l'émetteur et le récepteur des UART0.</p>
+</li>
+<li>
+<p>Mettre à 1 le bit UARTEN du registre UARTCTL pour permettre à la UART0.</p>
+</li>
+<li>
+<p>Configurer PA0 et PA1 pour être utilisés comme E/S numérique.</p>
+</li>
+<li>
+<p>Sélectionnez les fonctions alternatives des PA0 (RxD) et les broches PA1 (TxD) en utilisant le GPIOAFSEL.</p>
+</li>
+<li>
+<p>Configurer PA0 et PA1 broches pour la fonction UART.</p>
+</li>
+<li>
+<p>Attendre pour la sortie TxD d'établir ralenti.</p>
+</li>
+<li>
+<p>Surveiller le bit du flag TXFF de l'UART.</p>
+</li>
+</ol>
+<p>Exemple :</p>
+<p>Envoie les caractères "YES" au terminal. Vous devez installer TeraTerminal (ou un autre programme de comme HyperTerminal ou Putty) sur votre PC. Pour télécharger TeraTerminal et voir le tutoriel:</p>
+<div class="codehilite"><pre><span class="cm">/* UART0 est sur USB/Debug */</span>
+<span class="cm">/* Utiliser un terminal pour voir &quot;Bonjour&quot; sur un PC */</span>
+<span class="p">#</span><span class="k">include</span> <span class="s">&quot;tm4c123gh6pm.h&quot;</span>
+<span class="k">void</span> <span class="n">UART0Tx</span><span class="p">(</span><span class="n">char</span> <span class="n">c</span><span class="p">);</span>
+<span class="k">void</span> <span class="n">delayMs</span><span class="p">(</span><span class="k">int</span> <span class="n">n</span><span class="p">);</span>
+<span class="k">int</span> <span class="n">main</span><span class="p">(</span><span class="k">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="no">SYSCTL</span><span class="o">-&gt;</span><span class="no">RCGCUART</span> <span class="o">|=</span> <span class="mh">1</span><span class="p">;</span>  <span class="cm">/* l&#39;horloge pour l&#39;UART0 */</span>
+    <span class="no">SYSCTL</span><span class="o">-&gt;</span><span class="no">RCGCGPIO</span> <span class="o">|=</span> <span class="mh">1</span><span class="p">;</span>  <span class="cm">/* activer l&#39;horloge pour le PORTA */</span>
+    <span class="cm">/* UART0 initialization */</span>
+    <span class="no">UART0</span><span class="o">-&gt;</span><span class="no">CTL</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>         <span class="cm">/* désactiver l&#39;UART0 */</span>
+    <span class="no">UART0</span><span class="o">-&gt;</span><span class="no">IBRD</span> <span class="o">=</span> <span class="mh">104</span><span class="p">;</span>      <span class="cm">/* 16MHz/16=1MHz, 1MHz/104=9600 baud rate */</span>
+    <span class="no">UART0</span><span class="o">-&gt;</span><span class="no">FBRD</span> <span class="o">=</span> <span class="mh">11</span><span class="p">;</span>       <span class="cm">/* fraction partie */</span>
+    <span class="no">UART0</span><span class="o">-&gt;</span><span class="no">CC</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>          <span class="cm">/* utiliser l&#39;horloge système  */</span>
+    <span class="no">UART0</span><span class="o">-&gt;</span><span class="no">LCRH</span> <span class="o">=</span> <span class="mh">0</span><span class="n">x60</span><span class="p">;</span>     <span class="cm">/* 8-bit, no parity, 1-stop bit, no FIFO */</span>
+    <span class="no">UART0</span><span class="o">-&gt;</span><span class="no">CTL</span> <span class="o">=</span> <span class="mh">0</span><span class="n">x301</span><span class="p">;</span>     <span class="cm">/* activer UART0, TXE, RXE */</span>
+    <span class="cm">/* UART0 TX0 et RX0 utilisent PA0 et PA1.*/</span>
+    <span class="no">GPIOA</span><span class="o">-&gt;</span><span class="no">DEN</span> <span class="o">=</span> <span class="mh">0</span><span class="n">x03</span><span class="p">;</span>      <span class="cm">/* Mettre PA0 et PA1 comme digital */</span>
+    <span class="no">GPIOA</span><span class="o">-&gt;</span><span class="no">AFSEL</span> <span class="o">=</span> <span class="mh">0</span><span class="n">x03</span><span class="p">;</span>    <span class="cm">/* Utiliser PA0,PA1 alternate function */</span>
+    <span class="no">GPIOA</span><span class="o">-&gt;</span><span class="no">PCTL</span> <span class="o">=</span> <span class="mh">0</span><span class="n">x11</span><span class="p">;</span>     <span class="cm">/* configurer PA0 et PA1 pour l&#39;UART */</span>
+    <span class="n">delayMs</span><span class="p">(</span><span class="mh">1</span><span class="p">);</span>             <span class="cm">/* attendre que la ligne se stabilise */</span>
+    <span class="k">for</span><span class="p">(;;)</span>
+    <span class="p">{</span>
+        <span class="n">UART0Tx</span><span class="p">(</span><span class="sc">&#39;Y&#39;</span><span class="p">);</span>
+        <span class="n">UART0Tx</span><span class="p">(</span><span class="sc">&#39;E&#39;</span><span class="p">);</span>
+        <span class="n">UART0Tx</span><span class="p">(</span><span class="sc">&#39;S&#39;</span><span class="p">);</span>
+        <span class="n">UART0Tx</span><span class="p">(</span><span class="sc">&#39; &#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cm">/* UART0 Transmit */</span>
+<span class="cm">/* Cette fonction attend jusqu&#39;à ce que le buffer de transmission soit disponible */</span>
+<span class="cm">/* écrire un caractère sur le buffer de transmission */</span>
+
+<span class="k">void</span> <span class="n">UART0Tx</span><span class="p">(</span><span class="n">char</span> <span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">while</span><span class="p">((</span><span class="no">UART0</span><span class="o">-&gt;</span><span class="no">FR</span> <span class="o">&amp;</span> <span class="mh">0</span><span class="n">x20</span><span class="p">)</span> <span class="o">!=</span> <span class="mh">0</span><span class="p">);</span> <span class="cm">/* attendre jusqu&#39;à ce que Tx buffer soit vide */</span>
+    <span class="no">UART0</span><span class="o">-&gt;</span><span class="no">DR</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>                  <span class="cm">/* avant de mettre un autre byte */</span>
+<span class="p">}</span>
+<span class="cm">/* retard n millisecondes (16 MHz CPU clock) */</span>
+<span class="k">void</span> <span class="n">delayMs</span><span class="p">(</span><span class="k">int</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">3180</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>         <span class="p">{}</span> <span class="cm">/* do nothing for 1 ms */</span> 
+<span class="p">}</span>
+</pre></div>
+
+      <br> <br>
+
+      <div id="disqus_thread"></div>
+
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.io">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

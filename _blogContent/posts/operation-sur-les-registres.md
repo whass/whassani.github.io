@@ -3,6 +3,7 @@ date: 2015-01-22
 description: L'aspect fondamental de la programmation des micro-contrôleur est la configuration des registres. Quoique vous fassiez, configurer une entrée, une sortie, vitesse de transmission, .... vous devez passer par les registres associé. Ici je vous montre les méthodes utilisé pour cela. 
 categories: 
 - Embedded
+- C-C++
 
 **Table des matière**
 

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Comment vérifier et configurer les ports série sous Linux à des fins diverses telles que modem, connexion null modems ou connecter un terminal ?">
+
+
+
+    <title>
+	
+	Comment vérifier et utiliser les ports séries sous Linux
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire.html" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Comment vérifier et utiliser les ports séries sous Linux
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-02-21 in 
+  
+  <a href="../../categories/Linux/index.html"> Linux </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p>Comment vérifier et configurer les ports série sous Linux à des fins diverses telles que modem, connexion null modems ou connecter un terminal ?</p>
+<p>Linux offre divers outils. Linux utilise ttySx pour nommer un port série. Par exemple, COM1 (DOS nom / Windows) est ttyS0, ttyS1 COM2 est et ainsi de suite.</p>
+<h2 id="afficher-les-port-serie-connectes">Afficher les port série connectés</h2>
+<p>Il suffit d'utiliser la commande <em>dmesg </em>(messages système)</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">dmesg</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">tty</span>
+</pre></div>
+
+
+<p>Example de sortie :</p>
+<div class="codehilite"><pre><span class="p">[</span> <span class="mf">1.870774</span><span class="p">]</span> <span class="n">console</span> <span class="p">[</span><span class="n">tty0</span><span class="p">]</span> <span class="n">enabled</span>
+<span class="p">[</span><span class="mf">11510.094075</span><span class="p">]</span> <span class="n">cdc_acm</span> <span class="mi">1</span><span class="o">-</span><span class="mi">3</span><span class="o">:</span><span class="mf">1.2</span><span class="o">:</span> <span class="n">ttyACM0</span><span class="o">:</span> <span class="n">USB</span> <span class="n">ACM</span> <span class="n">device</span>
+</pre></div>
+
+
+<h3 id="la-commande-setserial">La commande <em>setserial</em></h3>
+<p>setserial est un programme conçu pour établir et/ou afficher les informations de configuration associé à un port série. Ces informations sont les I/O (entrées/sorties) ainsi que les IRQ (interruptions matérielles) qu'un port série utilise.</p>
+<p>Il suffit de taper la commande suivante:</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">setserial</span> <span class="o">-</span><span class="n">g</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyS</span><span class="p">[</span><span class="mo">0123</span><span class="p">]</span>
+</pre></div>
+
+
+<p>Sortie:</p>
+<div class="codehilite"><pre><span class="o">/</span><span class="n">Dev</span><span class="o">/</span><span class="n">ttyS0</span><span class="p">,</span> <span class="n">UART</span><span class="o">:</span> <span class="mi">16550</span><span class="n">A</span><span class="p">,</span> <span class="n">Port</span><span class="o">:</span> <span class="mh">0x03f8</span><span class="p">,</span> <span class="n">IRQ</span><span class="o">:</span> <span class="mi">4</span>
+ <span class="o">/</span><span class="n">Dev</span><span class="o">/</span><span class="n">ttyS1</span><span class="p">,</span> <span class="n">UART</span><span class="o">:</span> <span class="mi">16550</span><span class="n">A</span><span class="p">,</span> <span class="n">Port</span><span class="o">:</span> <span class="mh">0x1020</span><span class="p">,</span> <span class="n">IRQ</span><span class="o">:</span> <span class="mi">18</span>
+ <span class="o">/</span><span class="n">Dev</span><span class="o">/</span><span class="n">ttyS2</span><span class="p">,</span> <span class="n">UART</span><span class="o">:</span> <span class="n">inconnu</span><span class="p">,</span> <span class="n">Port</span><span class="o">:</span> <span class="mh">0x03e8</span><span class="p">,</span> <span class="n">IRQ</span><span class="o">:</span> <span class="mi">4</span>
+ <span class="o">/</span><span class="n">Dev</span><span class="o">/</span><span class="n">ttyS3</span><span class="p">,</span> <span class="n">UART</span><span class="o">:</span> <span class="n">inconnu</span><span class="p">,</span> <span class="n">Port</span><span class="o">:</span> <span class="mh">0x02e8</span><span class="p">,</span> <span class="n">IRQ</span><span class="o">:</span> <span class="mi">3</span>
+</pre></div>
+
+
+<p>setserial avec l'option -g renseigne sur les ports séries connectés physiquement à votre machine.</p>
+<h2 id="programmes-de-console-serie-linux">Programmes de console série Linux</h2>
+<p>Une fois identifiés les ports série, vous pouvez configurer les configurer en utilisant divers utilitaires, tels que :</p>
+<ul>
+<li>
+<p><a href="http://www.cyberciti.biz/tips/connect-soekris-single-board-computer-using-minicom.html"><strong>minicom</strong></a> :Le meilleur programme de communication série convivial pour contrôler les modems et la connexion à vider dispositifs</p>
+</li>
+<li>
+<p><a href="http://www.cyberciti.biz/tips/linux-configure-modem-to-connect-to-the-internet-using-a-ppp-dialup-account.html"><strong>wvidial ou autre GUI en réseau</strong></a> - un composeur PPP avec intelligence intégrée.</p>
+</li>
+<li>
+<p><strong>getty / agetty</strong> - agetty ouvre un port tty, demande un nom d'utilisateur et appelle la commande /bin/login.</p>
+</li>
+<li>
+<p><strong>configuration du grub / lilo</strong> - Pour configurer le port série comme console système</p>
+</li>
+</ul>
+
+      <br> <br>
+
+      <div id="disqus_thread"></div>
+
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.io">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="">
+
+
+
+    <title>
+	
+	Copier ou transférer un fichier ou un dossier via SSH en ligne de commande
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire.html" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Copier ou transférer un fichier ou un dossier via SSH en ligne de commande
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-01-22 in 
+  
+  <a href="../../categories/Linux/index.html"> Linux </a> &nbsp; 
+       
+  <a href="../../categories/WebServer/index.html"> WebServer </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p>La commande <strong>scp</strong> permet de copier un fichier ou un répertoire (-r) du client vers le serveur ou du serveur vers le client. Le chemin du serveur peut être indiqué en absolu (<em>/home/dupont/Repertoire</em> par exemple) ou relatif à partir du répertoire de base <em>Repertoire</em>. Pour utiliser <strong>scp</strong>, vous devez connaître l’arborescence exacte des répertoires de la machine distante. Il est impératif que <strong>SSH</strong> soit installé sur les deux machines devant communiquer pour effectuer votre transfert.</p>
+<h2 id="forme-generale">Forme générale</h2>
+<div class="codehilite"><pre><span class="n">scp</span> <span class="p">[</span><span class="o">-</span><span class="n">pqrvBC1246</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">F</span> <span class="n">ssh_config</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">S</span> <span class="n">program</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">P</span> <span class="n">port</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">cipher</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">identity_file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">limit</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">ssh_option</span><span class="p">]</span> <span class="p">[[</span><span class="n">user</span><span class="err">@</span><span class="p">]</span><span class="n">host1</span><span class="o">:</span><span class="p">]</span><span class="n">file1</span> <span class="p">[...]</span> <span class="p">[[</span><span class="n">user</span><span class="err">@</span><span class="p">]</span><span class="n">host2</span><span class="o">:</span><span class="p">]</span><span class="n">file2</span>
+</pre></div>
+
+
+<p>C'est du charabia pour vous !, voyons la syntaxe selon le cas de figure :</p>
+<h2 id="syntaxe">Syntaxe</h2>
+<p>Copie d'un fichier d'une machine <em>serveur1</em> vers une autre machine <em>serveur2</em> :</p>
+<div class="codehilite"><pre><span class="n">scp</span> <span class="n">Login1</span><span class="err">@</span><span class="n">Serveur1</span><span class="o">:</span><span class="n">Chemin1</span><span class="o">/</span><span class="n">NomFichier1</span> <span class="n">Login2</span><span class="err">@</span><span class="n">Serveur2</span><span class="o">:</span><span class="n">Chemin2</span><span class="o">/</span><span class="n">NomFichier2</span>
+</pre></div>
+
+
+<p>Copie d'un fichier depuis le répertoire courant vers un répertoire du serveur:</p>
+<div class="codehilite"><pre><span class="n">scp</span> <span class="n">Fichier</span> <span class="n">login</span><span class="err">@</span><span class="n">serveur</span><span class="o">:</span><span class="n">Chemin</span>
+</pre></div>
+
+
+<p>Copie d'un répertoire, avec éventuellement ses sous-répertoires, vers un répertoire du serveur:</p>
+<div class="codehilite"><pre><span class="n">scp</span> <span class="o">-</span><span class="n">r</span> <span class="n">Repertoire</span> <span class="n">login</span><span class="err">@</span><span class="n">serveur</span><span class="o">:</span><span class="n">Chemin</span>
+</pre></div>
+
+
+<p>Copie d'un fichier du serveur vers le répertoire courant:</p>
+<div class="codehilite"><pre><span class="n">scp</span> <span class="n">login</span><span class="err">@</span><span class="n">serveur</span><span class="o">:</span><span class="n">Chemin</span><span class="o">/</span><span class="n">Fichier</span> <span class="p">.</span>
+</pre></div>
+
+
+<p>Copie d'un répertoire du serveur vers le répertoire courant:</p>
+<div class="codehilite"><pre><span class="n">scp</span> <span class="o">-</span><span class="n">r</span> <span class="n">login</span><span class="err">@</span><span class="n">serveur</span><span class="o">:</span><span class="n">Chemin</span><span class="o">/</span><span class="n">Repertoire</span><span class="p">.</span>
+</pre></div>
+
+
+<p>Vous ne comprenez toujours rien !, regardez ces exemples :</p>
+<h2 id="exemples">Exemples</h2>
+<div class="codehilite"><pre><span class="n">scp</span> <span class="n">blender</span><span class="err">@</span><span class="n">domaine</span><span class="p">.</span><span class="n">fr</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="n">Readme</span><span class="p">.</span><span class="n">txt</span> <span class="p">.</span>
+</pre></div>
+
+
+<p>copie le fichier <em>Readme.txt</em> de <em>/home/user/</em> sur domaine.fr vers le répertoire local courant.</p>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="n">scp</span> <span class="o">-</span><span class="n">r</span> <span class="n">blender</span><span class="err">@</span><span class="n">domaine</span><span class="p">.</span><span class="n">fr</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="c1">//toto .</span>
+</pre></div>
+
+
+<p>copie le répertoire <em>toto</em> et les sous-répertoires attachés de <em>/home/user/</em> sur domaine.fr vers le répertoire local courant.</p>
+<p><strong>Attention</strong> : il y a un point (.) en fin de ligne !, si vous n'être pas encore familier avec linux, le point signifie le dossier sur le lequel vous êtes (pwd pour le connaitre).</p>
+<p>Si vous ne comprenez toujours rien, laissez moi un commentaire pour m'expliquez ce qui</p>
+
+      <br> <br>
+
+      <div id="disqus_thread"></div>
+
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.io">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

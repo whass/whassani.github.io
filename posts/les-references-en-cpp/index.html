@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Soit une variable utilisée dans deux parties très différentes du programme ou des parties créées par différents programmeurs. Sachant que cette variable n&#39;a qu&#39;une seule case mémoire, alors, comment faire pour que le nom donné par le programmeur A et celui donné par le programmeur B pointe vers vers la même variable !">
+
+
+
+    <title>
+	
+	Les références en C++. Plusieurs noms, mais une seule variable !
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire.html" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Les références en C++. Plusieurs noms, mais une seule variable !
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-03-05 in 
+  
+  <a href="../../categories/C-C++/index.html"> C-C++ </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p>Soit une variable utilisée dans deux parties très différentes du programme des parties ou créées par différents programmeurs. Dans une des parties, un des programmeurs va s'occuper de la déclaration de la variable alors que l'autre programmeur va juste l'afficher. Ce deuxième programmeur aura juste besoin d'un accès à la variable et un alias sera donc suffisant.</p>
+<p>Pour cela, il faut savoir qu'une variable n'a qu'une seule case mémoire mais peut avoir plusieurs références (étiquettes), donc plusieurs noms.</p>
+<p>Au niveau du code, on utilise une esperluette (&amp;) pour déclarer une référence sur une variable.</p>
+<div class="codehilite"><pre><span class="kt">int</span> <span class="nf">ageUtilisateur</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span> <span class="c1">//Déclaration d&#39;une variable.</span>
+<span class="kt">int</span><span class="o">&amp;</span> <span class="n">maVariable</span><span class="p">(</span><span class="n">ageUtilisateur</span><span class="p">);</span> <span class="c1">//Déclaration d&#39;une référence nommée maVariable qui est accrochée à la variable ageUtilisateur</span>
+</pre></div>
+
+      <br> <br>
+
+      <div id="disqus_thread"></div>
+
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.io">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

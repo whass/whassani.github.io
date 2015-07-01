@@ -3,6 +3,7 @@ date: 2015-01-24
 description: Cet article vous montre à travers un exemple pratique consistant à allumer une des LED de la carte ARM tiva-c. Quoique simple, cet exemple  regroupe tout les concepts fondamentaux pour manipuler les GPIO, ç savoir, la configuration, l'accès aux registres, lecture et écriture, etc. 
 categories: 
 - Embedded
+- C-C++
 
 
 Dans ce qui suit, j'aborderai avec vous, à travers un exemple très simple, un concept fondamental dans les systèmes embarqués, à savoir la manipulation des GPIO !

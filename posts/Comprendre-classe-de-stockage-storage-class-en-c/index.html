@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="Chaque variable en C a deux propriétés, type et classe de stockage. Le type fait référence aux types de données des variables (entier, virgule flottante, caractère, etc.). La classe de stockage détermine la durée de vie d&#39;une variable.">
+
+
+
+    <title>
+	
+	Comprendre les Classes de stockages (storage class) en C
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire.html" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Comprendre les Classes de stockages (storage class) en C
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-02-18 in 
+  
+  <a href="../../categories/C-C++/index.html"> C-C++ </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p>tags:
+- auto
+- extern
+- register
+- static
+- storage class</p>
+<p>Chaque variable en C a deux propriétés : </p>
+<ul>
+<li>type </li>
+<li>classe de stockage</li>
+</ul>
+<p>Le type fait référence aux types de données des variables (entier, virgule flottante, caractère, etc.). La classe de stockage détermine la durée de vie d'une variable.</p>
+<p>Il existent 4 types de classe de stockage :</p>
+<ol>
+<li>
+<p><em>automatic</em> : pour les variables locales;</p>
+</li>
+<li>
+<p><em>external</em> : déclare une variable sans la définir;</p>
+</li>
+<li>
+<p><em>static</em> : rend une définition de variable persistante.</p>
+</li>
+<li>
+<p><em>register</em> : demande au compilateur de faire tout son possible pour utiliser un registre processeur pour cette variable;</p>
+</li>
+</ol>
+<p>Les classes <em>static</em> et <em>extern</em> sont, de loin, les plus utilisées. <em>register</em> est d'une utilité limitée, et <em>auto</em> est maintenant obsolète.</p>
+<h2 id="auto">auto</h2>
+<p>Les variables déclarées à l'intérieur d'une fonction sont <em>automatic</em> par défaut. Ces variables sont aussi connues sous le nom de local du fait qu'elles n'ont aucun effet à l'extérieur de la fonction dans lesquelles elles sont définies.</p>
+<p>Comme les variables qui se trouve à l'intérieur d'une fonction sont par défaut automatique, le mot clé <em>automatic</em> est rarement utilisé.</p>
+<h2 id="extern">extern</h2>
+<p>Les variables externes peuvent être utilisées par n'importe quelle fonction. Elles sont connues sous le nom de variable globale. </p>
+<p>Les variables déclarées en-dehors de toutes les fonctions sont considérées comment externes.</p>
+<p>Cela dit, soyez prudent, si vous mettez le mot-clé <em>extern</em> le compilateur va automatiquement essayer de chercher la variable dans un autre fichier !!!</p>
+<p>Donc, si vous souhaitez définir une variable globale, définissez-là en-dehors de toutes fonctions. Et si, en plus de cela, vous souhaitez l'utiliser dans un autre fichier, à ce moment là, mettez le nom de variable précéder par le mot-clé <em>extern</em>   </p>
+<p><strong>N.B</strong></p>
+<p>Exemple :</p>
+<div class="codehilite"><pre><span class="k">extern</span> <span class="kt">int</span> <span class="n">var</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">var</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Affichera une erreur de compilation, par contre :</p>
+<div class="codehilite"><pre><span class="cp">#include &quot;unFichier.h&quot;    </span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">var</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">var</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>compilera correctement.</p>
+<h2 id="register">register</h2>
+<p>Les variables registres sont similaires aux variables automatiques et n'existent que dans certaines fonctions seulement.</p>
+<p>Si le compilateur trouve une variable <em>register</em>, il va essayer de la stocker dans un registre du microprocesseur plutôt que dans la mémoire. Les variables stockées dans un registre sans plus rapide d'accès qu'une mémoire.</p>
+<p>Dans la cas des programmes très grand, les variables utilisées dans les boucles et les paramètres des fonctions sont déclarées comme variables registres.</p>
+<p>Comme le nombre de registre est limitées si le nombre de variable <em>register</em> dépasse le nombre de <em>registres</em> disponible, la variable va être automatiquement stockée dans une case mémoire.</p>
+<h2 id="static">static</h2>
+<p>La valeur de la variable statique persiste jusqu'à la fin du programme. Une variable peut être déclarée statique utilisant le mot clé: <em>static</em>.</p>
+<p>L'effet de la classe <em>static</em> dépend de l'endroit où l'objet est déclaré :</p>
+<ul>
+<li><em>Objet local à une fonction</em>: la valeur de la variable sera persistante entre les différents appels de la fonction. La variable ne sera visible que dans la fonction, mais ne sera pas réinitialisée à chaque appel de la fonction. L'intérêt est de garantir une certaine encapsulation, afin d'éviter des usages multiples d'une variable globale. Qui plus est, cela permet d'avoir plusieurs fois le même nom, dans des fonctions différentes.</li>
+</ul>
+<p>exemple :</p>
+<div class="codehilite"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* i sera initialisée à 0 à la compilation seulement */</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* j sera initialisée à chaque appel de f */</span><span class="p">;</span>
+    <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;i vaut %d et j vaut %d.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">f</span><span class="p">();</span>
+    <span class="n">f</span><span class="p">();</span>
+    <span class="n">f</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Résultat d'exécution du code ci dessus :</p>
+<div class="codehilite"><pre><span class="n">i</span> <span class="n">vaut</span> <span class="mi">1</span> <span class="n">et</span> <span class="n">j</span> <span class="n">vaut</span> <span class="mf">1.</span>
+<span class="n">i</span> <span class="n">vaut</span> <span class="mi">2</span> <span class="n">et</span> <span class="n">j</span> <span class="n">vaut</span> <span class="mf">1.</span>
+<span class="n">i</span> <span class="n">vaut</span> <span class="mi">3</span> <span class="n">et</span> <span class="n">j</span> <span class="n">vaut</span> <span class="mf">1.</span>
+</pre></div>
+
+
+<ul>
+<li><em>Objet global et fonction</em>: comme une variable globale est déjà persistante, le mot-clé <em>static</em> aura pour effet de limiter la portée de la variable ou de la fonction au seul fichier où elle est déclarée, toujours dans le but de garantir un certain niveau d'encapsulation.</li>
+</ul>
+<p><strong>N.B</strong> : Une variable de classe statique est initialisée au moment de la compilation à zéro par défaut (contrairement aux variables dynamiques qui ont une valeur initiale indéterminée). Elle peut être initialisée explicitement à n'importe quelle valeur <em>constante</em>.</p>
+
+      <br> <br>
+
+      <div id="disqus_thread"></div>
+
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.io">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="L&#39;utilisation de pointeurs sur structures est très courante en C. Cet article est donne un aperçu des méthodes utilisées.">
+
+
+
+    <title>
+	
+	Les pointeurs sur structures en C
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
+    <link rel="shortcut icon" href="../../favicon.png">
+    <link rel="stylesheet" href="../../css/pygments.css">
+  </head>
+
+<body>
+    <header>
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../index.html" class="selected" >blog</a>
+          &rarr; <a href="../../hire.html" class="" >hire me</a>
+
+        </div>
+        <a id='logo1' href="/">whassani</a>
+        <span id='logo2'>#</span>
+        <a id='logo3' href="/posts">
+          blog
+        </a>
+      </div>
+
+    </header>
+
+	
+
+    <h1>
+  <span>
+	Les pointeurs sur structures en C
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-02-17 in 
+  
+  <a href="../../categories/C-C++/index.html"> C-C++ </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p>L'utilisation de pointeurs sur structures est très courante en C. Voici un exemple d'utilisation d'un pointeur sur un complexe :</p>
+<div class="codehilite"><pre><span class="n">complexe</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">3.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.12</span> <span class="p">};</span>
+<span class="n">complexe</span> <span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+<span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">).</span><span class="n">reel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">).</span><span class="n">imag</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="cm">/* a vaut (1 - i) */</span>
+</pre></div>
+
+
+<p>Nous avons été obligé de mettre des parenthèses autour de <em>p car l'opérateur point (.) est plus prioritaire que l'opérateur </em>. Cela rend difficile la lecture d'un tel programme. Heureusement, l'utilisation de pointeurs sur structures est si courante que le C définit l'opérateur '-&gt;' pour accéder aux champs d'une structure via un pointeur. </p>
+<p>Les deux expressions suivantes sont donc équivalentes :</p>
+<div class="codehilite"><pre><span class="c">(*pointeur).champ</span>
+<span class="c">pointeur-&gt;champ</span>
+</pre></div>
+
+
+<p>Ainsi l'exemple précédent s'écrit beaucoup plus facilement de la manière suivante :</p>
+<div class="codehilite"><pre><span class="n">complexe</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">3.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.12</span> <span class="p">};</span>
+<span class="n">complexe</span> <span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+<span class="n">p</span><span class="o">-&gt;</span><span class="n">reel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">p</span><span class="o">-&gt;</span><span class="n">imag</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="cm">/* a vaut (1 - i) */</span>
+</pre></div>
+
+      <br> <br>
+
+      <div id="disqus_thread"></div>
+
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.io">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+
+	
+	
+
+
+
+  </body>
+</html>
+
