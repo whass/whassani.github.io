@@ -1,6 +1,6 @@
 title: GPIO (General Purpose I/O) Programmation et interface
 date: 2015-02-17
-description: GPIO pour General Purpose Input Output désigne tout simplement les entrées-sorties d'un micro-contrôleur, micro-processeur, etc. C'est ce qui permet de passer du monde extérieur au monde binaire. A travers la puce ARM tiva-c de ti, je vous exposerai les élements les plus imortants des GPIO à savoir, les bus (APB (Advanced Bus périphérique) et AHB (Advanced High-Performance Bus)), l'adresse, les pins, les registes (Direction et Data Registers), l'horloge, pin multiplexing, etc.    
+description: GPIO pour General Purpose Input Output désigne tout simplement les entrées-sorties d'un micro-contrôleur, micro-processeur, etc. C'est ce qui permet de passer du monde extérieur au monde binaire. A travers la puce ARM tiva-c de ti, je vous exposerai les éléments les plus importants des GPIO à savoir, les bus (APB (Advanced Bus périphérique) et AHB (Advanced High-Performance Bus)), l'adresse, les pins, les registres (Direction et Data Registers), l'horloge, pin-multiplexing, etc.    
 categories:
 - Embedded
 tags:
@@ -23,9 +23,9 @@ tags:
 
 Comment leurs noms l'indiquent, les GPIO servent d'entrées/sortie pour les microprocesseur, il existe deux type :
 
-1. **General Purpose I/O (GPIO):** ils sont utiliser pour interfacer les périphériques, tels que, les LEDs, les switches, le LCD, et bien plus.
+1. **General Purpose I/O (GPIO):** ils sont utiliser pour interfacer les périphériques, tels que, les LEDs, les switches, le LCD, et bien plus.
 
-2. **Special purpose I/O:** ils sont conçus pour des fonctions spécifiques, tels que, ADC (Analog-to-Digital), Timer, UART (universal asynchronous receiver transmitter), etc,.
+2. **Special purpose I/O:** ils sont conçus pour des fonctions spécifiques, tels que, ADC (Analog-to-Digital), Timer, UART (universal asynchronous receiver transmitter), etc,.
 
 
 
@@ -50,7 +50,7 @@ Les adresses des ports d'E/S affectés à l'AP-PF pour APB sont les suivantes:
 * GPIO Port C (APB): 0x4000.6000
 * GPIO Port D (APB): 0x4000.7000
 * GPIO Port E (APB): 0x4002.4000
-* GPIO Port F (APB): 0x4002.5000 (ce port est connecté à la LED et SW sur TI Tiva LaunchPad)
+* GPIO Port F (APB): 0x4002.5000 (ce port est connecté à la LED et SW sur TI Tiva LaunchPad)
 
 
 Les adresses des ports d'E/S affectés à l'AP-PF pour AHB sont les suivantes:
@@ -79,7 +79,7 @@ Le registre de direction est utilisé pour faire en sorte que la broche soit une
 
 #### Data Register (GPIODATA) dans TI ARM
 
-Le registre de données GPIO (GPIODATA) est situé à l'offset 0x0000 à l'adresse de base de ce port. Ceci est illustré ci-dessous.
+Le registre de données GPIO (GPIODATA) est situé à l'offset 0x0000 à l'adresse de base de ce port. Ceci est illustré ci-dessous.
 
 [![00008](http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00008.jpeg)](http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00008.jpeg)
 
@@ -89,18 +89,18 @@ Le registre de données GPIO (GPIODATA) est situé à l'offset 0x0000 à l'adre
 
 _Rappel : le bit-banding permet l'écrire sur un registre en un seul cycle d'horloge._
 
-Parce le registre GPIODATA supporte le bit-banding, il occupe 256 mots (offset 0x000 - 0x3FC). Pour être capable d'écrire tous les 8 bits du registre de données GPIO à la fois, il faut utiliser l'offset 0x3FC.
+Parce le registre GPIODATA supporte le bit-banding, il occupe 256 mots (offset 0x000 - 0x3FC). Pour être capable d'écrire tous les 8 bits du registre de données GPIO à la fois, il faut utiliser l'offset 0x3FC.
 
 
 ##### Bit-banding de cas d'étude (Pour les experts seulement)
 
-Pourquoi faudrait-il  256 mots (1024 octets) pour le GPIODATA ?
+Pourquoi faudrait-il 256 mots (1024 octets) pour le GPIODATA ?
 
 Comme le montre la figure ci-dessous, afin de rendre le mot adresses alignées, les bits 1 et 0 sont toujours à 0.
 
 En utilisant les bits 2-9 de l'adresse, montre les bits qui doivent être changés lors de l'écriture dans le registre de GPIODATA.
 
-Par exemple, pour écrire à l'adresse la valeur 0x34 (0000110100 en binaire) signifiant que les broches 0, 2 et 4 du port doivent être changés tandis que les autres broches restent inchangés.
+Par exemple, pour écrire à l'adresse la valeur 0x34 (0000110100 en binaire) signifiant que les broches 0, 2 et 4 du port doivent être changés tandis que les autres broches restent inchangés.
 
 Pour changer toutes les broches du port, tous les masques de bits (bits 2-9) doit être réglée. Cela rend l'adresse de décalage de 0x3FC (001 111 111 100 en binaire).
 
@@ -110,7 +110,7 @@ Pour changer toutes les broches du port, tous les masques de bits (bits 2-9) doi
 
 ### Direction registrer dans le TI ARM
 
-Dans le cas des puces TI ARM, chaque bit du registre de direction doit être mis à 0 pour configurer la broche en entrée et à 1 pour configurer la broche en sortie. L'adresse du registre de Direction GPIO est situé à l'adresse de décalage de 0x400 à l'adresse de base de ce port. Ceci est illustré ci-dessous.
+Dans le cas des puces TI ARM, chaque bit du registre de direction doit être mis à 0 pour configurer la broche en entrée et à 1 pour configurer la broche en sortie. L'adresse du registre de Direction GPIO est situé à l'adresse de décalage de 0x400 à l'adresse de base de ce port. Ceci est illustré ci-dessous.
 
 [![00011](http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00011.jpeg)](http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00011.jpeg)
 
@@ -130,7 +130,7 @@ Pour être capable d'écrire à tous les 8 bits du registre de données à la fo
 
 L'emplacement de l'adresse physique de GPIODIR pour la PORTF est
 
-0x40025000+0x400=0x40025400
+0x40025000 + 0x400 = 0x40025400
 
 Pour accéder aux I/Ode la puce ARM TM4C123GH6PM utilisés dans LaunchPad, nous devons examiner deux autres registres. Ils sont les GPIODEN et RCGCGPIO.
 
@@ -142,7 +142,7 @@ L'utilisant d'une seule broche pour de multiples fonctions est appelé multiplex
 
 En l'absence du multiplexage de broches, un microcontrôleur aura besoin de plusieurs centaines de broches pour soutenir toutes ses fonctions. Par exemple, une broche peut être utilisé comme entrée analogique, numérique, etc. Bien sûr, pas tous en même temps.
 
-Le GPIODEN (Activer numérique) _special function register_ permet d'activer la broche pour être utilisé comme I/O numérique à la place de la fonction analogique. Chaque port (de A-F) a son propre registre de GPIODEN. Ceci est illustré ci-dessous.
+Le GPIODEN (Activer numérique) _special function register_permet d'activer la broche pour être utilisé comme I/O numérique à la place de la fonction analogique. Chaque port (de A-F) a son propre registre de GPIODEN. Ceci est illustré ci-dessous.
 
 [![00012](http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00012.jpeg)](http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00012.jpeg)
 
@@ -167,11 +167,11 @@ L'adresse de base du registre spécial RCGCGPIO est 0x400F.E000 et son offset e
 #### Exemple :
 
 
-Montrer comment activer l'horloge du PORTF et  activer la fonction Digital des broches des port PORTF1, PORTF2 et PORTF3.
+Montrer comment activer l'horloge du PORTF et activer la fonction Digital des broches des port PORTF1, PORTF2 et PORTF3.
 
 solution:
 
-a) Pour activer la source d'horloge pour PORTF nous devons fixer à 1 la bit 5 du registre RCGCGPIO (écrire la valuer 0x20).
+a) Pour activer la source d'horloge pour PORTF nous devons fixer à 1 la bit 5 du registre RCGCGPIO (écrire la valuer 0x20).
 b) Nous devons écrire la valeur 0b00001110 = 0x0E à PORTFDEN registre situé à l'adresse 0x4002551C
 
 

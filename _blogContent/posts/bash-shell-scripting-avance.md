@@ -1,6 +1,6 @@
 title: "Bash Shell Scripting II - Niveau avancé"
 date: 2015-02-23
-description: Cet article est la suite du Bash Shell Scripting I destiné à ceux ceux qui souhaitent aller plus loin. Il est déidié à la création de script bash pour la manipulation de chaînes, la logique booléenne, les boucle, débogage, etc.
+description: Cet article est la suite du Bash Shell Scripting I destiné à ceux ceux qui souhaitent aller plus loin. Il est dédié à la création de script bash pour la manipulation de chaînes, la logique booléenne, les boucle, débogage, etc.
 categories: 
 - Linux
 
@@ -32,14 +32,14 @@ $ {chaine:0: 1} Ici 0 est le décalage dans la chaîne, où, l'extraction doit c
 
 Les expressions booléennes ont pour résultat  TRUE ou FALSE, et les résultats sont obtenus en utilisant les différents opérateurs booléens énumérés dans le tableau.
 	
-* && **ET** L'action sera effectuée uniquement si les deux conditions sont satisfaites.
-* ||   **OU** L'action sera effectuée que si l'une des conditions est satisfaite.
-* !     **PAS** L'action sera effectuée uniquement si la condition n'est pas satisfaite.
+* && **ET** L'action sera effectuée uniquement si les deux conditions sont satisfaites.
+* || **OU** L'action sera effectuée que si l'une des conditions est satisfaite.
+* !  **PAS** L'action sera effectuée uniquement si la condition n'est pas satisfaite.
 
 
 **N.B** :	
 
-* si vous avez plusieurs conditions qui s'enchaînent avec l'opérateur &&,   le traitement s'arrête dès que la condition est évaluée à False. Par exemple, si vous avez un && B && C et A est vrai, mais B est faux, C ne sera jamais exécutée.
+* si vous avez plusieurs conditions qui s'enchaînent avec l'opérateur &&, le traitement s'arrête dès que la condition est évaluée à False. Par exemple, si vous avez un && B && C et A est vrai, mais B est faux, C ne sera jamais exécutée.
 
 * De même, si vous utilisez l'opérateur ||, le traitement s'arrête dès que quelque chose est vrai. Par exemple, si vous avez A || B || C et A est faux et B est vrai, C ne sera jamais exécutée.
 

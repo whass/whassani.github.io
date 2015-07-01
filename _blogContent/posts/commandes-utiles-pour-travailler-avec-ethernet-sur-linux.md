@@ -27,7 +27,7 @@ tags:
     $ ifconfig eth0 down
     $ Ifconfig eth0 up
 
-NB: le nom de la carte peut varier d'une machine à une autre, dans cet exemple, c'est eht0. Pour trouver la votre, faite un `ifconfig`  et repérer là.
+NB: le nom de la carte peut varier d'une machine à une autre, dans cet exemple, c'est eht0. Pour trouver la votre, faite un 'ifconfig'  et repérer là.
 
 ### Forcer une nouvelle adresse IP:
 

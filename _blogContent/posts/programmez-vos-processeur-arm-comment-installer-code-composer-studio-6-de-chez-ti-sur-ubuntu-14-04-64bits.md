@@ -8,11 +8,11 @@ categories:
 
 [TOC]
 
-[![CCSv6-embeddedprocessor](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png)
+[![CCSv6-embeddedprocessor](http://embarquez-vous.fr/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png)](embarquez-vous.fr/wp-content/uploads/2015/01/CCSv6-embeddedprocessor.png)
 
-Le logiciel **Code Composer Studio** est un environnement de développement intégré qui permet de programmer les processeurs embarqués de chez Texas Instrument comme les processeurs de signal numérique (DSP) de la famille TMS320, les appareils basé sur l'architecture ARM ou les microcontrôleurs de la famille MSP430.
+Le logiciel **Code Composer Studio** est un environnement de développement intégré qui permet de programmer les processeurs embarqués de chez Texas Instrument comme les processeurs de signal numérique (DSP) de la famille TMS320, les appareils basé sur l'architecture ARM ou les microcontrôleurs de la famille MSP430.
 
-Cet IDE est basé sur Eclipse, un framework open source.
+Cet IDE est basé sur Eclipse, un Framework open source.
 
 Let's begin .....
 
@@ -55,20 +55,20 @@ L'installation est relativement aisée, et se déroule comme suit :
 
 1. Accepter les termes du contrat
 
-[![Capture d’écran 2015-01-23 à 02.15.15](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png)
+[![Capture d’écran 2015-01-23 à 02.15.15](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png)](http://embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.15.15.png)
 
 2. Cocher les outils de développement nécessaire à la Tiva-C launchpad comme sur la figure suivante.
 
-[![Capture d’écran 2015-01-23 à 02.24.09](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png)
+[![Capture d’écran 2015-01-23 à 02.24.09](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png)](http://embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.24.09.png)
 
-3. Sélectctionner les émulateurs qui vous intéresse
+3. Sélectionner les émulateurs qui vous intéresse
 
-[![Capture d’écran 2015-01-23 à 02.25.30](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png)
+[![Capture d’écran 2015-01-23 à 02.25.30](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png)](http://embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.30.png)
 
 
 4. Pour l'app centre, libre à vous de les cocher ou pas.
 
-[![Capture d’écran 2015-01-23 à 02.25.55](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png)
+[![Capture d’écran 2015-01-23 à 02.25.55](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png)](http://embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-23-à-02.25.55.png)
 
 
 Juste avant que l'installation se termine, l'installateur vous demande si vous souhaiter un raccourci ou pas.
@@ -76,8 +76,8 @@ Juste avant que l'installation se termine, l'installateur vous demande si vous s
 * Si vous choisissez oui alors, il y'a de forte chance qui si vous cliquez sur le raccourci que ça ne marche pas. Dans ce cas, modifier le fichier du raccourci qui se trouve dans le d'installation de CCS choisi au début comme ceci :
 
 ```
-$ cd /votre-dossier-d-installation/```
-$ sudo nano nom-du-raccourci`
+    $ cd /votre-dossier-d-installation/
+    $ sudo nano nom-du-raccourci
 ```
 
 Modifier la ligne qui commence par EXEC, elle devrait ressembler à ceci :
@@ -116,8 +116,8 @@ Maintenant CCS et prêt à être utilisé.
 Il reste une dernière étape elle concerne les drivers de la carte, ils s'installent facilement comme ceci :
 
     
-    cd /votre-dossier-d-installation/ccsvx/install_scripts
-    sudo ./install_drivers.sh.
+    cd /votre-dossier-d-installation/ccsvx/install_scripts
+    sudo ./install_drivers.sh
 
 
 
@@ -151,10 +151,10 @@ Téléchargez ce fichier et enregistrez-le dans votre dossier d'installation de 
     cd /votre-dossier-d-installation/
     mkdir tivaware
     cd tivaware 
-    unzip ~/Downloads/SW-TM4C-2.1.0.12573.exe</code>
+    unzip ~/Downloads/SW-TM4C-2.1.0.12573.exe
 
 
-Il y a plusieurs façons d'inclure TivawWre dans vos projets. Afin de minimiser les paramètres requis sur chaque projet, créez un fichier dans votre espace de travail qu'on appellera "vars.ini". 
+Il y a plusieurs façons d'inclure TivawWre dans vos projets. Afin de minimiser les paramètres requis sur chaque projet, créez un fichier dans votre espace de travail qu'on appellera "vars.ini".
 
 `cd /votre-espace-de-travail/
 nano vars.ini`

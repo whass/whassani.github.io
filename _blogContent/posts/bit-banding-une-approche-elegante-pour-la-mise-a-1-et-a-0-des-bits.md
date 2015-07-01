@@ -1,5 +1,5 @@
 title: Bit-banding - une approche élégante pour la mise à 1 ou à 0 des Bits de vos registres
-description: Typiquement un noyau CPU ne peut pas écrire des bits d'un registre individuellement. En effet, il doit écrire des octets ou mots entiers à la fois selon la flow (Read-Modify-Write). Mais que ce passera-t-il si durant (Read-Modify-Write) une intéreeution prioritaire survient ? Pour en savoir plus, lisez la la suite.
+description: Typiquement un noyau CPU ne peut pas écrire des bits d'un registre individuellement. En effet, il doit écrire des octets ou mots entiers à la fois selon la flow (Read-Modify-Write). Mais que ce passera-t-il si durant (Read-Modify-Write) une interruption prioritaire survient ? Pour en savoir plus, lisez la la suite.
 date: 2015-02-14
 categories: 
 - Embedded
@@ -39,7 +39,6 @@ L'image ci-dessous montre le principe du bit-banding, à des fins de démonstra
 
 Pour utiliser cette caractéristique, vous devez avoir l'adresse du mot dans la région Alias (Alias Region) qui correspond au bit que vous voulez manipuler (lecture/écrire). Ceci est fait en C avec une macro.
 
-To use this feature, you must first get the address of the word in the alias region that corresponds to the bit you wish to read/write. This is done in C with a simple pre-processor macro.
 
     
     #define BITBAND_SRAM_REF 0x20000000
@@ -64,7 +63,7 @@ To use this feature, you must first get the address of the word in the alias reg
 
 Pour plus de détails veuillez vous référer a cette adresse [the ARM InfoCenter page on bit-banding](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0179b/CHDJHIDF.html).
 
-Ce n'est pas la seule solution existante. Pour toute les architectures connues, ils existent des mécanismes pour agir sur un bit individuellement. L"approche qu'utilise ARM est élégante et n'utilise que le ANSI C  là où les autres utilisent des extensions spéciales ou le langages assembleur.
+Ce n'est pas la seule solution existante. Pour toute les architectures connues, ils existent des mécanismes pour agir sur un bit individuellement. L'"'approche qu'utilise ARM est élégante et n'utilise que le ANSI C là où les autres utilisent des extensions spéciales ou le langages assembleur.
 
 
 

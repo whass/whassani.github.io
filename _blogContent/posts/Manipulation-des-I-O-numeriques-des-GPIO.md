@@ -7,7 +7,7 @@ categories:
 
 Dans ce qui suit, j'aborderai avec vous, à travers un exemple très simple, un concept fondamental dans les systèmes embarqués, à savoir la manipulation des GPIO !
 
-Les GPIO pour General Purpose Input Output, sont l'ensemble des entrées/sorties numériques permettants de communiquer avec le monde extérieur.
+Les GPIO pour General Purpose Input Output, sont l'ensemble des entrées/sorties numériques permettant de communiquer avec le monde extérieur.
 
 Dans ce qui suit, je vous apprendrez à :
 
@@ -24,13 +24,13 @@ Dans ce qui suit, je supposerai que :
 	
   * vous avez déjà installé et configuré
 	
-    * CCS V6 (Code Composer Studio) sur votre machine ubuntu ou windows
+    * CCS V6 (Code Composer Studio) sur votre machine Ubuntu ou Windows
 	
     * TivaWare
 	
   * Possédez une carte Tiva C Séries TM4C123G LaunchPad Evaluation Kit EK-TM4C123GXL.
 	
-  * Vous savez comment écrire sur un registre.
+  * Vous savez comment écrire sur un registre.
 
 
 
@@ -72,14 +72,14 @@ Conclusion, la LED rouge est connectée à PF1, qui correspond au deuxième bit 
 
   * Activer le port (mettre le bit numéro 5 du registre de contrôle à l'état haut)
 
-3. Identifier les registres de contrôles du port
+3. Identifier les registres de contrôles du port
 
   1. Les adresse mémoires des registres de contrôle (0x40025400, 0x4002551C)
      
-    * définir la direction (registre : 0x40025400, mettre le bit numéro 2 à l'état haut)
+    * définir la direction (registre : 0x40025400, mettre le bit numéro 2 à l'état haut)
 
 	
-    * activer la sortie numérique (registre : 0x4002551C, mettre le bit numéro 2 à l'état haut)
+    * activer la sortie numérique (registre : 0x4002551C, mettre le bit numéro 2 à l'état haut)
 
 	
     * D'autres registres peuvent être configuré, mais ces deux sont largement suffisant pour lire et écrire un GPIO
@@ -90,7 +90,7 @@ Conclusion, la LED rouge est connectée à PF1, qui correspond au deuxième bit 
 	
   * le bit du registre de données qui agit sur le pin (le deuxième bit)
 
-5. écrire sur la sortie en agissante sur le registre de donnée (mettre le bit numéro 2 à l'état haut ou bas)
+5. écrire sur la sortie en agissante sur le registre de donnée (mettre le bit numéro 2 à l'état haut ou bas)
 
 
 

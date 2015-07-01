@@ -94,15 +94,15 @@ On a presque terminé.
 
 Maintenant, si sur votre navigateur WEB tapez :
 
-http://votre_nom_de_domaine_ou_IP/owncloud
+    http://votre_nom_de_domaine_ou_IP/owncloud
 
 Si tout est OK, vous verrez cela :
 
-[![Capture d’écran 2015-01-22 à 12.37.45](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.37.45.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.37.45.png)
+[![Capture d’écran 2015-01-22 à 12.37.45](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.37.45.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.37.45.png)
 
 Choisissez le nom ainsi qu'un mot de passe administrateur que vous souhaitez (j'ai choisi blender pour moi !), saisissiez-les. Avant de terminer l'installation, cliquez sur "support de stockage & base de données". Vous verrez apparaître cela :
 
-[![Capture d’écran 2015-01-22 à 12.36.57](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.36.57.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.36.57.png)
+[![Capture d’écran 2015-01-22 à 12.36.57](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.36.57.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.36.57.png)
 
 
 
@@ -110,6 +110,6 @@ Cliquez sur "MySQL/MariaDB" et saisissez  les informations relatives à cette 
 
 Cliquez sur "Terminer l'installation", encore une fois, si tout s'est bien passé, vous accéderez à votre OwnCloud. Un message de bienvenu vous invitera à télécharger les clients webs de OwnCloud pour votre machine (PC, Mac, Smartphone, etc.) sur les système mac os, android et linux. Libre à vous de les télécharger ou pas.
 
-[![Capture d’écran 2015-01-22 à 12.48.59](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.48.59.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.48.59.png)
+[![Capture d’écran 2015-01-22 à 12.48.59](http://www.embarquez-vous.fr/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.48.59.png)](http://ec2-54-175-20-183.compute-1.amazonaws.com/wp-content/uploads/2015/01/Capture-d’écran-2015-01-22-à-12.48.59.png)
 
 Bravo, votre serveur est prêt pour stocker vos données.

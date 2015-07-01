@@ -1,4 +1,4 @@
-title: Applications en Bare Metal (sans OS) sur la Beagle Bone Board
+title: Applications en Bare-Metal (sans OS) sur la Beagle Bone Board
 date: 2015-02-22
 description: Mise en place d'applications embarqués sans os sur la BeagleBone Black équipé d'un processeur ARM-A7. Utilisation de StarterWare de TI et de la chaine de compilation croisée pour ARM (linaro-gcc)
 categories: 
@@ -20,7 +20,7 @@ tags:
 
 [TOC]
 
-Dans ce qui suit, je vais vous montrer comment mettre en place des applications en Metal Bar (i.e., sans OS) sur la BeagleBone Black équipé d'un processeur ARM-A7.
+Dans ce qui suit, je vais vous montrer comment mettre en place des applications en Bare-Metal (i.e., sans OS) sur la BeagleBone Black équipé d'un processeur ARM-A7.
 
 
 ## Installer StarterWare
@@ -108,8 +108,7 @@ Par :
     ifndef PREFIX
        PREFIX=${LIB_PATH}/bin/arm-none-eabi-
     endif
-    
-    
+
 
 
 

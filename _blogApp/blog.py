@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from flask_flatpages import FlatPages, pygments_style_defs
 from flask_frozen import Freezer
 from flaskext.markdown import Markdown
+from markdown.extensions import Extension
 
 
 DEBUG = True
@@ -10,6 +11,8 @@ FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = '.md'
 FLATPAGES_ROOT = '../_blogContent'
 POST_DIR = 'posts'
+IMG_DIR= 'images'
+
 FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','headerid','extra','toc']
 FREEZER_RELATIVE_URLS=True
 FREEZER_DESTINATION="../"
@@ -26,6 +29,7 @@ app.config['FREEZER_DESTINATION_IGNORE'] = ['.git*', 'CNAME', '.gitignore', 'rea
 @app.route('/css/pygments.css')
 def pygments_css():
     return pygments_style_defs('friendly'), 200, {'Content-Type': 'text/css'}
+
 
 @app.route('/')
 def home():
@@ -54,6 +58,12 @@ def post(name):
     post = flatpages.get_or_404(path)
 
     return render_template('post.html', post=post)
+
+@app.route('/images/<name>')
+def image(name):
+    path = '{}/{}'.format(IMG_DIR, name)
+    post = flatpages.get_or_404(path)
+    return send_from_directory(post)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "build":
