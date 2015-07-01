@@ -131,7 +131,7 @@ exemple :
 
 La boucle while répète un ensemble de déclarations tant que la commande de contrôle renvoie true. La syntaxe est:
     
-	while "condition est vraie"
+	while "condition est vraie"
 		do "commandes à executer"
 		----
 	done
