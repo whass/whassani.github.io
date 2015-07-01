@@ -87,7 +87,7 @@ Voici quelques-uns des avantages de l'utilisation de la déclaration de cas:
 Voici la structure de base de la déclaration de cas:
 
     
-	case expression in
+	case expression in
 	    pattern1) exécuter des commandes;;
 	    pattern2) exécuter des commandes;;
 	    pattern3) exécuter des commandes;;
