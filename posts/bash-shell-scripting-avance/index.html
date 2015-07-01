@@ -68,10 +68,7 @@
 <li><a href="#manipulation-de-chaines">manipulation de chaînes</a></li>
 <li><a href="#expressions-booleennes">expressions booléennes</a><ul>
 <li><a href="#tests-dans-les-expressions-booleennes">Tests dans les expressions booléennes</a></li>
-</ul>
-</li>
-<li><a href="#la-declaration-de-cas-case">La déclaration de cas (case)</a><ul>
-<li><a href="#structure-de-la-declaration-de-cas-case">Structure de la déclaration de cas (case)</a></li>
+<li><a href="#la-declaration-de-cas-case">La déclaration de cas (case)</a></li>
 </ul>
 </li>
 <li><a href="#les-boucles">Les boucles</a><ul>
@@ -85,9 +82,10 @@
 <li><a href="#redirection-erreurs-vers-un-fichier-ou-un-ecran">Redirection erreurs vers un fichier ou un écran</a></li>
 </ul>
 </li>
+<li><a href="#binbash">! /bin/bash</a></li>
 </ul>
 </div>
-<h3 id="manipulation-de-chaines">manipulation de chaînes</h3>
+<h2 id="manipulation-de-chaines">manipulation de chaînes</h2>
 <p>Une variable de type chaîne contient une séquence de caractères de texte. Elle peut inclure des lettres, chiffres, symboles et signes de ponctuation. Quelques exemples: ABCDE, 123, 123, ABCDE ABCDE-123, et 123% = acbde</p>
 <p>Les opérateurs de chaînes comprennent ceux qui font la comparaison, le tri, et de trouver la longueur. l'utilisation de certains opérateurs de base sont illustrés ci-après :</p>
 <ul>
@@ -95,7 +93,6 @@
 <li>[String1 = string2] Compare les caractères dans chaîne1 avec les caractères string2.</li>
 <li>myLen1 = $ {#string1} Enregistre la longueur de string1 dans la variable myLen1.</li>
 </ul>
-<p><strong>1 : Partie de la chaîne</strong></p>
 <p>Pour extraire le premier caractère d'une chaîne, nous pouvons préciser:</p>
 <p>$ {chaine:0: 1} Ici 0 est le décalage dans la chaîne, où, l'extraction doit commencer et 1 est le nombre de caractères à extraire.</p>
 <p>(.) Pour extraire tous les caractères d'une chaîne après un point, utiliser l'expression suivante:</p>
@@ -103,7 +100,7 @@
 </pre></div>
 
 
-<h3 id="expressions-booleennes">expressions booléennes</h3>
+<h2 id="expressions-booleennes">expressions booléennes</h2>
 <p>Les expressions booléennes ont pour résultat  TRUE ou FALSE, et les résultats sont obtenus en utilisant les différents opérateurs booléens énumérés dans le tableau.</p>
 <ul>
 <li>&amp;&amp; <strong>ET</strong> L'action sera effectuée uniquement si les deux conditions sont satisfaites.</li>
@@ -119,7 +116,7 @@
 <p>De même, si vous utilisez l'opérateur ||, le traitement s'arrête dès que quelque chose est vrai. Par exemple, si vous avez A || B || C et A est faux et B est vrai, C ne sera jamais exécutée.</p>
 </li>
 </ul>
-<h4 id="tests-dans-les-expressions-booleennes">Tests dans les expressions booléennes</h4>
+<h3 id="tests-dans-les-expressions-booleennes">Tests dans les expressions booléennes</h3>
 <p>Nous pouvons utiliser ces expressions lorsque vous travaillez avec plusieurs types de données y compris les chaînes ou des nombres ainsi que les fichiers. Par exemple, pour vérifier si un fichier existe, utiliser le test conditionnelle suivante:</p>
 <div class="codehilite"><pre><span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="o">&lt;</span><span class="n">Nom</span> <span class="n">du</span> <span class="n">fichier</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
@@ -140,7 +137,7 @@
 <li>Il vous permet de comparer une variable contre plusieurs valeurs à la fois.</li>
 <li>Cela réduit la complexité d'un programme.</li>
 </ul>
-<h4 id="structure-de-la-declaration-de-cas-case">Structure de la déclaration de cas (case)</h4>
+<p><strong>Structure de la déclaration de cas (case)</strong></p>
 <p>Voici la structure de base de la déclaration de cas:</p>
 <div class="codehilite"><pre><span class="k">case</span> <span class="n">expression</span> <span class="n">in</span>
     <span class="n">pattern1</span><span class="p">)</span> <span class="s">&quot;exécuter des commandes&quot;</span><span class="p">;;</span>
@@ -152,7 +149,7 @@
 </pre></div>
 
 
-<h3 id="les-boucles">Les boucles</h3>
+<h2 id="les-boucles">Les boucles</h2>
 <p>En utilisant les boucles, vous pouvez exécuter une ou plusieurs lignes de code de façon répétitive. Habituellement, vous faites cela jusqu'à ce qu'à qu'une condition d'arrêt soit satisfaite.</p>
 <p>Trois types de boucles sont souvent utilisés dans la plupart des langages de programmation:</p>
 <ul>
@@ -160,7 +157,7 @@
 <li>while</li>
 <li>until</li>
 </ul>
-<h4 id="la-boucle-for">La boucle "for"</h4>
+<h3 id="la-boucle-for">La boucle "for"</h3>
 <p>La boucle <strong>for</strong> opère sur chaque élément d'une liste d'éléments. La syntaxe de la boucle est:</p>
 <div class="codehilite"><pre><span class="k">for</span> <span class="n">variable</span> <span class="n">in</span> <span class="n">list</span>
     <span class="k">do</span> <span class="s">&quot;exécuter une itération pour chaque élément dans la liste jusqu&#39;à ce que la liste est terminée&quot;</span>
@@ -177,13 +174,13 @@
 6</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash </span>
 <span class="nv">sum</span><span class="o">=</span>0
 <span class="k">for </span>i in 1 2 3 4
-<span class="nv">sum</span> <span class="o">=</span> <span class="k">$((</span><span class="nv">$sum</span><span class="o">+</span><span class="nv">$i</span><span class="k">))</span>
+    <span class="nv">sum</span> <span class="o">=</span> <span class="k">$((</span><span class="nv">$sum</span><span class="o">+</span><span class="nv">$i</span><span class="k">))</span>
 <span class="k">done</span>
 <span class="nb">echo</span> <span class="s2">&quot;la somme des $i est $sum&quot;</span>
 </pre></div>
 </td></tr></table>
 
-<h4 id="la-boucle-while">La boucle while</h4>
+<h3 id="la-boucle-while">La boucle while</h3>
 <p>La boucle while répète un ensemble de déclarations tant que la commande de contrôle renvoie true. La syntaxe est:</p>
 <div class="codehilite"><pre><span class="k">while</span><span class="err"> </span><span class="s">&quot;condition est vraie&quot;</span>
     <span class="k">do</span> <span class="s">&quot;commandes à executer&quot;</span>
@@ -217,7 +214,7 @@
 </pre></div>
 </td></tr></table>
 
-<h4 id="la-boucle-until">La boucle until</h4>
+<h3 id="la-boucle-until">La boucle until</h3>
 <p>La boucle <strong>until</strong> répète un ensemble de déclarations tant que la commande de contrôle est fausse. Ainsi, il est essentiellement à l'opposé de la boucle while. La syntaxe est:</p>
 <div class="codehilite"><pre><span class="n">until</span><span class="err"> </span><span class="s">&quot;la condition est fausse&quot;</span>
 <span class="k">do</span>
@@ -246,11 +243,11 @@
 </pre></div>
 </td></tr></table>
 
-<h3 id="introduction-au-debogage-de-script">Introduction au débogage de script</h3>
+<h2 id="introduction-au-debogage-de-script">Introduction au débogage de script</h2>
 <p>Tout en travaillant avec des scripts et des commandes, vous pouvez rencontrer des erreurs. Ceux-ci peuvent être due à une erreur dans le script, comme une syntaxe incorrecte, ou d'autres sources comme un fichier manquant ou la permission insuffisante pour effectuer une opération. Ces erreurs peuvent être signalées avec un code d'erreur spécifique. </p>
 <p>Alors, comment allez-vous identifier et fixer une erreur?</p>
 <p>Débogage vous aide à détecter et de résoudre de telles erreurs, et est l'une des tâches les plus importantes d'un administrateur système.</p>
-<h4 id="en-savoir-plus-sur-le-debogage-de-script">En savoir plus sur le débogage de script</h4>
+<h3 id="en-savoir-plus-sur-le-debogage-de-script">En savoir plus sur le débogage de script</h3>
 <p>Avant de corriger une erreur (ou bug), il est essentiel de connaître sa source.
 En bash shell script, vous pouvez exécuter un script en mode débogage en faisant</p>
 <div class="codehilite"><pre><span class="n">bash</span> <span class="o">-</span><span class="n">x</span> <span class="p">.</span><span class="o">/</span><span class="n">script_file</span><span class="p">.</span><span class="n">sh</span>
@@ -268,16 +265,15 @@ En bash shell script, vous pouvez exécuter un script en mode débogage en faisa
 </ul>
 <p>exemple :</p>
 <ul>
-<li>Sans débogage</li>
+<li>
+<p>Sans débogage</p>
+<h1 id="binbash">! /bin/bash</h1>
+<p>echo "entrer votre nom avec votre titre"
+read nom
+echo "votre titre est ${nom:0:3}"
+echo "votre nom est ${nom#*.}"</p>
+</li>
 </ul>
-<div class="codehilite"><pre>    #!/bin/bash `
-    echo &quot;entrer votre nom avec votre titre&quot;`
-    read nom`
-    echo &quot;votre titre est <span class="cp">${</span><span class="n">nom</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="cp">}</span>&quot;`
-    echo &quot;votre nom est <span class="cp">${</span><span class="n">nom</span><span class="c">#*.</span><span class="cp">}</span>&quot;`
-</pre></div>
-
-
 <p>sortie :</p>
 <div class="codehilite"><pre><span class="n">entrer</span> <span class="n">votre</span> <span class="n">nom</span> <span class="n">avec</span> <span class="n">votre</span> <span class="n">titre</span> 
 <span class="n">Mr</span> <span class="n">Blender</span> 
@@ -311,7 +307,7 @@ En bash shell script, vous pouvez exécuter un script en mode débogage en faisa
 </pre></div>
 
 
-<h4 id="redirection-erreurs-vers-un-fichier-ou-un-ecran">Redirection erreurs vers un fichier ou un écran</h4>
+<h3 id="redirection-erreurs-vers-un-fichier-ou-un-ecran">Redirection erreurs vers un fichier ou un écran</h3>
 <p>Dans UNIX / Linux, tous les programmes qui s'exécutent donnent lieu à trois flux de fichiers qui sont:</p>
 <ol>
 <li>

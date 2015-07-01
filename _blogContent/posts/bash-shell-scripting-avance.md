@@ -8,7 +8,7 @@ categories:
 
 [TOC]
 
-### manipulation de chaînes
+## manipulation de chaînes
 Une variable de type chaîne contient une séquence de caractères de texte. Elle peut inclure des lettres, chiffres, symboles et signes de ponctuation. Quelques exemples: ABCDE, 123, 123, ABCDE ABCDE-123, et 123% = acbde
 
 Les opérateurs de chaînes comprennent ceux qui font la comparaison, le tri, et de trouver la longueur. l'utilisation de certains opérateurs de base sont illustrés ci-après :
@@ -17,8 +17,6 @@ Les opérateurs de chaînes comprennent ceux qui font la comparaison, le tri, et
 * [String1 = string2] Compare les caractères dans chaîne1 avec les caractères string2.
 * myLen1 = $ {#string1} Enregistre la longueur de string1 dans la variable myLen1.
 
-
-**1 : Partie de la chaîne**
 
 Pour extraire le premier caractère d'une chaîne, nous pouvons préciser:
 
@@ -30,7 +28,7 @@ $ {chaine:0: 1} Ici 0 est le décalage dans la chaîne, où, l'extraction doit c
 	${string#*.}
 
 
-### expressions booléennes
+## expressions booléennes
 
 Les expressions booléennes ont pour résultat  TRUE ou FALSE, et les résultats sont obtenus en utilisant les différents opérateurs booléens énumérés dans le tableau.
 	
@@ -48,7 +46,7 @@ Les expressions booléennes ont pour résultat  TRUE ou FALSE, et les résulta
 
 
 
-#### Tests dans les expressions booléennes
+### Tests dans les expressions booléennes
 
 
 Nous pouvons utiliser ces expressions lorsque vous travaillez avec plusieurs types de données y compris les chaînes ou des nombres ainsi que les fichiers. Par exemple, pour vérifier si un fichier existe, utiliser le test conditionnelle suivante:
@@ -79,9 +77,7 @@ Voici quelques-uns des avantages de l'utilisation de la déclaration de cas:
 * Cela réduit la complexité d'un programme.
 
 
-
-
-#### Structure de la déclaration de cas (case)
+**Structure de la déclaration de cas (case)**
 
 
 Voici la structure de base de la déclaration de cas:
@@ -98,7 +94,7 @@ Voici la structure de base de la déclaration de cas:
 
 
 
-### Les boucles
+## Les boucles
 
 
 En utilisant les boucles, vous pouvez exécuter une ou plusieurs lignes de code de façon répétitive. Habituellement, vous faites cela jusqu'à ce qu'à qu'une condition d'arrêt soit satisfaite.
@@ -109,7 +105,7 @@ Trois types de boucles sont souvent utilisés dans la plupart des langages de pr
 * while
 * until
 
-#### La boucle "for"
+### La boucle "for"
 
 
 La boucle **for** opère sur chaque élément d'une liste d'éléments. La syntaxe de la boucle est:
@@ -125,13 +121,13 @@ exemple :
 	#!/bin/bash 
 	sum=0
 	for i in 1 2 3 4
-	sum = $(($sum+$i))
+		sum = $(($sum+$i))
 	done
 	echo "la somme des $i est $sum"
 	
 
 
-#### La boucle while
+### La boucle while
 
 La boucle while répète un ensemble de déclarations tant que la commande de contrôle renvoie true. La syntaxe est:
     
@@ -159,7 +155,7 @@ exemple :
 
 
 
-#### La boucle until
+### La boucle until
 
 
 La boucle **until** répète un ensemble de déclarations tant que la commande de contrôle est fausse. Ainsi, il est essentiellement à l'opposé de la boucle while. La syntaxe est:
@@ -187,7 +183,7 @@ exemple :
 
 
 
-### Introduction au débogage de script
+## Introduction au débogage de script
 
 
 Tout en travaillant avec des scripts et des commandes, vous pouvez rencontrer des erreurs. Ceux-ci peuvent être due à une erreur dans le script, comme une syntaxe incorrecte, ou d'autres sources comme un fichier manquant ou la permission insuffisante pour effectuer une opération. Ces erreurs peuvent être signalées avec un code d'erreur spécifique. 
@@ -197,7 +193,7 @@ Alors, comment allez-vous identifier et fixer une erreur?
 Débogage vous aide à détecter et de résoudre de telles erreurs, et est l'une des tâches les plus importantes d'un administrateur système.
 
 
-#### En savoir plus sur le débogage de script
+### En savoir plus sur le débogage de script
 Avant de corriger une erreur (ou bug), il est essentiel de connaître sa source.
 En bash shell script, vous pouvez exécuter un script en mode débogage en faisant
     
@@ -217,14 +213,13 @@ exemple :
 
 * Sans débogage
 
-```
-    #!/bin/bash `
-    echo "entrer votre nom avec votre titre"`
-    read nom`
-    echo "votre titre est ${nom:0:3}"`
-    echo "votre nom est ${nom#*.}"`
-```
-
+	#! /bin/bash
+	echo "entrer votre nom avec votre titre"
+	read nom
+	echo "votre titre est ${nom:0:3}"
+	echo "votre nom est ${nom#*.}"
+	
+	
 sortie :
     
     entrer votre nom avec votre titre 
@@ -258,7 +253,7 @@ sortie :
 
 
 
-#### Redirection erreurs vers un fichier ou un écran
+### Redirection erreurs vers un fichier ou un écran
 
 Dans UNIX / Linux, tous les programmes qui s'exécutent donnent lieu à trois flux de fichiers qui sont:
 	
