@@ -47,20 +47,6 @@
 {{post.html|safe}}
       
 
-      <div id="more">
-        <div id="more-articles">
-          
-            <p>Since you scrolled this far, you might as well take a look at some other things I wrote !</p>
-            <ul>
-       	    {% for posts in posts %}
-              <li><a href="{{ url_for('post', post_id=post.id) }}">{{ posts.title }}</a></li>
-           {% endfor %}
-            </ul>
-          
-        </div>
-
-
-      </div>
 
       <style id="disqus_hide">
         #disqus_thread{
