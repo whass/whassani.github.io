@@ -21,7 +21,7 @@ app = Flask(__name__,  static_url_path='')
 flatpages = FlatPages(app)
 freezer = Freezer(app)
 app.config.from_object(__name__)
-app.config['FREEZER_DESTINATION_IGNORE'] = ['.git*', 'CNAME', '.gitignore', 'readme.md','_blogContent','_blogApp']
+app.config['FREEZER_DESTINATION_IGNORE'] = ['.git*', 'CNAME', '.gitignore', 'readme.md','_blogContent','_blogApp', 'content_update.sh']
 
 @app.route('/css/pygments.css')
 def pygments_css():
