@@ -70,7 +70,7 @@ header{
 }
 
 #logo{
-  font-size: 1.2em;
+  font-size: 1.6em;
   font-family: "anonymousregular";
   margin-top: 20px;
 }
@@ -543,7 +543,7 @@ blockquote p{
 
 
 *:focus {
-	outline: none;
+  outline: none;
 }
 
 
@@ -606,7 +606,7 @@ box-shadow: none;
   font-size: 12px;
   color: #444;
   display: block;
-	margin-top: 12px;
+  margin-top: 12px;
 }
 
 table {

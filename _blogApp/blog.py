@@ -39,6 +39,9 @@ def home():
 def hire():
     return render_template('hire.html')
 
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 @app.route("/posts/")
 def posts():
