@@ -9,15 +9,12 @@
       <div id="logo">
         <div id="more-nav">
           &rarr; <a href="{{ url_for('home') }}" class="" >about</a>        
-          &rarr; <a href="{{ url_for('posts') }}" class="selected" >blog</a>
+          <a href="{{ url_for('posts') }}" class="selected" > &rarr; blog</a>
           &rarr; <a href="{{ url_for('hire') }}" class="" >hire me</a>
 
         </div>
-        <a id='logo1' href="/">whassani</a>
-        <span id='logo2'>#</span>
-        <a id='logo3' href="{{ url_for('posts') }}">
-          blog
-        </a>
+        <a id='logo1' href="/">W. Hassani</a>
+
       </div>
 {% endblock %}
 
