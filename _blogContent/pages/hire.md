@@ -1,5 +1,5 @@
 tite: hire-me
-description: this page describes my major skills and how how I can be useful for you.
+description: this page describes my major skills and how I can be useful for you.
 
 # Want to hire me ?
 
@@ -16,25 +16,25 @@ Here's an incomplete list of the things I can help you with
 * **Design of a Human-Machine Interaction Strategies**
 * **Dynamical System Modeling and Optimization**
 * **Programming your MicroController based board**
-* Development of a simulation models using Matlab/Simulink, C/C++ or Pyhton
+* Development of a simulation model using Matlab/Simulink, C/C++ or Pyhton
 * Speed prototyping using dSPACE board
 
 
 ## Why I Can Help
 
-### - I've a deep knowlegde in control engineering .....
+### - I've a deep knowledge in control engineering .....
 
-*My developped control strategies have been experimentally tested, published in most prestigious conferences and revues in robotics and Control (IROS, CDC, RSS, ...). Therefore, reviewed and approved by international experts from Stanford, Berlin, Tokyo, Washington, etc.*
+*My developed control strategies have been experimentally tested, published in most prestigious conferences and revues in robotics and Control (IROS, CDC, RSS,...). Therefore, reviewed and approved by international experts from Stanford, Berlin, Tokyo, Washington, etc.*
 
 
-### - I've several years of experience in electronics and embedded systme design for robotics and automated industrial systems.
+### - I've several years of experience in electronics and embedded system design for robotics and automated industrial systems.
 
-*I occupied several engineer positions and developped many systems including the design and the development. I can cite, a microconroller-based boards for automated industrial systems, servo-controllers, robot benchmark, wireless system network, multichannel signal acquisition systems, etc.*
+*I occupied several engineer positions and developed many systems, including the design and the development. I can cite, a microconroller-based boards for automated industrial systems, servo-controllers, robot benchmark, wireless system network, multichannel signal acquisition systems, etc.*
 
 
 ### - I worked in an international environments .....
 
-*I was invloved in many international projects, including, industrial and academic from Finland, Germany, Spain, Turkey, South of Korea.*
+*I was involved in many international projects, including, industrial and academic from Finland, Germany, Spain, Turkey, South Korea.*
 
 
 Since all this is just me talking, let's see some video of my previous projects.
@@ -56,5 +56,5 @@ Before contacting me, know that....
 
 I'm localized in Paris, so if you need me in person... that's where I'll be !....
 
-References available on request.
+References are available on request.
 
