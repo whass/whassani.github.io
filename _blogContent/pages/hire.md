@@ -24,7 +24,7 @@ Here's an incomplete list of the things I can help you with
 
 ### - I've a deep knowledge in control engineering .....
 
-*My developed control strategies have been experimentally tested, published in most prestigious conferences and revues in robotics and Control (IROS, CDC, RSS,...). Therefore, reviewed and approved by international experts from Stanford, Berlin, Tokyo, Washington, etc.*
+*As a PhD I've developed new control strategies that have been experimentally tested, published in most prestigious conferences and revues in robotics and Control (IROS, CDC, RSS,...).*
 
 
 ### - I've several years of experience in electronics and embedded system design for robotics and automated industrial systems.
