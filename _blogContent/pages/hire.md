@@ -32,7 +32,7 @@ Here's an incomplete list of the things I can help you with
 *I occupied several engineer positions and developed many systems, including the design and the development. I can cite, a microconroller-based boards for automated industrial systems, servo-controllers, robot benchmark, wireless system network, multichannel signal acquisition systems, etc.*
 
 
-### &nbsp;&nbsp;&nbsp; International environment .....
+### &nbsp;&nbsp;&nbsp; International collaborative environment .....
 
 *I was involved in many international projects, including, industrial and academic from Finland, Germany, Spain, Turkey, South Korea.*
 
