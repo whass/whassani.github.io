@@ -27,12 +27,12 @@ Here's an incomplete list of the things I can help you with
 *My PhD deals with advanced control issues, such as, stability analysis, robustness, perturbations reject, etc. I developed new control strategies that have been experimentally tested, published in most prestigious conferences and revues in robotics and Control (IROS, CDC, RSS,...).*
 
 
-### Electronics and embedded system years experience ...
+### Years of experience in Electronics and embedded system ...
 
 *I occupied several engineer positions and developed many systems, including the design and the development. I can cite, a microconroller-based boards for automated industrial systems, servo-controllers, robot benchmark, wireless system network, multichannel signal acquisition systems, etc.*
 
 
-### International environments experience .....
+### International environment .....
 
 *I was involved in many international projects, including, industrial and academic from Finland, Germany, Spain, Turkey, South Korea.*
 
