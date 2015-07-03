@@ -56,5 +56,11 @@ Before contacting me, know that....
 
 I'm localized in Paris, so if you need me in person... that's where I'll be !....
 
+**My email is :** *hassani.walid@gmail.com*
+
+**My phone number is :** *(0033) 619 137 550*
+
+## References
+
 References are available on request.
 
