@@ -16,8 +16,8 @@ Here's an incomplete list of the things I can help you with
 * **Design of a Human-Machine Interaction Strategies**
 * **Dynamical System Modeling and Optimization**
 * **Programming your MicroController based board**
-* Development of a simulation model using Matlab/Simulink, C/C++ or Pyhton
-* Speed prototyping using dSPACE board
+    * Development of a simulation model using Matlab/Simulink, C/C++ or Pyhton
+    * Speed prototyping using dSPACE board
 
 
 ## Why I Can Help
