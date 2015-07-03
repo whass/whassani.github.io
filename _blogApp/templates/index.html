@@ -21,36 +21,58 @@
 
 {% block content %}
 
-  <h1>PhD in Control Engineering</h1>
+  <h1><img src="{{ url_for('static', filename='images/whassani.jpeg') }}" alt="Mountain View" style="width:150px;height:150px;"></h1>
+
+    <div class="published">
+      <span > 
+            <p style="font-size: 1.6em;  text-align: center;" > Walid Hassani | <small> hassani.walid@gmail.com </small></p>
+      </span> <br>
+  <h1 style="margin-top:0em;">PhD in Robotics & Control Engineering</h1>
   <div class="published">
-    <span>friendly human-machine relationship</span>
+    </div>
+
   </div>
 
-  <div id="container">
+  <div id="container" style="margin-top:-5em;">
     <div id="content">
 
-<p> I'm currently looking for an R&D engineer position. I have several years of experiences in many industries and laboratories, including : 
+<p> Living at Paris in France, I'm looking for an R&D engineer position in : <br>
     <div id="hire">
       <ul>
-        <li><strong>Biomedical Robotics</strong></li>
+        <li><strong>Robotics</strong></li>
         <li><strong>Advanced Control Engineering </strong></li>
         <li><strong>Electronics & Embedded Systems Design</strong></li>
       </ul>
     </div>
-</p>
- 
+<br>
+
+    I'm writing on differents topics (<a href="/categories/Linux/"> Linux</a>, <a href="/categories/Embedded/"> Embedded</a>, <a href="/categories/C-C++/"> C/C++</a>, etc), my latest posts are :
+        <div id="hire">
+
+        <ul>
+          {% for post in posts %}
+              <li><a href="{{ url_for('post', name=post.path.replace('posts/', '')) }}">{{ post.title }}</a></li>
+          {% endfor %}
+          <li> More posts ?, go check out my blog from this <a href="/posts"> page </a></li>
+        </ul>
+
+        </div>
   <p>
-    You can reach me via
-    <a href="https://www.researchgate.net/profile/Hassani_Walid"target="_blank">ResearchGate</a>
-    , my <a href="https://fr.linkedin.com/pub/walid-hassani/92/814/ba8" class="linkedin" target="_blank">LinkedIn</a>
+
+
+    If you enjoy my website and want the same, I coding it using <a href="http://flask.pocoo.org/">Flask Python</a> and you can clone it from my <a href="https://github.com/whassani/whassani.github.io">Github</a>.
+  </p>
+
+    <br>
+
+    You can reach me via <a href="https://www.researchgate.net/profile/Hassani_Walid"target="_blank">ResearchGate</a>, my <a href="https://fr.linkedin.com/pub/walid-hassani/92/814/ba8" class="linkedin" target="_blank">LinkedIn</a>
     account or my email "hassani.walid-at-gmail-dot-com". If you want
     to hire me, go check out <a href="/hire">this page</a>
     before contacting me.
-  </p>
+     </p>
   <div class="footnote">
     Walid Hassani-
   </div>
-
 </div>
 
 
