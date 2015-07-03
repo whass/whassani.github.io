@@ -11,7 +11,5 @@ The quad-rotor model is obtained by representing the aircraft as a solid body ev
 
 The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Fig. 2.1. Each motor produces a thrust and a torque, whose combination generates the main thrust, the yaw torque, the pitch torque, and the roll torque acting on the quad-rotor. 
 
-Formula Test:
-$$\sum_{i=1}^n X_i$$
-$$\tau_{i}$$
+
 
