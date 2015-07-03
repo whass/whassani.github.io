@@ -12,6 +12,7 @@ FLATPAGES_EXTENSION = '.md'
 FLATPAGES_ROOT = '../_blogContent'
 POST_DIR = 'posts'
 IMG_DIR= 'images'
+PAGE_DIR= 'pages'
 
 FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','headerid','extra','toc']
 FREEZER_RELATIVE_URLS=True
@@ -37,9 +38,11 @@ def home():
     posts.sort(key=lambda item:item['date'], reverse=False)
     return render_template('index.html', posts=posts[:4])
 
-@app.route('/hire.html')
-def hire():
-    return render_template('hire.html')
+@app.route('/pages/<name>/')
+def page(name):
+    path = '{}/{}'.format(PAGE_DIR, name)
+    page = flatpages.get_or_404(path)
+    return render_template('page.html', page=page) 
 
 
 @app.route("/posts/")
@@ -60,7 +63,6 @@ def post(name):
     post = flatpages.get_or_404(path)
 
     return render_template('post.html', post=post)
-
 
 
 if __name__ == "__main__":
