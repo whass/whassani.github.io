@@ -5,6 +5,7 @@ description: The complete dynamics of an aircraft, taking into account aero-elas
 categories: 
 - Control
 
+dere
 
 The quad-rotor model is obtained by representing the aircraft as a solid body evolving in a three dimensional space and subject to the main thrust and three torques: pitch, roll and yaw.
 
