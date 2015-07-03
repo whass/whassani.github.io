@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="author" content="Walid Hassani">
 	
-    <meta name="description" content="Soit une variable utilisée dans deux parties très différentes du programme ou des parties créées par différents programmeurs. Sachant que cette variable n&#39;a qu&#39;une seule case mémoire, alors, comment faire pour que le nom donné par le programmeur A et celui donné par le programmeur B pointe vers vers la même variable !">
+    <meta name="description" content="The complete dynamics of an aircraft, taking into account aero-elastic effects, flexibility of the wings, internal dynamics of the engine and the whole set of changing variables are quite complex and somewhat.">
 
 
 
     <title>
 	
-	Les références en C++. Plusieurs noms, mais une seule variable !
+	Quadrotor Mini-Rotorcraft Modeling
 
     </title>
 
@@ -52,15 +52,15 @@
 
     <h1>
   <span>
-	Les références en C++. Plusieurs noms, mais une seule variable !
+	Quadrotor Mini-Rotorcraft Modeling
 
   </span>
 </h1>
 
 <div class="published">
-  <span>Published the 2015-03-05 in 
+  <span>Published the 2015-03-14 in 
   
-  <a href="../../categories/C-C++/index.html"> C-C++ </a> &nbsp; 
+  <a href="../../categories/Control/index.html"> Control </a> &nbsp; 
        
   </span>
 </div>
@@ -68,12 +68,9 @@
 <div id="container">
   <div id="content">
     <div class="post">
-<p>Soit une variable utilisée dans deux parties très différentes du programme des parties ou créées par différents programmeurs. Dans une des parties, un des programmeurs va s'occuper de la déclaration de la variable alors que l'autre programmeur va juste l'afficher. Ce deuxième programmeur aura juste besoin d'un accès à la variable et un alias sera donc suffisant.</p>
-<p>Pour cela, il faut savoir qu'une variable n'a qu'une seule case mémoire mais peut avoir plusieurs références (étiquettes), donc plusieurs noms.</p>
-<p>Au niveau du code, on utilise une esperluette (&amp;) pour déclarer une référence sur une variable.</p>
-<div class="codehilite"><pre><span class="kt">int</span> <span class="nf">ageUtilisateur</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span> <span class="c1">//Déclaration d&#39;une variable.</span>
-<span class="kt">int</span><span class="o">&amp;</span> <span class="n">maVariable</span><span class="p">(</span><span class="n">ageUtilisateur</span><span class="p">);</span> <span class="c1">//Déclaration d&#39;une référence nommée maVariable qui est accrochée à la variable ageUtilisateur</span>
-</pre></div>
+<p>The quad-rotor model is obtained by representing the aircraft as a solid body evolving in a three dimensional space and subject to the main thrust and three torques: pitch, roll and yaw.</p>
+<p>The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Fig. 2.1. Each motor produces a thrust and a torque, whose combination generates the main thrust, the yaw torque, the pitch torque, and the roll torque acting on the quad-rotor. </p>
+<p>$$ \tau_{i} $$</p>
 
       <br> <br>
 

@@ -1,5 +1,7 @@
 tite: hire-me
 description: this page describes my major skills and how I can be useful for you.
+categories:
+- pager
 
 # Want to hire me ?
 
