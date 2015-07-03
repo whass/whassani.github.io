@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+      Walid Hassani - Hire me !
+{% endblock %}
+
+
+{% block header %}
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="{{ url_for('home') }}" class="" >about</a>        
+          &rarr; <a href="{{ url_for('posts') }}" class="" >blog</a>
+          <a href="{{ url_for('page', name='hire') }}" class="selected">&rarr; hire me</a>
+        </div>
+        <a id='logo1' href="/">W. Hassani</a>
+
+      </div>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block content %}
+    <h1>Want to hire me ?</h1>
+<div class="published">
+  <span>Great news, keep reading!</span>
+</div>
+
+<div id="container">
+  <div id="content">
+
+    <div id="hire">
+
+{{page.html|safe}}
+
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
