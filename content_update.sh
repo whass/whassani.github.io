@@ -1,5 +1,5 @@
 #!/bin/bash 
 python _blogApp/blog.py build ;
 git add * ;
-git commit -m "change navigation bar and add my photo" ;
+git commit -m "regenerate static files afiter updating idex and hire pages" ;
 git push origin master ;
