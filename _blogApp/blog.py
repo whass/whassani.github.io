@@ -5,7 +5,6 @@ from flask_frozen import Freezer
 from flaskext.markdown import Markdown
 from markdown.extensions import Extension
 
-
 DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = '.md'
