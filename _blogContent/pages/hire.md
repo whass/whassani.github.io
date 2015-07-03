@@ -5,7 +5,7 @@ description: this page describes my major skills and how I can be useful for you
 
 <div class="published"><span>Great news, keep reading!</span></div>
 
-Currently I'm mostly focused on research & developpment in control engineering, but I'm open to other kind of missions.
+Currently I'm mostly focused on research & development in control engineering, but I'm open to other kind of missions.
 
 ## What I Can Do For You
 
@@ -24,7 +24,7 @@ Here's an incomplete list of the things I can help you with
 
 ### - I've a deep knowledge in control engineering .....
 
-*As a PhD I've developed new control strategies that have been experimentally tested, published in most prestigious conferences and revues in robotics and Control (IROS, CDC, RSS,...).*
+*My PhD deals with advanced control issues, such as, stability analysis, robustness, perturbations reject, etc. I developed new control strategies that have been experimentally tested, published in most prestigious conferences and revues in robotics and Control (IROS, CDC, RSS,...).*
 
 
 ### - I've several years of experience in electronics and embedded system design for robotics and automated industrial systems.
