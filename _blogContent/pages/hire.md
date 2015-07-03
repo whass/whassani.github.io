@@ -22,7 +22,7 @@ Here's an incomplete list of the things I can help you with
 
 ## Why I Can Help
 
-### Control engineering deep knowledge ...
+### -- Control engineering deep knowledge ...
 
 *My PhD deals with advanced control issues, such as, stability analysis, robustness, perturbations reject, etc. I developed new control strategies that have been experimentally tested, published in most prestigious conferences and revues in robotics and Control (IROS, CDC, RSS,...).*
 
