@@ -5,14 +5,21 @@ description: The complete dynamics of an aircraft, taking into account aero-elas
 categories: 
 - Control
 
+**Table of content**
 
+[TOC]
+
+## Desciption 
 The quad-rotor model is obtained by representing the aircraft as a solid body evolving in a three dimensional space and subject to the main thrust and three torques: pitch, roll and yaw.
 
 The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Fig. 2.1. Each motor produces a thrust and a torque, whose combination generates the main thrust, the yaw torque, the pitch torque, and the roll torque acting on the quad-rotor. 
 
-In the following we will use the Euler-Langrange approach to obtain the dynamical model of the system. If your are not familiar with this approach you can use the Newton-Euler approach.
+![ ](/../quad-rotor.png  "The quad-rotor control input")
 
-Let's begin by contruct the Lagrangian of our system. It's given as follow : 
+## Euler-Lagrange formulation
+In the following we will use the Euler-Lagrange approach to obtain the dynamical model of the system. If your are not familiar with this later you could use the Newton-Euler one.
+
+Let's begin by construct the Lagrangian of our system. It's given as follow : 
 
 $$ L(q, \dot{q}) = T_{rot} + T_{trans} - U $$
 
@@ -24,67 +31,81 @@ Where :
 
     * \\(\eta=(\psi, \theta, \phi)  \in R^3 \\) the rotorcraft’s Euler angles (the orientation of the rotorcraft). \\(\phi\\) is the yaw angle around the *z-axis*, \\(\theta\\) is the pitch angle around the *x-axis* and \\(\psi\\) is the roll angle around *x-axis*.
 
-* \\(U = mgz\\) is the potential energy of the rotorcraft, 
-    * \\(z\\) is the rotorcraft altitude.
-    * \\(m\\) denotes the mass of the quad-rotor.
-    * \\(g\\) is the acceleration due to gravity).
 
-* \\( T_{rot} = \frac{m}{2} \dot{\zeta}^T\dot{\zeta}\\) is the rotational kinetic energy
-    * \\( \zeta \\) is the vector of the angular velocity.
+### Potential energy
 
+The potential energy of the rotorcraft is given by ,
 
-* \\( T_{rot} = \frac{1}{2} \dot{\Omega}^T I \dot{\Omega}\\) is the translational kinetic energy.
-    * \\( \Omega \\) is the vector of the angular velocity.
-    * \\( I \\) is the inertia matrix.
-
-Good news, since the Lagrangian is defined, 50% of the work is done !. 
-
-The angular velocity vector \\( \omega \\) resolved in the body-fixed frame is related to the gener alized velocities \\( \eta \\) by means of the standard kinematic relationship.
-
-$$ \Omega = W_{\eta} \dot{\eta} $$
+$$  U = mgz $$ 
 
 Where :
 
-$$
-W_{\eta} = \left[\begin{matrix}
+* \\(z\\) is the rotorcraft altitude.
+* \\(m\\) denotes the mass of the quad-rotor.
+* \\(g\\) is the acceleration due to gravity).
+
+
+### Tranlational Kinetic energy 
+
+The translational kinetic energy is given as follow :
+
+$$ T_{trans} = \frac{m}{2} \dot{\zeta}^T\dot{\zeta} $$
+
+Where :
+
+* \\( \dot\zeta \\) is the vector of the angular velocity.
+* \\(m\\) denotes the mass of the quad-rotor.
+
+
+
+### Rotational Kinetic energy 
+The translational kinetic energy is given by :
+
+$$ T_{rot} = \frac{1}{2} \dot{\eta}^T J \dot{\eta} $$ 
+
+
+* The matrix \\(J = J(\eta)\\) acts as the inertia matrix for the full rotational kinetic energy of the quad-rotor, expressed directly in terms of the generalized coordinates \\( \eta \\) and defined as follow :
+
+$$ J=J(\eta)=W_{\eta}^T I W_{\eta}$$
+
+$$ W_{\eta} = \left[\begin{matrix}
                  -sin \theta & 0 & 1\\\
                  cos \theta sin \phi & cos \phi & 0\\\
                  cos \theta cos \phi  & -sin \phi & 0\\\
            \end{matrix}\right]
-$$
+$$ 
+*Exaplanation :*
 
-Then :
+Initially we have :
 
-$$
-\Omega = \left[\begin{matrix}
-                 \dot{\phi}-\dot{\psi}sin \theta \\\
-                 \dot{\theta}cos(\phi)+\dot{\psi}cos \theta sin \phi\\\
-                 \dot{\psi}cos \theta cos \phi - \dot{\theta}sin(\phi) \\\
-           \end{matrix}\right]
-$$
+$$ T_{rot} = \frac{1}{2} \dot{\Omega}^T I \dot{\Omega} $$ 
 
-Define 
+Where :
 
-$$ J=J(\eta)=W_{\eta}^T I W_{\eta}$$
-
-Where 
-
-$$
+* \\( I \\) is the inertia matrix (we assume that there exists no relationship between the axes inertia).
+    * \\(  
 I = \left[\begin{matrix}
                  I_{xx} & 0 & 0\\\
                  0 & I_{yy} & 0\\\
                  0 & 0 & I_{zz} \\\
            \end{matrix}\right]
-$$
+\\)
 
-so that 
+* \\( \Omega \\) is the vector of the angular velocity.
 
-$$ T_{rot} = \frac{1}{2} \dot{\eta}^T J \dot{\eta}$$
 
-Thus, the matrix \\(J = J(\eta)\\) acts as the inertia matrix for the full rotational kinetic energy of the quad-rotor, expressed directly in terms of the generalized coordinates \\( \eta \\).
+    The angular velocity vector \\( \omega \\) resolved in the body-fixed frame is related to the generalized velocities \\( \eta \\) by means of the standard kinematic relationship.
 
-The model of the full rotorcraft dynamics is obtained from Euler–Lagrange equa-
-tions with external generalized forces.
+$$ \Omega = W_{\eta} \dot{\eta} = \left[\begin{matrix}
+                 \dot{\phi}-\dot{\psi}sin \theta \\\
+                 \dot{\theta}cos(\phi)+\dot{\psi}cos \theta sin \phi\\\
+                 \dot{\psi}cos \theta cos \phi - \dot{\theta}sin(\phi) \\\
+           \end{matrix}\right] $$
+
+
+## Euler-Lagrange equation 
+
+The model of the full rotorcraft dynamics is obtained from Euler–Lagrange equations with external generalized forces.
 
 $$
 \frac{d}{dt} \left(\frac{\partial L}{\partial \dot{q}}\right) - \frac{\partial L}{\partial q} =  \left[\begin{matrix}
@@ -118,20 +139,41 @@ Where
 
     * \\( l \\) is the distance between the motors and the center of gravity, and \\( \tau_{M_i} \\) is the moment produced by motor \\( M_i \\) around the center of gravity of the aircraft.  
 
+
+
+### Euler-Lagrange of translation motion
+
 Since the Lagrangian contains no cross terms in the kinematic energy combining \\(\dot{\zeta}\\) with \\(\dot{\eta}\\), the EUler-Lagrange equation can be partionned into dynamics for \\(\zeta\\) and \\(\eta\\).
 
 The Euler–Lagrange equation for the translational motion is :
 
 $$ \frac{d}{dt} \left\[\frac{\partial L_{trans}}{\partial \dot{\zeta}}\right] - \frac{\partial L_{trans}}{\partial \zeta} = F_{\zeta}$$
 
+Where :
 
-The Euler–Lagrange equation for the translational motion is :
+* \\(
+L_{trans} = T_{trans} - U =  \frac{m}{2} \dot{\zeta}^T\dot{\zeta} - mg E_z
+\\)
+
+* \\(
+E_z = [0, 0, z]^T
+\\)
+
+Then 
+
+$$ m \ddot\zeta + mg E_z = F_{\zeta}$$
+
+### Euler-Lagrange of rotational motion
+
+The Euler–Lagrange equation for the rotational motion is :
 
 $$ \frac{d}{dt} \left\[\frac{\partial L_{rot}}{\partial \dot{\eta}}\right] - \frac{\partial L_{rot}}{\partial \eta} = \tau$$
 
-or 
+Where 
 
-$$ \frac{d}{dt} \left\[\dot{\eta}^T J \frac{\partial \dot{\eta}}{\partial \eta}\right] - \frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J \dot{\eta}) = \tau$$
+* \\(
+L_{rot} = T_{rot} = \frac{1}{2} \dot{\eta}^T J \dot{\eta}
+\\)
 
 Thus one obtains`:
 
@@ -145,11 +187,16 @@ one writes :
 
 $$ J \ddot{\eta} + \tilde{V} (\eta, \dot{\eta}) = \tau $$
 
-but \tilde{V} (\eta, \dot{\eta}) can be expressed as 
+but \\( \tilde{V} (\eta, \dot{\eta}) \\) can be expressed as 
 
 $$ \tilde{V} (\eta, \dot{\eta}) = \left( \dot{J}  - \frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J ) \right) \dot{\eta} = C(\eta, \dot{\eta}) \dot{\eta}$$ 
 
-where \\( C(\eta, \dot{\eta}) \\) is referred to as the Coriolis term and contains the gyroscopic and centrifugal terms associated with the \\( \eta \\) depence of \\( J \\). This yeals 
+where \\( C(\eta, \dot{\eta}) \\) is referred to as the Coriolis term and contains the gyroscopic and centrifugal terms associated with the \\( \eta \\) depence of \\( J \\). 
+
+
+## General Equation of motion
+
+Finally one obtains :
 
 $$ m \ddot{\zeta} + mg E_z = F_{\zeta}$$
 $$ J \ddot{\eta} = \tau - C(\eta, \dot{\eta}) \dot{\eta} $$
@@ -163,9 +210,9 @@ $$ \tau = \left[ \begin{matrix}
            \end{matrix} \right] 
            =
            J^{-1}(\tau - C(\eta, \dot{\eta}) \dot{\eta})
-$$
+$$ 
 
-Finally one obtains
+Therefor the general equation of the quad-rotor aircraft are :
 
 $$
 \begin{align}
@@ -177,3 +224,9 @@ m \ddot{z} & = u cos \theta cos \phi - mg \\\
 \ddot{\phi} & = \tilde\tau_{\phi}
 \end{align}
 $$
+
+We have finished, be happy.
+
+This is one of the most important step to design a controller, and must be very rigorous, no mistake is tolerated. I'll show in next articles why I'm saying that.
+
+In the next article of the series "Quadrotor Mini-Rotorcraft"; we will construct a simulation model, I'll do it with python since it's free and like that more people can implement the model easily.
