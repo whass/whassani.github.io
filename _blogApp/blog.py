@@ -62,6 +62,13 @@ def post(name):
     post = flatpages.get_or_404(path)
     return render_template('post.html', post=post)
 
+@APP.route('/images/<string:filename>')
+def flat_page_content(filename):
+    """flat pages content (static) rendering"""
+    path = '{}/{}'.format(IMG_DIR, name)
+    page = PAGES.get_or_404(path)
+    return send_from_directory(path, filename)
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "build":
