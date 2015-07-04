@@ -12,11 +12,75 @@ categories:
 ## Desciption 
 The quad-rotor model is obtained by representing the aircraft as a solid body evolving in a three dimensional space and subject to the main thrust and three torques: pitch, roll and yaw.
 
-The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Fig. 2.1. Each motor produces a thrust and a torque, whose combination generates the main thrust, the yaw torque, the pitch torque, and the roll torque acting on the quad-rotor. 
+The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Figure 1. Each motor produces a thrust and a torque, whose combination generates the main thrust, the yaw torque, the pitch torque, and the roll torque acting on the quad-rotor. 
 
-<img src="{{ url_for('static', filename='images/plant.jpg') }}" alt="" style="width:304px;height:228px;">
+<center><figure>
+<img src="{{ url_for('static', filename='images/quad-rotor.png') }}" alt="FrameWork" style="width:304px;height:228px;" >
+  <figcaption>*Figure 1 : The quad-rotor control input.*</figcaption>
+</figure> 
+</center>
 
-![ ](../images/quad-rotor.png  "The quad-rotor control input")
+## How it works
+The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Figure 1. 
+
+Each motor produces a :
+
+* thrust 
+* torque
+
+whose combination generates : 
+
+* the main thrust, 
+* the yaw torque, 
+* the pitch torque, and 
+* the roll torque. 
+
+From Figure 1 it can be observed that the motor \\( M_i \\) (for \\(i=1,...,4\\) produces the force \\( f_i \\), which is proportional to the square of the angular speed, that is, 
+
+$$ f_i = k \omega_i^2 $$
+
+* The front (\\(M_1\\)) and the rear (\\(M_3\\)) motors rotate **counter-clockwise**, 
+* while the left (\\(M_2\\)) and right (\\(M_4\\)) motors rotate **clockwise**. 
+
+With this arrangement, gyroscopic effects and aerodynamic torques tend to cancel in trimmed flight. 
+
+* The main thrust \\( u \\) is the sum of individual thrusts of each motor. 
+* The pitch torque is a function of the difference \\((f_1 - f_3)\\),
+* the roll torque is a function of \\((f_2 - f_4)\\),
+* and the yaw torque is the sum \\( \tau_{M_1} + \tau_{M_2} + \tau_{M_3} + \tau_{M_4}\\), where \\( \tau_{M_i} \\) is the reaction torque of motor i due to shaft acceleration and blades drag. 
+
+The motor torque is opposed by an aerodynamic drag \\( \tau_{drag} \\), such that :
+
+$$ I_{rot} \dot{\omega} = \tau_{M_i} -  \tau_{drag} $$
+
+where \\(I_{rot}\\) is the moment of inertia of a rotor around its axis. The aerodynamic drag is defined as
+
+$$ \tau_{drag} = \rho Av^2$$
+
+where \\( \rho \\) is the air density, the frontal area of the moving shape is defined by \\( A \\), and \\( v \\) is its velocity relative to the air. 
+
+In magnitude, the angular velocity \\( \omega \\) is equal to the linear velocity \\( v \\) divided by the radius of rotation \\( r \\)
+
+$$ \omega = \frac{v}{r} $$
+
+The aerodynamic drag can be rewritten as
+
+$$ \tau_{drag} = k_{drag} \omega^2$$
+
+where \\( k_{drag} > 0 \\) is a constant depending on the air density, the radius, the shape of the blade and other factors. 
+
+For quasi-stationary maneuvers, \\( \omega \\) is constant, then
+
+$$ \tau_{M_i} = \tau_{drag} $$
+
+
+* Forward pitch motion is obtained by increasing the speed of the rear motor \\( M_3 \\) while reducing the speed of the front motor \\( M_1 \\). 
+
+* Similarly, roll motion is obtained using the left and right motors. 
+
+* Yaw motion is obtained by increasing the torque of the front and rear motors \\( \tau_{M_1} \\) and \\( \tau_{M_3} \\), respectively) while decreasing the torque of the lateral motors (\\( \tau_{M_2} \\) and \\( \tau_{M_4} \\), respectively). 
+
+Such motions can be accomplished while maintaining the total thrust constant, see Figure 2.
 
 ## Euler-Lagrange formulation
 In the following we will use the Euler-Lagrange approach to obtain the dynamical model of the system. If your are not familiar with this later you could use the Newton-Euler one.
@@ -59,6 +123,11 @@ Where :
 * \\(m\\) denotes the mass of the quad-rotor.
 
 
+<center><figure>
+<img src="{{ url_for('static', filename='images/quad-rotor-pitch-yaw-roll.png') }}" alt="FrameWork" style="width:304px;height:228px;" >
+  <figcaption>*Figure 2 : Pitch, roll and yaw torques of the quad-rotor.*</figcaption>
+</figure> 
+</center>
 
 ### Rotational Kinetic energy 
 The translational kinetic energy is given by :
@@ -105,6 +174,8 @@ $$ \Omega = W_{\eta} \dot{\eta} = \left[\begin{matrix}
            \end{matrix}\right] $$
 
 
+
+
 ## Euler-Lagrange equation 
 
 The model of the full rotorcraft dynamics is obtained from Euler–Lagrange equations with external generalized forces.
@@ -141,7 +212,11 @@ Where
 
     * \\( l \\) is the distance between the motors and the center of gravity, and \\( \tau_{M_i} \\) is the moment produced by motor \\( M_i \\) around the center of gravity of the aircraft.  
 
-
+<center><figure>
+<img src="{{ url_for('static', filename='images/quad-rotor-frame.png') }}" alt="FrameWork" style="width:304px;height:228px;" >
+  <figcaption>*Figure 3 : The quad-rotor in an inertial frame. f1 , f2 , f3 , f4 represent the thrust of each motor, \\(\psi \\) , \\(\theta \\) and \\(\phi \\) represent the Euler angles, and u is the main thrust.*</figcaption>
+</figure> 
+</center>
 
 ### Euler-Lagrange of translation motion
 
