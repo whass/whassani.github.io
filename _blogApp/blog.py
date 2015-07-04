@@ -1,5 +1,5 @@
 import sys
-from flask import Flask, render_template, render_template_string, Markup
+from flask import Flask, render_template, render_template_string, Markup, make_response
 from flask_flatpages import FlatPages, pygments_style_defs, pygmented_markdown
 from flask_frozen import Freezer
 from flaskext.markdown import Markdown
@@ -16,7 +16,7 @@ class DefaultConfig(object):
     DEBUG = True
     FLATPAGES_AUTO_RELOAD = DEBUG
     FLATPAGES_EXTENSION = '.md'
-    FLATPAGES_ROOT = '../_blogContent'
+    FLATPAGES_ROOT = 'content'
     POST_DIR = 'posts'
     PAGE_DIR = 'pages'
     FREEZER_DESTINATION_IGNORE = ['.git*', 'CNAME', '.gitignore', 'readme.md','_blogContent','_blogApp', 'content_update.sh']
