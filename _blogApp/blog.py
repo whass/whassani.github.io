@@ -22,7 +22,7 @@ class DefaultConfig(object):
     FREEZER_DESTINATION_IGNORE = ['.git*', 'CNAME', '.gitignore', 'readme.md','_blogContent','_blogApp', 'content_update.sh']
     FLATPAGES_HTML_RENDERER = prerender_jinja
     FLATPAGES_MARKDOWN_EXTENSIONS = ['codehilite','tables','extra','toc']
-    PYGMENTS_STYLE = 'solarizeddark'
+    PYGMENTS_STYLE = 'friendly'
     FREEZER_RELATIVE_URLS=True
     FREEZER_DESTINATION="../"
 
