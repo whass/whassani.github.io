@@ -14,7 +14,7 @@ The quad-rotor model is obtained by representing the aircraft as a solid body ev
 
 The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Fig. 2.1. Each motor produces a thrust and a torque, whose combination generates the main thrust, the yaw torque, the pitch torque, and the roll torque acting on the quad-rotor. 
 
-![ ](/../quad-rotor.png  "The quad-rotor control input")
+![ ](../../quad-rotor.png  "The quad-rotor control input")
 
 ## Euler-Lagrange formulation
 In the following we will use the Euler-Lagrange approach to obtain the dynamical model of the system. If your are not familiar with this later you could use the Newton-Euler one.
