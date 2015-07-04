@@ -12,8 +12,6 @@ categories:
 ## Desciption 
 The quad-rotor model is obtained by representing the aircraft as a solid body evolving in a three dimensional space and subject to the main thrust and three torques: pitch, roll and yaw.
 
-The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Figure 1. Each motor produces a thrust and a torque, whose combination generates the main thrust, the yaw torque, the pitch torque, and the roll torque acting on the quad-rotor. 
-
 <center><figure>
 <img src="{{ url_for('static', filename='images/quad-rotor.png') }}" alt="FrameWork" style="width:304px;height:228px;" >
   <figcaption>*Figure 1 : The quad-rotor control input.*</figcaption>
@@ -23,31 +21,38 @@ The quad-rotor mini-rotorcraft is controlled by the angular speeds of four elect
 ## How it works
 The quad-rotor mini-rotorcraft is controlled by the angular speeds of four electric motors as shown in Figure 1. 
 
-Each motor produces a :
-
-* thrust 
-* torque
-
-whose combination generates : 
+Each motor produces a thrust and a torque to generate : 
 
 * the main thrust, 
 * the yaw torque, 
 * the pitch torque, and 
 * the roll torque. 
 
-From Figure 1 it can be observed that the motor \\( M_i \\) (for \\(i=1,...,4\\) produces the force \\( f_i \\), which is proportional to the square of the angular speed, that is, 
+From Figure 1 it can be observed that the motor \\( M_i \\) (for \\(i=1,...,4\\) produces the force \\( f_i \\) and the torque \\( \tau{M_i} \\), which is proportional to the square of the angular speed, that is, 
 
 $$ f_i = k \omega_i^2 $$
 
+$$ \tau_{M_i} = k_{drag} \omega^2$$
+
+The propeller rotation sens must be arranged to tend to cancel gyroscopic effects and aerodynamic torques in trimmed flight as follow :
+
 * The front (\\(M_1\\)) and the rear (\\(M_3\\)) motors rotate **counter-clockwise**, 
-* while the left (\\(M_2\\)) and right (\\(M_4\\)) motors rotate **clockwise**. 
+* while the left (\\(M_2\\)) and right (\\(M_4\\)) motors rotate **clockwise**
 
-With this arrangement, gyroscopic effects and aerodynamic torques tend to cancel in trimmed flight. 
 
-* The main thrust \\( u \\) is the sum of individual thrusts of each motor. 
-* The pitch torque is a function of the difference \\((f_1 - f_3)\\),
-* the roll torque is a function of \\((f_2 - f_4)\\),
-* and the yaw torque is the sum \\( \tau_{M_1} + \tau_{M_2} + \tau_{M_3} + \tau_{M_4}\\), where \\( \tau_{M_i} \\) is the reaction torque of motor i due to shaft acceleration and blades drag. 
+* ***The main thrust \\( u \\)*** : is the sum of individual thrusts of each motor. 
+* ***The pitch torque*** : is a function of the difference \\((f_1 - f_3)\\).
+  * Forward pitch motion is obtained by increasing the speed of the rear motor \\( M_3 \\) while reducing the speed of the front motor \\( M_1 \\).
+
+* ***the roll torque*** : is a function of \\((f_2 - f_4)\\),
+  * Forward roll motion is obtained by increasing the speed of the rear motor \\( M_4 \\) while reducing the speed of the front motor \\( M_2 \\).
+
+* *** the yaw torque *** : is the sum \\( \tau_{M_1} + \tau_{M_2} + \tau_{M_3} + \tau_{M_4}\\), where \\( \tau_{M_i} \\) is the reaction torque of motor \\(i\\) due to shaft acceleration and blades drag. 
+  * Yaw motion is obtained by increasing the torque of the front and rear motors \\( \tau_{M_1} \\) and \\( \tau_{M_3} \\), respectively) while decreasing the torque of the lateral motors (\\( \tau_{M_2} \\) and \\( \tau_{M_4} \\), respectively). 
+
+Such motions can be accomplished while maintaining the total thrust constant, see Figure 2.
+
+### Origine of \\( \tau_{M_i}\\) expression 
 
 The motor torque is opposed by an aerodynamic drag \\( \tau_{drag} \\), such that :
 
@@ -73,14 +78,6 @@ For quasi-stationary maneuvers, \\( \omega \\) is constant, then
 
 $$ \tau_{M_i} = \tau_{drag} $$
 
-
-* Forward pitch motion is obtained by increasing the speed of the rear motor \\( M_3 \\) while reducing the speed of the front motor \\( M_1 \\). 
-
-* Similarly, roll motion is obtained using the left and right motors. 
-
-* Yaw motion is obtained by increasing the torque of the front and rear motors \\( \tau_{M_1} \\) and \\( \tau_{M_3} \\), respectively) while decreasing the torque of the lateral motors (\\( \tau_{M_2} \\) and \\( \tau_{M_4} \\), respectively). 
-
-Such motions can be accomplished while maintaining the total thrust constant, see Figure 2.
 
 ## Euler-Lagrange formulation
 In the following we will use the Euler-Lagrange approach to obtain the dynamical model of the system. If your are not familiar with this later you could use the Newton-Euler one.
