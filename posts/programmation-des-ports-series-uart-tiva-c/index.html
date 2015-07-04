@@ -18,9 +18,9 @@
 
     <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
-    <link rel=stylesheet type=text/css href="../../css/app.css" media="all">
-    <link rel="shortcut icon" href="../../favicon.png">
-    <link rel="stylesheet" href="../../css/pygments.css">
+    <link rel=stylesheet type=text/css href="../../static/css/app.css" media="all">
+    <link rel="shortcut icon" href="../../static/favicon.png">
+    <link rel="stylesheet" href="../../pygments.css">
     <style type="text/css">
 
 
@@ -202,7 +202,7 @@
 </ul>
 <h3 id="uart-control-uartctl-register">UART Control (UARTCTL) register</h3>
 <p>La prochaine registre important dans UART est le registre de contrôle. Ce est un des registres 32 bits et un grand nombre de bits ne sont pas utilisés. Pour nous, les bits les plus importants sont RXE, TXE, HSE et UARTEN.</p>
-<h4 id="_1"><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00045.jpeg"><img alt="00045" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00045.jpeg" /></a></h4>
+<h4><a href="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00045.jpeg"><img alt="00045" src="http://www.embarquez-vous.fr/wp-content/uploads/2015/02/00045.jpeg" /></a></h4>
 <h4 id="uarten-d0-uart-enable">UARTEN (D0) UART enable</h4>
 <p>Cela permet d'activer ou désactiver l'UART. Lors de l'initialisation nous devons désactiver tout en modifiant certains des registres UART,. Également au cours de l'exécution de certaines tâches critiques, vous pouvez désactiver l'UART pour l'empêcher d'interrompre les tâches.</p>
 <h4 id="hse-d5-high-speed-enable"><strong>HSE (D5) High Speed enable</strong></h4>
