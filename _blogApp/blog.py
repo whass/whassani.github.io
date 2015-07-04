@@ -34,7 +34,7 @@ def pygments_css():
 @app.route('/')
 def home():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
-    posts.sort(key=lambda item:item['date'], reverse=False)
+    posts.sort(key=lambda item:item['date'], reverse=True)
     return render_template('index.html', posts=posts[:4])
 
 @app.route('/pages/<name>/')
@@ -47,7 +47,7 @@ def page(name):
 @app.route("/posts/")
 def posts():
     posts = [p for p in flatpages if p.path.startswith(POST_DIR)]
-    posts.sort(key=lambda item:item['date'], reverse=False)
+    posts.sort(key=lambda item:item['date'], reverse=True)
     return render_template('posts.html', posts=posts)
 
 @app.route("/categories/<name>/")
