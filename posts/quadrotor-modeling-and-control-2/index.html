@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="After mathematically modeling the quadrotor in the previsous article, we will implement it using python.">
+
+
+
+    <title>
+	
+	Quadrotor Mini-Rotorcraft, Part 1 : Numerical model of simulation
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../static/css/app.css" media="all">
+    <link rel="shortcut icon" href="../../static/favicon.png">
+    <link rel="stylesheet" href="../../pygments.css">
+    <style type="text/css">
+
+
+    </style>
+  </head>
+
+
+<body>
+
+    <header>
+
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>        
+          <a href="../index.html" class="selected" > &rarr;  blog</a>
+          &rarr; <a href="../../pages/hire/index.html" class=""> hire me</a>
+
+        </div>
+        <a id='logo1' href="/">W. Hassani</a>
+
+      </div>
+
+    </header>
+
+<div id="container">
+  <div id="content">
+	
+
+    <h1>
+  <span>
+	Quadrotor Mini-Rotorcraft, Part 1 : Numerical model of simulation
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-07-01 in 
+  
+  <a href="../../categories/Control/index.html"> Control </a> &nbsp; 
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong>Table of content</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#reminder-of-the-mathematical-model">reminder of the mathematical model</a></li>
+<li><a href="#programming-considerations">Programming considerations</a></li>
+</ul>
+</div>
+<h2 id="reminder-of-the-mathematical-model">reminder of the mathematical model</h2>
+<p>The mathematical model is given as follow :</p>
+<p>$$ m \ddot{\zeta} + mg E_z = F_{\zeta}$$
+$$ J \ddot{\eta} = \tau - C(\eta, \dot{\eta}) \dot{\eta} $$</p>
+<p>To simplify the notatio we have take</p>
+<p>$$ \tau = \left[ \begin{matrix}
+                  \tilde\tau_{\psi} \\
+                  \tilde\tau_{\theta}  \\
+                  \tilde\tau_{\phi}   \\
+           \end{matrix} \right] 
+           =
+           J^{-1}(\tau - C(\eta, \dot{\eta}) \dot{\eta})
+$$ </p>
+<p>Therefor we have obtained the general equation of the quad-rotor aircraft, that are :</p>
+<p>$$
+\begin{align}
+m \ddot{x} &amp; = u(sin \phi sin \psi + cos \phi cos \psi sin \theta ) \\
+m \ddot{y} &amp; = u(cos \phi sin \psi sin \theta - sin \phi cos \psi )\\
+m \ddot{z} &amp; = u cos \theta cos \phi - mg \\
+\ddot{\psi} &amp; = \tilde\tau_{\psi} \\
+\ddot{\theta} &amp; = \tilde\tau_{\theta} \\
+\ddot{\phi} &amp; = \tilde\tau_{\phi}
+\end{align}
+$$</p>
+<h2 id="programming-considerations">Programming considerations</h2>
+<p>We will suppose that we have a genral class of quadrotor mini aircraft that have 3 methods :</p>
+<ul>
+<li>Translation</li>
+<li>Rotation</li>
+</ul>
+<h2></h2>
+<p>Install numpy</p>
+
+      <br> <br>
+
+      <div id="disqus_thread"></div>
+
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</div>
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.io">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64782800-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+	
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+
+
+
+  </body>
+</html>
+
