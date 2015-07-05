@@ -271,7 +271,7 @@ Therefor the general equation of the quad-rotor aircraft are :
 $$
 \begin{align}
 m \ddot{x} & = u(sin \phi sin \psi + cos \phi cos \psi sin \theta ) \\\
-m \ddot{y} & = u(cos \phi sos \psi sin \theta - sin \phi cos \psi )\\\
+m \ddot{y} & = u(cos \phi sin \psi sin \theta - sin \phi cos \psi )\\\
 m \ddot{z} & = u cos \theta cos \phi - mg \\\
 \ddot{\psi} & = \tilde\tau_{\psi} \\\
 \ddot{\theta} & = \tilde\tau_{\theta} \\\
