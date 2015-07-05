@@ -244,6 +244,7 @@ but \\( \tilde{V} (\eta, \dot{\eta}) \\) can be expressed as
 
 $$ \tilde{V} (\eta, \dot{\eta}) = \left( \dot{J}  - \frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J ) \right) \dot{\eta} = C(\eta, \dot{\eta}) \dot{\eta}$$ 
 
+$$ C(\eta, \dot{\eta}) = \left( \dot{J}  - \frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J )\right)$$
 where \\( C(\eta, \dot{\eta}) \\) is referred to as the Coriolis term and contains the gyroscopic and centrifugal terms associated with the \\( \eta \\) depence of \\( J \\). 
 
 
@@ -277,6 +278,7 @@ m \ddot{z} & = u cos \theta cos \phi - mg \\\
 \ddot{\phi} & = \tilde\tau_{\phi}
 \end{align}
 $$
+
 
 We have finished, be happy.
 
