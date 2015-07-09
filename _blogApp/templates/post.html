@@ -11,7 +11,7 @@
 {% block header %}
       <div id="logo">
         <div id="more-nav">
-          &rarr; <a href="{{ url_for('home') }}" class="" >about</a>        
+          &rarr; <a href="{{ url_for('home') }}" class="" >about</a>
           <a href="{{ url_for('posts') }}" class="selected" > &rarr;  blog</a>
           &rarr; <a href="{{ url_for('page', name='hire') }}" class=""> hire me</a>
 
@@ -31,9 +31,9 @@
 </h1>
 
 <div class="published">
-  <span>Published the {{ post.date }} in 
+  <span>Published the {{ post.date }} in
   {%  for category in post.categories %}
-  <a href="{{ url_for('categories',name=category) }}"> {{ category }} </a> &nbsp; 
+  <a href="{{ url_for('categories',name=category) }}"> {{ category }} </a> &nbsp;
        {% endfor %}
   </span>
 </div>
@@ -65,4 +65,3 @@
 {% block js %}
   <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 {% endblock %}
-

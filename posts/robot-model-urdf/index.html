@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Walid Hassani">
+	
+    <meta name="description" content="The Unified Robot Description Format (URDF) is the standard ROS XML representation of the robot model (kinematics, dynamics, sensors) describing a robot.">
+
+
+
+    <title>
+	
+	Create an urdf (Universal Robot Description File) file
+
+    </title>
+
+    <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="../../static/css/app.css" media="all">
+    <link rel="shortcut icon" href="../../static/favicon.png">
+    <link rel="stylesheet" href="../../pygments.css">
+    <style type="text/css">
+
+
+    </style>
+  </head>
+
+
+<body>
+
+    <header>
+
+	
+      <div id="logo">
+        <div id="more-nav">
+          &rarr; <a href="../../index.html" class="" >about</a>
+          <a href="../index.html" class="selected" > &rarr;  blog</a>
+          &rarr; <a href="../../pages/hire/index.html" class=""> hire me</a>
+
+        </div>
+        <a id='logo1' href="/">W. Hassani</a>
+
+      </div>
+
+    </header>
+
+<div id="container">
+  <div id="content">
+	
+
+    <h1>
+  <span>
+	Create an urdf (Universal Robot Description File) file
+
+  </span>
+</h1>
+
+<div class="published">
+  <span>Published the 2015-07-09 in
+  
+  <a href="../../categories/Simulation/index.html"> Simulation </a> &nbsp;
+       
+  </span>
+</div>
+
+<div id="container">
+  <div id="content">
+    <div class="post">
+<p><strong>Table of content</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#create-the-tree-structure">Create the tree structure</a><ul>
+<li><a href="#balise-robot">balise robot :</a></li>
+<li><a href="#balise-link">balise link :</a></li>
+<li><a href="#balise-joint">balise joint :</a></li>
+</ul>
+</li>
+<li><a href="#dimension-origins-of-the-joints">Dimension : Origins of the joints</a><ul>
+<li><a href="#balise-origin">balise origin :</a></li>
+</ul>
+</li>
+<li><a href="#kinematics-links-axes-of-rotation">Kinematics : links axes of rotation</a><ul>
+<li><a href="#balise-axis">balise axis :</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="create-the-tree-structure">Create the tree structure</h2>
+<p>In this tutorial we'll create the URDF description of the "robot" shown in the image below. </p>
+<p><center><figure>
+<img src="../../static/images/link.png" alt="FrameWork" style="width:50%;" >
+</figure> 
+</center></p>
+<p>The robot in the image is a tree structure. Let's start very simple, and create a description of that tree structure, without worrying about the dimensions etc. </p>
+<p>Fire up your favorite text editor, and create a file called <strong><em>my_robot.urdf</em></strong>: </p>
+<div class="codehilite"><pre><span class="nt">&lt;robot</span> <span class="na">name=</span><span class="s">&quot;test_robot&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link1&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- create a link named link 1--&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link2&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link3&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link4&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint1&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!--  meaning that it can take on any angle from negative infinity to positive infinity --&gt;</span>
+        <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link2&quot;</span><span class="nt">/&gt;</span> 
+    <span class="nt">&lt;/joint&gt;</span>
+
+    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint2&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/joint&gt;</span>
+
+    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint3&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link3&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/joint&gt;</span>
+<span class="nt">&lt;/robot&gt;</span>
+</pre></div>
+
+
+<p>Let describe each part of the program</p>
+<h4 id="balise-robot">balise <strong><em>robot</em></strong> :</h4>
+<div class="codehilite"><pre><span class="nt">&lt;robot</span> <span class="na">name=</span><span class="s">&quot;test_robot&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/robot&gt;</span>
+</pre></div>
+
+
+<p>This balise tell to the parser that this is a robot and its name is test_robot.</p>
+<h4 id="balise-link">balise <strong><em>link</em></strong> :</h4>
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">link</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;link1&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+
+
+<p>Each link in your model must have a link balise and its name.</p>
+<h4 id="balise-joint">balise <strong><em>joint</em></strong> :</h4>
+<div class="codehilite"><pre>    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint3&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link3&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/joint&gt;</span>
+</pre></div>
+
+
+<p>Each joint must connect at least two joints, therefore, we have to define its parents and childs, in this example, the parent if the 3rd link and the child is the 4th link :   </p>
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">parent</span> <span class="n">link</span><span class="o">=</span><span class="s">&quot;link3&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">child</span> <span class="n">link</span><span class="o">=</span><span class="s">&quot;link4&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+
+
+<h2 id="dimension-origins-of-the-joints">Dimension : Origins of the joints</h2>
+<p>So now that we have the basic tree structure, let's add the appropriate dimensions. As you notice in the robot image, the reference frame of each link (in green) is located at the bottom of the link, and is identical to the reference frame of the joint. </p>
+<h4 id="balise-origin">balise <strong><em>origin</em></strong> :</h4>
+<p>To add dimensions to our tree, all we have to specify is the offset from a link to the joint(s) of its <strong><em>children</em></strong>. To accomplish this, we will add the field <strong><em>origin</em></strong>* to each of the joints.</p>
+<p>Let's look at the second joint. Joint2 is offset in the Y-direction from link1, a little offset in the negative X-direction from link1, and it is rotated 90 degrees around the Z-axis. </p>
+<p>So, we need to add the following <strong><em>origin</em></strong> element:</p>
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">origin</span> <span class="n">xyz</span><span class="o">=</span><span class="s">&quot;-2 5 0&quot;</span> <span class="n">rpy</span><span class="o">=</span><span class="s">&quot;0 0 1.57&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+
+
+<p>where </p>
+<div class="codehilite"><pre><span class="nt">&lt;robot</span> <span class="na">name=</span><span class="s">&quot;test_robot&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link1&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link2&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link3&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link4&quot;</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint1&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">xyz=</span><span class="s">&quot;5 3 0&quot;</span> <span class="na">rpy=</span><span class="s">&quot;0 0 0&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/joint&gt;</span>
+
+  <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint2&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">xyz=</span><span class="s">&quot;-2 5 0&quot;</span> <span class="na">rpy=</span><span class="s">&quot;0 0 1.57&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/joint&gt;</span>
+
+  <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint3&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">xyz=</span><span class="s">&quot;5 0 0&quot;</span> <span class="na">rpy=</span><span class="s">&quot;0 0 -1.57&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/joint&gt;</span>
+<span class="nt">&lt;/robot&gt;</span>
+</pre></div>
+
+
+<h2 id="kinematics-links-axes-of-rotation">Kinematics : links axes of rotation</h2>
+<p>What we didn't specify yet is around which axis the joints rotate. Once we add that, we actually have a full kinematic model of this robot! All we need to do is add the <strong><em>axis</em></strong> element to each joint. The axis specifies the rotational axis in the local frame.</p>
+<h4 id="balise-axis">balise <strong><em>axis</em></strong> :</h4>
+<p>So, if you look at joint2, you see it rotates around the positive Y-axis. So, simple add the following xml to the joint element: </p>
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">axis</span> <span class="n">xyz</span><span class="o">=</span><span class="s">&quot;0 1 0&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+
+
+<p>Similarly, joint1 is rotating around the following axis: </p>
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">axis</span> <span class="n">xyz</span><span class="o">=</span><span class="s">&quot;-0.707 0.707 0&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+
+
+<p>Note that it is a good idea to normalize the axis.</p>
+<p>If we add this to all the joints of the robot, our URDF looks like this: </p>
+<div class="codehilite"><pre><span class="nt">&lt;robot</span> <span class="na">name=</span><span class="s">&quot;test_robot&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link1&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link2&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link3&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;link4&quot;</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint1&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">xyz=</span><span class="s">&quot;5 3 0&quot;</span> <span class="na">rpy=</span><span class="s">&quot;0 0 0&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;axis</span> <span class="na">xyz=</span><span class="s">&quot;-0.9 0.15 0&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/joint&gt;</span>
+
+  <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint2&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">xyz=</span><span class="s">&quot;-2 5 0&quot;</span> <span class="na">rpy=</span><span class="s">&quot;0 0 1.57&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;axis</span> <span class="na">xyz=</span><span class="s">&quot;-0.707 0.707 0&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/joint&gt;</span>
+
+  <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;joint3&quot;</span> <span class="na">type=</span><span class="s">&quot;continuous&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">&quot;link3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">&quot;link4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">xyz=</span><span class="s">&quot;5 0 0&quot;</span> <span class="na">rpy=</span><span class="s">&quot;0 0 -1.57&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;axis</span> <span class="na">xyz=</span><span class="s">&quot;0.707 -0.707 0&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/joint&gt;</span>
+<span class="nt">&lt;/robot&gt;</span>
+</pre></div>
+
+      <br> <br>
+
+      <div id="disqus_thread"></div>
+
+      <script type="text/javascript">
+          var disqus_shortname = 'whassani';
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</div>
+    <footer>
+      Blog App made by me using <a href="http://flask.pocoo.org/">Flask Python</a> hosted on
+      <a href="https://github.com/whassani/whassani.github.io">Github</a>
+      <br />
+      All of the <a href="/blog">blog's articles</a> are under
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative commons</a> license
+      unless stated otherwise. Everything else is &copy;.
+    </footer>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64782800-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+	
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+
+
+
+  </body>
+</html>

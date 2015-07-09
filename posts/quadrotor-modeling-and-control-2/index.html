@@ -35,7 +35,7 @@
 	
       <div id="logo">
         <div id="more-nav">
-          &rarr; <a href="../../index.html" class="" >about</a>        
+          &rarr; <a href="../../index.html" class="" >about</a>
           <a href="../index.html" class="selected" > &rarr;  blog</a>
           &rarr; <a href="../../pages/hire/index.html" class=""> hire me</a>
 
@@ -58,15 +58,15 @@
 </h1>
 
 <div class="published">
-  <span>Published the 2015-07-01 in 
+  <span>Published the 2015-07-01 in
   
-  <a href="../../categories/Control/index.html"> Control </a> &nbsp; 
+  <a href="../../categories/Control/index.html"> Control </a> &nbsp;
        
-  <a href="../../categories/Modeling/index.html"> Modeling </a> &nbsp; 
+  <a href="../../categories/Modeling/index.html"> Modeling </a> &nbsp;
        
-  <a href="../../categories/Quadcopter/index.html"> Quadcopter </a> &nbsp; 
+  <a href="../../categories/Quadcopter/index.html"> Quadcopter </a> &nbsp;
        
-  <a href="../../categories/Drone/index.html"> Drone </a> &nbsp; 
+  <a href="../../categories/Drone/index.html"> Drone </a> &nbsp;
        
   </span>
 </div>
@@ -92,11 +92,11 @@
 <p><center><figure>
 <img src="../../static/images/the-inertial-and-body-frame.png" alt="FrameWork" style="width:70%;" >
   <figcaption><em>Figure 1 : The inertial and body frames of a quadcopter.</em></figcaption>
-</figure> 
+</figure>
 </center></p>
 <h2 id="inertial-and-body-frames">Inertial and body frames</h2>
 <p>The absolute linear position of the quad-rotor copter is defined in the inertial frame \( x,y,z\)-axes with \( \zeta \). The attitude, i.e. the angular position, is defined in the inertial frame with three Euler angles η. Pitch angle θ determines the rotation of the quad-rotor around the y-axis. Roll angle φ determines the rotation around the x-axis and yaw angle ψ around the z-axis. Vector q contains the linear and angular position vectors</p>
-<p>$$ 
+<p>$$
 \zeta = \left[\begin{matrix}
               x   \\
               y   \\
@@ -115,7 +115,7 @@
     \end{matrix}\right]
 $$</p>
 <p>The origin of the body frame is in the center of mass of the quad-rotor. In the body frame, the linear velocities are determined by \( V_B\) and the angular velocities by \( \Omega \)</p>
-<p>$$ 
+<p>$$
 V_B = \left[\begin{matrix}
               v_{x,Q}   \\
               v_{y,Q}   \\
@@ -138,13 +138,13 @@ $$</p>
 $$</p>
 <p>in which \( Sx=sin(x) \) and \( Cx = cos(x) \). The rotation matrix \( ^{I}R_{B} \) is orthogonal thus \( (^{I}R_{B})^{-1} = (^{I}R_{B})^T \) which is the rotation matrix from the inertial frame to the body frame.</p>
 <p>The transformation matrix for angular velocities from the inertial frame to the body frame is \( W_{\eta}\), and from the body frame to the inertial frame is \( W_{\eta}^{-1} \), as shown in,</p>
-<p>$$ 
+<p>$$
 \dot \eta = W_{\eta}^{-1} \Omega,<br />
            \left[\begin{matrix}
                  \dot \phi   \\
                  \dot \theta \\
                  \dot \psi   \\
-           \end{matrix}\right] 
+           \end{matrix}\right]
            =
            \left[\begin{matrix}
                  1 &amp; S\phi T\theta &amp; C\phi T\theta \\
@@ -155,15 +155,15 @@ $$</p>
                  p \\
                  q \\
                  r \\
-           \end{matrix}\right]          <br />
+           \end{matrix}\right]
 $$</p>
-<p>$$ 
+<p>$$
 \Omega = W_{\eta} \dot \eta,<br />
            \left[\begin{matrix}
                  p \\
                  q \\
                  r \\
-           \end{matrix}\right]         <br />
+           \end{matrix}\right]
            =
            \left[\begin{matrix}
                  1 &amp; 0      &amp; -S\theta      \\
@@ -187,11 +187,11 @@ I = \left[\begin{matrix}
 $$</p>
 <p>The angular velocity of rotor \( i \) i, denoted with \(\omega_i\), creates force \(f_i\) in the direction of the rotor axis. The angular velocity and acceleration of the rotor also create torque \(\tau_{M_i}\) around the rotor axis</p>
 <p>$$ f_i = k \omega_i^2 $$</p>
-<p>$$ \tau_{M_i} = b \omega_i^2 + I_M \dot \omega_i $$ </p>
+<p>$$ \tau_{M_i} = b \omega_i^2 + I_M \dot \omega_i $$</p>
 <p>in which the lift constant is \( k \), the drag constant is \( b \) and the inertia moment of the rotor is \( I_M \) . Usually the effect of \( \dot \omega_i \) is considered small and thus it is omitted.</p>
 <p>The combined forces of rotors create thrust T in the direction of the body z-axis. Torque \( \tau \) consists of the torques \( \tau_\phi \),\( \tau_\theta \) and \( \tau_\psi \) in the direction of the corresponding
 body frame angles
-$$ 
+$$
   T=\sum_{i=1}^{4} f_i = k \sum_{i=1}^{4} \omega_i^2
 $$</p>
 <p>$$
@@ -199,24 +199,24 @@ $$</p>
                   \tau_{\phi}   \\
                   \tau_{\theta} \\
                   \tau_{\psi}   \\
-          \end{matrix} \right] 
-            = 
+          \end{matrix} \right]
+            =
           \left[\begin{matrix}
                   l (f_2-f_4)         \\
                   l (f_3-f_1)         \\
                   \sum_i^4 \tau_{M_i} \\
-          \end{matrix}\right] 
-            = 
+          \end{matrix}\right]
+            =
           \left[\begin{matrix}
                   (\omega_2^2 - \omega_4^2) l         \\
                   (\omega_3^2 - \omega_1^2) l         \\
                   \sum_i^4 \tau_{M_i} \\
-          \end{matrix}\right] 
+          \end{matrix}\right]
 $$</p>
 <p>in which \(l\) is the distance between the rotor and the center of mass of the quad-rotor. Thus, the roll movement is acquired by decreasing the 2nd rotor velocity and increasing the 4th rotor velocity. Similarly, the pitch movement is acquired by decreasing the 1st rotor velocity and increasing the 3th rotor velocity. Yaw movement is acquired by increasing the the angular velocities of two opposite rotors and decreasing the velocities of the other two.</p>
 <h2 id="euler-lagrange-formulation">Euler-Lagrange formulation</h2>
 <p>In the following we will use the Euler-Lagrange approach to obtain the dynamical model of the system. If your are not familiar with this later you could use the Newton-Euler one.</p>
-<p>Let's begin by construct the Lagrangian of our system. It's given as follow : </p>
+<p>Let's begin by construct the Lagrangian of our system. It's given as follow :</p>
 <p>$$ \mathcal{L}(q, \dot{q}) = E_{r} + E_{t} - E_{p} $$
 $$ \mathcal{L}(\mathbb{q}, \dot{\mathbb{q}}) = (m/2) \dot{\zeta}^T\dot{\zeta} + (m/2) \Omega^T I \Omega - mgz $$</p>
 <p>The model of the full quadrotor dynamics is obtained from Euler–Lagrange equations with external generalized forces.</p>
@@ -227,22 +227,22 @@ $$ \mathcal{L}(\mathbb{q}, \dot{\mathbb{q}}) = (m/2) \dot{\zeta}^T\dot{\zeta} + 
            \end{matrix}\right]
 $$</p>
 <p>The linear and angular components do not depend on each other thus they can be
-studied separately. </p>
+studied separately.</p>
 <h3 id="translational-motion">Translational motion</h3>
 <p>The linear external force is the total thrust of the rotors. The linear Euler-Lagrange equations are</p>
-<p>$$ 
-F_{\zeta} = ^{I}R_B <br />
+<p>$$
+F_{\zeta} = ^{I}R_B
           \left[\begin{matrix}
             0         \\
             0         \\
             T         \\
-          \end{matrix}\right]            <br />
-= m \ddot \zeta + m g 
+          \end{matrix}\right]
+= m \ddot \zeta + m g
            \left[\begin{matrix}
             0         \\
             0         \\
             1         \\
-          \end{matrix}\right] 
+          \end{matrix}\right]
 $$</p>
 <h3 id="rotational-motion">Rotational motion</h3>
 <p>The matrix \( J(\eta) \) from \( \Omega \) to \( \eta \)  is</p>
@@ -255,19 +255,19 @@ J = \left[\begin{matrix}
     \end{matrix}\right]
 $$</p>
 <p>Thus, the rotational energy \(E_r \) can be expressed in the inertial frame as</p>
-<p>$$ E_{rot} = (1/2) \dot{\Omega}^T J \dot{\Omega} = (1/2) \dot{\eta}^T J \dot{\eta} $$ </p>
+<p>$$ E_{rot} = (1/2) \dot{\Omega}^T J \dot{\Omega} = (1/2) \dot{\eta}^T J \dot{\eta} $$</p>
 <p>The external angular force is the torques of the rotors. The angular Euler-Lagrange equations are</p>
 <p>$$
-\tau = \tau_B = J \ddot{\eta} + \dot{J} \dot{\eta} -\frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J \dot{\eta}) 
+\tau = \tau_B = J \ddot{\eta} + \dot{J} \dot{\eta} -\frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J \dot{\eta})
 $$</p>
 <p>Defining the Coriolis-centripetal vector :</p>
 <p>$$ \tilde{V} (\eta, \dot{\eta}) = \dot{J} \dot{\eta} - \frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J \dot{\eta}) $$</p>
 <p>one writes :</p>
 <p>$$ J \ddot{\eta} + \tilde{V} (\eta, \dot{\eta}) = \tau $$</p>
-<p>but \( \tilde{V} (\eta, \dot{\eta}) \) can be expressed as </p>
-<p>$$ \tilde{V} (\eta, \dot{\eta}) = \left( \dot{J}  - \frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J ) \right) \dot{\eta} = C(\eta, \dot{\eta}) \dot{\eta}$$ </p>
+<p>but \( \tilde{V} (\eta, \dot{\eta}) \) can be expressed as</p>
+<p>$$ \tilde{V} (\eta, \dot{\eta}) = \left( \dot{J}  - \frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J ) \right) \dot{\eta} = C(\eta, \dot{\eta}) \dot{\eta}$$</p>
 <p>$$ C(\eta, \dot{\eta}) = \left( \dot{J}  - \frac{1}{2} \frac{\partial}{\partial \eta}(\dot{\eta}^T J )\right)$$
-where \( C(\eta, \dot{\eta}) \) is referred to as the Coriolis term and contains the gyroscopic and centrifugal terms associated with the \( \eta \) depence of \( J \). </p>
+where \( C(\eta, \dot{\eta}) \) is referred to as the Coriolis term and contains the gyroscopic and centrifugal terms associated with the \( \eta \) depence of \( J \).</p>
 <p>Therefore :</p>
 <p>$$ J \ddot{\eta} = \tau - C(\eta, \dot{\eta}) \dot{\eta} $$</p>
 <p>The matrix \( C(\eta, \dot{\eta}) \) is a \( 3X3 \) matrix and has the form :</p>
@@ -279,7 +279,7 @@ C(\eta, \dot{\eta})= \left[\begin{matrix}
 \end{matrix}\right]
 $$</p>
 <p>Where :</p>
-<p>\( 
+<p>\(
 C_{1,1} = 0 \\
 C_{1,2} = (I_{yy}-I_{zz})(\dot\theta C \phi S \phi + \dot \psi (S \phi)^2 C \theta)+(I_{zz}-I_{yy}) \dot \psi (C \phi)^2 C \theta -I_{xx} \dot \psi C \theta) \\
 C_{1,3} = (I_{zz}-I_{yy})\dot \psi C \phi S \phi (C \theta)^2 \\
@@ -296,12 +296,12 @@ C_{3,3} = (I_{yy}-I_{zz})(\dot \phi C \phi S \phi (C \theta)^2)-I_{yy} \dot \the
         \ddot x         \\
         \ddot y         \\
         \ddot z         \\
-      \end{matrix}\right] <br />
+      \end{matrix}\right]
        =  \left[\begin{matrix}
            C\psi C\theta &amp; C\psi S\theta S\phi - S\psi C\phi &amp; C\psi S\theta C\phi + S\psi S\phi \\
            S\psi C\theta &amp; S\psi S\theta S\phi + C\psi C\phi &amp; S\psi S\theta C\phi - C\psi S\phi \\
            -S\theta &amp; C\theta S\phi &amp; C\theta C\phi \\
-     \end{matrix}\right] <br />
+     \end{matrix}\right]
       \left[\begin{matrix}
             0         \\
             0         \\
@@ -311,7 +311,7 @@ C_{3,3} = (I_{yy}-I_{zz})(\dot \phi C \phi S \phi (C \theta)^2)-I_{yy} \dot \the
         0         \\
         0         \\
         g         \\
-      \end{matrix}\right]  <br />
+      \end{matrix}\right]
 $$</p>
 <p>$$  \ddot{\eta} = J^{-1} (\tau - C(\eta, \dot{\eta}) \dot{\eta}) $$</p>
 <p>To simplify let us take</p>
@@ -319,10 +319,10 @@ $$</p>
                   \tilde\tau_{\psi} \\
                   \tilde\tau_{\theta}  \\
                   \tilde\tau_{\phi}   \\
-           \end{matrix} \right] 
+           \end{matrix} \right]
            =
            J^{-1}(\tau - C(\eta, \dot{\eta}) \dot{\eta})
-$$ </p>
+$$</p>
 <p>Therefor the general equation of the quad-rotor quadrotor are :</p>
 <p>$$
 \begin{align}
@@ -387,4 +387,3 @@ $$</p>
 
   </body>
 </html>
-
