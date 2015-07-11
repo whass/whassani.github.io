@@ -36,7 +36,7 @@ Software in the ROS Ecosystem can be separated into three groups:
 
 ## Install ROS on Ubuntu Trusty (14.04)
 
-There exist dfifferents version of ROS, currently the latest one is JADE.
+There exist dfifferents version of ROS, currently the latest one is Jade, bu we will prefer the stable one in this article which is Indigo.
 
 In the following we will install ROS from repository.
 
@@ -55,14 +55,14 @@ Finally, update repository list
 According to your needs, there exists several ways to install ROS To install, but the easiest (and recommended if you have enough hard disk space)
 installation is known as desktop-full. It comes with ROS, the Rx tools, the rviz visualizer (for 3D), many generic robot libraries, the simulator in 2D (such as stage) and 3D (usually Gazebo), the navigation stack (to move, localize, do mapping, and control arms), and also perception libraries using vision, lasers or RGB-D cameras
 
-    $ sudo apt-get install ros-jade-desktop-full
+    $ sudo apt-get install ros-indigo-desktop-full
 
 
 ## Setup the environment
 
 To start using it, the system must know where the executable or binary files as well as other commands are. To do that execute the following script :
 
-    $ source /opt/ros/jade/setup.bash
+    $ source /opt/ros/indigo/setup.bash
 
 To chack your setup execute :
 
@@ -83,7 +83,7 @@ You must obtain something like that :
     ========
 
     PARAMETERS
-     * /rosdistro: jade
+     * /rosdistro: indigo
      * /rosversion: 1.11.13
 
     NODES
@@ -97,7 +97,7 @@ You must obtain something like that :
     started core service [/rosout]
 
 
-## Install standalone tools
+## Install ROS and standalone tools
 
 ROS has some tools that need to be installed. These tools will help us install dependencies between programs to compile, download, and install packages from ROS. These tools are ***rosinstall*** and ***rosdep***.
 

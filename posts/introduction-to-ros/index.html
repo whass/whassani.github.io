@@ -76,7 +76,7 @@
 <li><a href="#description">Description</a></li>
 <li><a href="#install-ros-on-ubuntu-trusty-1404">Install ROS on Ubuntu Trusty (14.04)</a></li>
 <li><a href="#setup-the-environment">Setup the environment</a></li>
-<li><a href="#install-standalone-tools">Install standalone tools</a></li>
+<li><a href="#install-ros-and-standalone-tools">Install ROS and standalone tools</a></li>
 </ul>
 </div>
 <p><center><figure>
@@ -100,7 +100,7 @@
 </li>
 </ul>
 <h2 id="install-ros-on-ubuntu-trusty-1404">Install ROS on Ubuntu Trusty (14.04)</h2>
-<p>There exist dfifferents version of ROS, currently the latest one is JADE.</p>
+<p>There exist dfifferents version of ROS, currently the latest one is Jade, bu we will prefer the stable one in this article which is Indigo.</p>
 <p>In the following we will install ROS from repository.</p>
 <p>First, add the following repository to ubuntu sources.list</p>
 <div class="codehilite"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">echo</span> <span class="s">&quot;deb http://packages.ros.org/ros/ubuntu trusty main&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">ros</span><span class="o">-</span><span class="n">latest</span><span class="p">.</span><span class="n">list</span><span class="err">&#39;</span>
@@ -119,13 +119,13 @@
 
 <p>According to your needs, there exists several ways to install ROS To install, but the easiest (and recommended if you have enough hard disk space)
 installation is known as desktop-full. It comes with ROS, the Rx tools, the rviz visualizer (for 3D), many generic robot libraries, the simulator in 2D (such as stage) and 3D (usually Gazebo), the navigation stack (to move, localize, do mapping, and control arms), and also perception libraries using vision, lasers or RGB-D cameras</p>
-<div class="codehilite"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">jade</span><span class="o">-</span><span class="n">desktop</span><span class="o">-</span><span class="n">full</span>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">indigo</span><span class="o">-</span><span class="n">desktop</span><span class="o">-</span><span class="n">full</span>
 </pre></div>
 
 
 <h2 id="setup-the-environment">Setup the environment</h2>
 <p>To start using it, the system must know where the executable or binary files as well as other commands are. To do that execute the following script :</p>
-<div class="codehilite"><pre><span class="err">$</span> <span class="n">source</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">ros</span><span class="o">/</span><span class="n">jade</span><span class="o">/</span><span class="n">setup</span><span class="p">.</span><span class="n">bash</span>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">source</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">ros</span><span class="o">/</span><span class="n">indigo</span><span class="o">/</span><span class="n">setup</span><span class="p">.</span><span class="n">bash</span>
 </pre></div>
 
 
@@ -148,7 +148,7 @@ installation is known as desktop-full. It comes with ROS, the Rx tools, the rviz
 <span class="o">========</span>
 
 <span class="n">PARAMETERS</span>
- <span class="o">*</span> <span class="o">/</span><span class="n">rosdistro</span><span class="o">:</span> <span class="n">jade</span>
+ <span class="o">*</span> <span class="o">/</span><span class="n">rosdistro</span><span class="o">:</span> <span class="n">indigo</span>
  <span class="o">*</span> <span class="o">/</span><span class="n">rosversion</span><span class="o">:</span> <span class="mf">1.11.13</span>
 
 <span class="n">NODES</span>
@@ -163,7 +163,7 @@ installation is known as desktop-full. It comes with ROS, the Rx tools, the rviz
 </pre></div>
 
 
-<h2 id="install-standalone-tools">Install standalone tools</h2>
+<h2 id="install-ros-and-standalone-tools">Install ROS and standalone tools</h2>
 <p>ROS has some tools that need to be installed. These tools will help us install dependencies between programs to compile, download, and install packages from ROS. These tools are <strong><em>rosinstall</em></strong> and <strong><em>rosdep</em></strong>.</p>
 <div class="codehilite"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">rosinstall</span> <span class="n">python</span><span class="o">-</span><span class="n">rosdep</span>
 </pre></div>
