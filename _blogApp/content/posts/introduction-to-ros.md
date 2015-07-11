@@ -2,7 +2,7 @@ title: "Install ROS (Robotics Operating System)"
 date: 2015-07-09
 lang: en
 description: Robot Operating System (ROS) is a collection of software frameworks for robot software development, providing operating system-like functionality on a heterogeneous computer cluster.
-categories: 
+categories:
 - Simulation
 - Robotics
 
@@ -19,11 +19,11 @@ categories:
 
 ## Description
 
-Robot Operating System (ROS) is a collection of software frameworks for robot software development, providing operating system-like functionality on a heterogeneous computer cluster. 
+Robot Operating System (ROS) is a collection of software frameworks for robot software development, providing operating system-like functionality on a heterogeneous computer cluster.
 
-ROS provides standard operating system services such as hardware abstraction, low-level device control, implementation of commonly used functionality, message-passing between processes, and package management. 
+ROS provides standard operating system services such as hardware abstraction, low-level device control, implementation of commonly used functionality, message-passing between processes, and package management.
 
-Running sets of ROS-based processes are represented in a graph architecture where processing takes place in nodes that may receive, post and multiplex sensor, control, state, planning, actuator and other messages. 
+Running sets of ROS-based processes are represented in a graph architecture where processing takes place in nodes that may receive, post and multiplex sensor, control, state, planning, actuator and other messages.
 
 Software in the ROS Ecosystem can be separated into three groups:
 
@@ -34,7 +34,7 @@ Software in the ROS Ecosystem can be separated into three groups:
 * packages containing application-related code which uses one or more ROS client libraries.
 
 
-## Install ROS on Ubuntu
+## Install ROS on Ubuntu Trusty (14.04)
 
 There exist dfifferents version of ROS, currently the latest one is JADE.
 
@@ -48,7 +48,7 @@ After that set up your keys
 
     $ wget http://packages.ros.org/ros.key -O - | sudo apt-key add –
 
-Finally, update repository list 
+Finally, update repository list
 
     $ sudo apt-get update
 
@@ -61,8 +61,8 @@ installation is known as desktop-full. It comes with ROS, the Rx tools, the rviz
 ## Setup the environment
 
 To start using it, the system must know where the executable or binary files as well as other commands are. To do that execute the following script :
-    
-    $ source /opt/ros/jade/setup.bash 
+
+    $ source /opt/ros/jade/setup.bash
 
 To chack your setup execute :
 
