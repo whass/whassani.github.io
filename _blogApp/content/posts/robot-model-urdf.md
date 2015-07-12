@@ -1,8 +1,8 @@
 title:  "Create an urdf (Universal Robot Description File) file"
 date: 2015-07-09
 lang: en
-description: The Unified Robot Description Format (URDF) is the standard ROS XML representation of the robot model (kinematics, dynamics, sensors) describing a robot. 
-categories: 
+description: The Unified Robot Description Format (URDF) is the standard ROS XML representation of the robot model (kinematics, dynamics, sensors) describing a robot.
+categories:
 - Simulation
 
 **Table of content**
@@ -12,16 +12,16 @@ categories:
 
 ## Create the tree structure
 
-In this tutorial we'll create the URDF description of the "robot" shown in the image below. 
+In this tutorial we'll create the URDF description of the "robot" shown in the image below.
 
 <center><figure>
 <img src="{{ url_for('static', filename='images/link.png') }}" alt="FrameWork" style="width:50%;" >
-</figure> 
+</figure>
 </center>
 
-The robot in the image is a tree structure. Let's start very simple, and create a description of that tree structure, without worrying about the dimensions etc. 
+The robot in the image is a tree structure. Let's start very simple, and create a description of that tree structure, without worrying about the dimensions etc.
 
-Fire up your favorite text editor, and create a file called ***my_robot.urdf***: 
+Fire up your favorite text editor, and create a file called ***my_robot.urdf***:
 
 
     <robot name="test_robot">
@@ -32,7 +32,7 @@ Fire up your favorite text editor, and create a file called ***my_robot.urdf***:
 
         <joint name="joint1" type="continuous"> <!--  meaning that it can take on any angle from negative infinity to positive infinity -->
             <parent link="link1"/>
-            <child link="link2"/> 
+            <child link="link2"/>
         </joint>
 
         <joint name="joint2" type="continuous">
@@ -72,26 +72,39 @@ Each link in your model must have a link balise and its name.
         </joint>
 
 
-Each joint must connect at least two joints, therefore, we have to define its parents and childs, in this example, the parent if the 3rd link and the child is the 4th link :   
+Each joint must connect at least two joints, therefore, we have to define its parents and childs, in this example, the parent if the 3rd link and the child is the 4th link :
 
     <parent link="link3"/>
     <child link="link4"/>
 
+Those types of joints can be modeled using URDF :
+
+* ***Fixed:*** As name suggests this type of joints are fixed and has no degree of freedom for movement
+
+* ***Revolute:*** This type of Joint rotates around an axis and the movement is restricted within the specified upper and lower limits
+
+* ***Continuous:*** This Joint is similar to revolute joint and  it rotates around an axis with the exception of having no limits.
+
+* ***Prismatic:*** This type of joint slides along an axis within the specified limits
+
+* ***Planar:*** In this type of joint the movement is perpendicular to the specified axis
+
+* ***Floating:*** This is not exactly a joint as all six degrees of freedom are free.  
 
 ## Dimension : Origins of the joints
 
-So now that we have the basic tree structure, let's add the appropriate dimensions. As you notice in the robot image, the reference frame of each link (in green) is located at the bottom of the link, and is identical to the reference frame of the joint. 
+So now that we have the basic tree structure, let's add the appropriate dimensions. As you notice in the robot image, the reference frame of each link (in green) is located at the bottom of the link, and is identical to the reference frame of the joint.
 
 #### balise ***origin*** :
 To add dimensions to our tree, all we have to specify is the offset from a link to the joint(s) of its ***children***. To accomplish this, we will add the field ***origin**** to each of the joints.
 
-Let's look at the second joint. Joint2 is offset in the Y-direction from link1, a little offset in the negative X-direction from link1, and it is rotated 90 degrees around the Z-axis. 
+Let's look at the second joint. Joint2 is offset in the Y-direction from link1, a little offset in the negative X-direction from link1, and it is rotated 90 degrees around the Z-axis.
 
 So, we need to add the following ***origin*** element:
 
     <origin xyz="-2 5 0" rpy="0 0 1.57" />
 
-where 
+where
 
     <robot name="test_robot">
         <link name="link1" />
@@ -116,7 +129,7 @@ where
         <child link="link4"/>
         <origin xyz="5 0 0" rpy="0 0 -1.57" />
       </joint>
-    </robot> 
+    </robot>
 
 
 ## Kinematics : links axes of rotation
@@ -125,18 +138,18 @@ What we didn't specify yet is around which axis the joints rotate. Once we add t
 
 #### balise ***axis*** :
 
-So, if you look at joint2, you see it rotates around the positive Y-axis. So, simple add the following xml to the joint element: 
+So, if you look at joint2, you see it rotates around the positive Y-axis. So, simple add the following xml to the joint element:
 
-    <axis xyz="0 1 0" /> 
+    <axis xyz="0 1 0" />
 
-Similarly, joint1 is rotating around the following axis: 
+Similarly, joint1 is rotating around the following axis:
 
     <axis xyz="-0.707 0.707 0" />
 
 
 Note that it is a good idea to normalize the axis.
 
-If we add this to all the joints of the robot, our URDF looks like this: 
+If we add this to all the joints of the robot, our URDF looks like this:
 
     <robot name="test_robot">
         <link name="link1" />
@@ -164,4 +177,4 @@ If we add this to all the joints of the robot, our URDF looks like this:
         <origin xyz="5 0 0" rpy="0 0 -1.57" />
         <axis xyz="0.707 -0.707 0" />
       </joint>
-    </robot> 
+    </robot>
